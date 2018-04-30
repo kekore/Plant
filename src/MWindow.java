@@ -3,6 +3,7 @@ import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.TextEvent;
 
 public class MWindow extends JFrame{
 
@@ -12,7 +13,7 @@ public class MWindow extends JFrame{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(500,160);
         setLocation(screenSize.width/2-250,screenSize.height/2-200);
-        //setLayout(new GridLayout(1, 2, 20, 20));
+        setLayout(new GridLayout(1, 2, 20, 20));
 
         /*JButton s = new JButton("Symulacja");
         JButton w = new JButton("Wyjście");
@@ -25,6 +26,10 @@ public class MWindow extends JFrame{
         sim = s;
         JPanel bP = new ButtonPanel((ActionListener) sim);
         add(bP);
+        JPanel c = new Foo();
+        add(c);
+        //c.setSize(10,10);
+        //c.setLocation(0,0);
 
         setResizable(false);
         setVisible(true);
@@ -66,4 +71,21 @@ class ButtonPanel extends JPanel implements ActionListener{
         }
     }
     private boolean simW;
+}
+
+class Foo extends JPanel{
+    public Foo(){
+        setBackground(Color.cyan);
+        setLayout(new FlowLayout());
+        TextField tf1 = new TextField();
+        TextField tf2 = new TextField();
+        TextField tf3 = new TextField();
+        Dimension d = new Dimension(200,20);
+        tf1.setPreferredSize(d);
+        tf2.setPreferredSize(d);
+        tf3.setPreferredSize(d);
+        add(tf1);
+        add(tf2);
+        add(tf3);
+    }
 }
