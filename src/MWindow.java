@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class MWindow extends JFrame{
 
-    public MWindow(){
+    public MWindow(JFrame s){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //do zmiany
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -22,15 +22,12 @@ public class MWindow extends JFrame{
         add(s);
         add(w);*/
 
-        JPanel bP = new ButtonPanel();
+        sim = s;
+        JPanel bP = new ButtonPanel((ActionListener) sim);
         add(bP);
 
         setResizable(false);
         setVisible(true);
-    }
-
-    public void setSim(JFrame s){
-        sim = s;
     }
 
     private JFrame sim;
@@ -41,23 +38,32 @@ class ButtonPanel extends JPanel implements ActionListener{
     private JButton s;
     private JButton w;
 
-    public ButtonPanel(){
+    public ButtonPanel(ActionListener sim){
         s = new JButton("Symulacja");
         w = new JButton("Wyjście");
 
         s.addActionListener(this);
+        s.addActionListener(sim);
         w.addActionListener(this);
 
         setLayout(new GridLayout(1, 2, 20, 20));
         add(s);
         add(w);
+        simW = false;
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         Object source = e.getSource();
-        if(source == s){
-
+        if(source == s && !simW){
+            /*EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new SWindow();
+                }
+            });*/
+            simW = true;
         }
     }
+    private boolean simW;
 }

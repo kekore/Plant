@@ -19,24 +19,27 @@ public class Plant {
         frame.setTitle("Plant");
         frame.setSize(800, 600);
         frame.setVisible(true);*/
-        JFrame m = new MWindow();
-        JFrame s = new SWindow();
-        /*EventQueue.invokeLater(new Runnable(){
+        SimRunnable SimR = new SimRunnable();
+        EventQueue.invokeLater(SimR);
+        EventQueue.invokeLater(new Runnable(){
             @Override
             public void run(){
-                new MWindow();
+                new MWindow(SimR.getRef());
             }
         });
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new SWindow();
-            }
-        });*/
     }
 }
 
-
+class SimRunnable implements Runnable{
+    @Override
+    public void run() {
+        s = new SWindow();
+    }
+    protected JFrame getRef(){
+        return s;
+    }
+    private JFrame s;
+}
 
 /* class DrawFrame extends JFrame
 {
