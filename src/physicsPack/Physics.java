@@ -8,23 +8,23 @@ public class Physics {
     private float mass;
     private long lastUpdate;
 
-    public Physics(Vector2D p, Vector2D v, float m){
+    public Physics(Vector2D p, Vector2D v, float m, long when){
         pos = p;
         vel = v;
         acc = new Vector2D();
         force = new Vector2D();
         mass = m;
-        lastUpdate = System.currentTimeMillis();
+        lastUpdate = when;
     }
 
-    public void proc(long tickTime)
+    public void proc(long when, long tickTime)
     {
-        long currentTime = System.currentTimeMillis();
+        long currentTime = when;
         //System.out.println((float)(currentTime-lastUpdate)/tickTime);
         acc.set(force.scaleNC(1/mass));
         vel.add(acc.scaleNC((float)(currentTime-lastUpdate)/tickTime));
         pos.add(vel.scaleNC((float)(currentTime-lastUpdate)/tickTime));
-        lastUpdate = System.currentTimeMillis();
+        lastUpdate = when;
     }
 
     public Vector2D getPos() {

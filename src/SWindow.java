@@ -28,14 +28,23 @@ public class SWindow extends JFrame implements ActionListener{
         setResizable(false);
         s = new SimPanel();
         add(s);
+        siming = false;
         //setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText() == "Symulacja"){
-            setVisible(true);
-            s.sT();
+            if(!siming) {
+                setVisible(true);
+                siming = true;
+                s.start();
+            }
+            else{
+                setVisible(true);
+                siming = false;
+                s.pause();
+            }
         }
     }
     protected SimPanel getPanel(){
@@ -43,16 +52,19 @@ public class SWindow extends JFrame implements ActionListener{
     }
 
     private SimPanel s;
+    private boolean siming;
 }
 
 class SimPanel extends JPanel implements ActionListener{
     private Timer timer;
     private Simulator simulator;
+    Random generator;
 
     SimPanel(){
         simulator = new Simulator(100);
         timer = new Timer(1,this);
         generator = new Random();
+        timer.start();
     }
 
     @Override
@@ -64,7 +76,6 @@ class SimPanel extends JPanel implements ActionListener{
             g2d.setColor(s.getColor());
             g2d.draw(s.getEllipse());
         }
-
     }
 
     @Override
@@ -75,21 +86,24 @@ class SimPanel extends JPanel implements ActionListener{
                 t = System.currentTimeMillis(); //procować powinien tylko simulator(mierzyc czas etc.) a repaint panel
                 simulator.proc();
             }*/
-            simulator.proc();
+            //simulator.proc();
             repaint();
         } else if (((JButton) e.getSource()).getText() == "Dodaj") {
-            for(int i = 0; i < 20; i++) {
+            for(int i = 0; i < 1; i++) {
                 Vector2D p = new Vector2D(generator.nextInt(400) + 50, generator.nextInt(600) + 50);
                 Vector2D v = new Vector2D(generator.nextInt(50) / 10, generator.nextInt(50) / 10);
-                simulator.addP(new Particle(p, v, 1, generator.nextInt(3)+9, Particle.Type.OXYGEN));
+                simulator.addP(p, v, 1, generator.nextInt(3)+9, Particle.Type.OXYGEN);
             }
         }
     }
-    protected void sT(){
-        timer.start();
+    protected void start(){
+        //timer.start();
+        simulator.startSimulation();
     }
-    private long t;
-    Random generator;
+    protected void pause(){
+        //timer.stop();
+        simulator.pauseSimulation();
+    }
 }
 
 /*class Cir extends JPanel implements MouseMotionListener, ActionListener{
