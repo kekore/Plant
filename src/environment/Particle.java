@@ -37,8 +37,8 @@ public class Particle {
     public void setForce(Vector2D f){
         physics.setForce(f);
     }
-    public void proc(){
-        physics.proc();
+    public void proc(long tickTime){
+        physics.proc(tickTime);
         shape.setPos(physics.getPos());
     }
     public Circle getShape(){

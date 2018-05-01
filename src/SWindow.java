@@ -50,8 +50,8 @@ class SimPanel extends JPanel implements ActionListener{
     private Simulator simulator;
 
     SimPanel(){
-        simulator = new Simulator();
-        timer = new Timer(10,this);
+        simulator = new Simulator(100);
+        timer = new Timer(1,this);
         generator = new Random();
     }
 
@@ -71,15 +71,18 @@ class SimPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
             //System.out.println(System.currentTimeMillis());
-            if(System.currentTimeMillis()-t>100){ //zawsze proc, ale mnozyc przez część czasu!! czyli zmienic proc w physics --TODO--
+            /*if(System.currentTimeMillis()-t>100){ //zawsze proc, ale mnozyc przez część czasu!! czyli zmienic proc w physics --TODO--
                 t = System.currentTimeMillis(); //procować powinien tylko simulator(mierzyc czas etc.) a repaint panel
                 simulator.proc();
-            }
+            }*/
+            simulator.proc();
             repaint();
         } else if (((JButton) e.getSource()).getText() == "Dodaj") {
-            Vector2D p = new Vector2D(generator.nextInt(400)+50,generator.nextInt(600)+50);
-            Vector2D v = new Vector2D(generator.nextInt(50)/10,generator.nextInt(50)/10);
-            simulator.addP(new Particle(p,v,1,10,Particle.Type.OXYGEN));
+            for(int i = 0; i < 20; i++) {
+                Vector2D p = new Vector2D(generator.nextInt(400) + 50, generator.nextInt(600) + 50);
+                Vector2D v = new Vector2D(generator.nextInt(50) / 10, generator.nextInt(50) / 10);
+                simulator.addP(new Particle(p, v, 1, generator.nextInt(3)+9, Particle.Type.OXYGEN));
+            }
         }
     }
     protected void sT(){
@@ -89,7 +92,7 @@ class SimPanel extends JPanel implements ActionListener{
     Random generator;
 }
 
-class Cir extends JPanel implements MouseMotionListener, ActionListener{
+/*class Cir extends JPanel implements MouseMotionListener, ActionListener{
     Cir(){
         x=10;
         y=20;
@@ -135,4 +138,4 @@ class Cir extends JPanel implements MouseMotionListener, ActionListener{
     private Graphics2D g2d;
     private Ellipse2D c;
     private Timer timer;
-}
+}*/

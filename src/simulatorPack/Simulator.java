@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 public class Simulator {
     private ArrayList<Particle> pList;
-    public Simulator(){
+    private long tickTime;
+    public Simulator(long tT){
         pList = new ArrayList<Particle>();
+        tickTime = tT;
     }
     public void addP(Particle p){
         pList.add(p);
@@ -20,8 +22,10 @@ public class Simulator {
             p.setForce(new Vector2D(0.3F,-0.1F));
         }
         for(Particle p : pList){
-            p.proc();
+            p.proc(tickTime);
         }
+        //Check if particle is out of canvas
+        //Check collisions
     }
     public ArrayList<Circle> getShapes(){
         ArrayList<Circle> sList = new ArrayList<Circle>();

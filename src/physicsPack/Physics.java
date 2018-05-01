@@ -6,6 +6,7 @@ public class Physics {
     private Vector2D acc;
     private Vector2D force;
     private float mass;
+    private long lastUpdate;
 
     public Physics(Vector2D p, Vector2D v, float m){
         pos = p;
@@ -13,13 +14,17 @@ public class Physics {
         acc = new Vector2D();
         force = new Vector2D();
         mass = m;
+        lastUpdate = System.currentTimeMillis();
     }
 
-    public void proc()
+    public void proc(long tickTime)
     {
+        long currentTime = System.currentTimeMillis();
+        //System.out.println((float)(currentTime-lastUpdate)/tickTime);
         acc.set(force.scaleNC(1/mass));
-        vel.add(acc);
-        pos.add(vel);
+        vel.add(acc.scaleNC((float)(currentTime-lastUpdate)/tickTime));
+        pos.add(vel.scaleNC((float)(currentTime-lastUpdate)/tickTime));
+        lastUpdate = System.currentTimeMillis();
     }
 
     public Vector2D getPos() {
