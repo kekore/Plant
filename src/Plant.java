@@ -34,11 +34,14 @@ class SimRunnable implements Runnable{
     @Override
     public void run() {
         s = new SWindow();
+        /*while(true){
+            s.update(System.currentTimeMillis()%100);
+        }*/
     }
-    protected JFrame getRef(){
+    protected SWindow getRef(){
         return s;
     }
-    private JFrame s;
+    private SWindow s;
 }
 
 /* class DrawFrame extends JFrame
