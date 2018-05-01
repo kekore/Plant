@@ -6,12 +6,12 @@ import java.awt.geom.Rectangle2D;
 
 public class MWindow extends JFrame{
 
-    public MWindow(JFrame s){
+    public MWindow(SWindow s){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //do zmiany
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(500,500);
-        setLocation(screenSize.width/2-250,screenSize.height/2-200);
+        setLocation(screenSize.width/4-200,screenSize.height/4-150);
         setLayout(new GridLayout(2, 1, 20, 20));
         //setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -23,8 +23,8 @@ public class MWindow extends JFrame{
         add(s);
         add(w);*/
 
-        sim = s;
-        JPanel bP = new ButtonPanel((ActionListener) sim);
+        simWindow = s;
+        JPanel bP = new ButtonPanel(simWindow);
         add(bP);
         JPanel c = new Foo();
         add(c);
@@ -38,7 +38,7 @@ public class MWindow extends JFrame{
         //pack();
     }
 
-    private JFrame sim;
+    private SWindow simWindow;
 
 }
 
@@ -46,36 +46,37 @@ class ButtonPanel extends JPanel implements ActionListener{
     private JButton s;
     private JButton w;
 
-    public ButtonPanel(ActionListener sim){
+    public ButtonPanel(SWindow simW){
         Dimension d = new Dimension(100,100);
         setPreferredSize(d);
         s = new JButton("Symulacja");
-        w = new JButton("Wyjście");
+        w = new JButton("Dodaj");
 
         s.addActionListener(this);
-        s.addActionListener(sim);
+        s.addActionListener((ActionListener)simW);
         w.addActionListener(this);
+        w.addActionListener((ActionListener)simW.getPanel());
 
         setLayout(new GridLayout(1, 2, 20, 20));
         add(s);
         add(w);
-        simW = false;
+        simV = false;
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         Object source = e.getSource();
-        if(source == s && !simW){
+        if(source == s && !simV){
             /*EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     new SWindow();
                 }
             });*/
-            simW = true;
+            simV = true;
         }
     }
-    private boolean simW;
+    private boolean simV;
 }
 
 class Foo extends JPanel{
