@@ -72,7 +72,7 @@ class SimPanel extends JPanel implements ActionListener{
         if(e.getSource() == timer){
             //System.out.println(System.currentTimeMillis());
             if(System.currentTimeMillis()-t>100){ //zawsze proc, ale mnozyc przez część czasu!! czyli zmienic proc w physics --TODO--
-                t = System.currentTimeMillis();
+                t = System.currentTimeMillis(); //procować powinien tylko simulator(mierzyc czas etc.) a repaint panel
                 simulator.proc();
             }
             repaint();
