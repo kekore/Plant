@@ -26,10 +26,9 @@ public class SWindow extends JFrame implements ActionListener{
         setSize(600,700);
         setLocation(screenSize.width/2,screenSize.height/2-350);
         setResizable(false);
-        s = new SimPanel();
-        add(s);
+        simPanel = new SimPanel();
+        add(simPanel);
         siming = false;
-        //setVisible(true);
     }
 
     @Override
@@ -38,20 +37,20 @@ public class SWindow extends JFrame implements ActionListener{
             if(!siming) {
                 setVisible(true);
                 siming = true;
-                s.start();
+                simPanel.start();
             }
             else{
                 setVisible(true);
                 siming = false;
-                s.pause();
+                simPanel.pause();
             }
         }
     }
     protected SimPanel getPanel(){
-        return s;
+        return simPanel;
     }
 
-    private SimPanel s;
+    private SimPanel simPanel;
     private boolean siming;
 }
 
@@ -81,12 +80,6 @@ class SimPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
-            //System.out.println(System.currentTimeMillis());
-            /*if(System.currentTimeMillis()-t>100){ //zawsze proc, ale mnozyc przez część czasu!! czyli zmienic proc w physics --TODO--
-                t = System.currentTimeMillis(); //procować powinien tylko simulator(mierzyc czas etc.) a repaint panel
-                simulator.proc();
-            }*/
-            //simulator.proc();
             repaint();
         } else if (((JButton) e.getSource()).getText() == "Dodaj") {
             for(int i = 0; i < 1; i++) {
@@ -96,60 +89,6 @@ class SimPanel extends JPanel implements ActionListener{
             }
         }
     }
-    protected void start(){
-        //timer.start();
-        simulator.startSimulation();
-    }
-    protected void pause(){
-        //timer.stop();
-        simulator.pauseSimulation();
-    }
+    protected void start(){simulator.startSimulation();}
+    protected void pause(){simulator.pauseSimulation();}
 }
-
-/*class Cir extends JPanel implements MouseMotionListener, ActionListener{
-    Cir(){
-        x=10;
-        y=20;
-        r=8;
-        d=0;
-        timer = new Timer(100, this);
-        addMouseMotionListener(this);
-    }
-    @Override
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g2d = (Graphics2D)g;
-        g2d.setColor(Color.darkGray);
-        c = new Ellipse2D.Float(x,y+d,r,r);
-        g2d.draw(c);
-    }
-    @Override
-    public void mouseMoved(MouseEvent e){
-        x = e.getX();
-        y = e.getY();
-        repaint();
-    }
-    @Override
-    public void mouseDragged(MouseEvent e){
-
-    }
-    public void setT(long n){
-        t = n;
-    }
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == timer){
-            d++;
-            repaint();
-        }
-    }
-    protected void sT(){
-        timer.start();
-    }
-
-    private int x,y,r,d;
-    private long t;
-    private Graphics2D g2d;
-    private Ellipse2D c;
-    private Timer timer;
-}*/

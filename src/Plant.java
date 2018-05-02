@@ -34,9 +34,6 @@ class SimRunnable implements Runnable{
     @Override
     public void run() {
         s = new SWindow();
-        /*while(true){
-            s.update(System.currentTimeMillis()%100);
-        }*/
     }
     protected SWindow getRef(){
         return s;
