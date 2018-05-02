@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -71,10 +72,15 @@ class SimPanel extends JPanel implements ActionListener{
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
         ArrayList<Circle> sList = simulator.getShapes();
+        //ArrayList<Line2D> lList = simulator.getLines();
         for(Circle s : sList){
             g2d.setColor(s.getColor());
             g2d.draw(s.getEllipse());
         }
+        /*for(Line2D l : lList){
+            g2d.setColor(Color.RED);
+            g2d.draw(l);
+        }*/
     }
 
     @Override
@@ -83,10 +89,16 @@ class SimPanel extends JPanel implements ActionListener{
             repaint();
         } else if (((JButton) e.getSource()).getText() == "Dodaj") {
             for(int i = 0; i < 1; i++) {
-                Vector2D p = new Vector2D(generator.nextInt(400) + 50, generator.nextInt(600) + 50);
-                Vector2D v = new Vector2D(generator.nextInt(50) / 10, generator.nextInt(50) / 10);
+                Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);
+                Vector2D v = new Vector2D((float)generator.nextInt(50) / 10+10, (float)generator.nextInt(50) / 10+10);
                 simulator.addP(p, v, 1, generator.nextInt(3)+9, Particle.Type.OXYGEN);
             }
+        } else if (((JButton) e.getSource()).getText() == "2x"){
+            simulator.setSpeed(2);
+        } else if (((JButton) e.getSource()).getText() == "4x"){
+            simulator.setSpeed(1);
+        } else if (((JButton) e.getSource()).getText() == "0.5x"){
+            simulator.setSpeed(8);
         }
     }
     protected void start(){simulator.startSimulation();}

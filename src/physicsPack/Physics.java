@@ -1,30 +1,34 @@
 package physicsPack;
 
+import java.awt.geom.Line2D;
+
 public class Physics {
     private Vector2D pos;
     private Vector2D vel;
     private Vector2D acc;
     private Vector2D force;
     private float mass;
-    private long lastUpdate;
+    //private long lastUpdate;
 
-    public Physics(Vector2D p, Vector2D v, float m, long when){
+    public Physics(Vector2D p, Vector2D v, float m){
         pos = p;
         vel = v;
         acc = new Vector2D();
         force = new Vector2D();
         mass = m;
-        lastUpdate = when;
+        //lastUpdate = when;
     }
 
-    public void proc(long when, long tickTime)
+    public void proc(long tickTime)
     {
-        long currentTime = when;
+        //long currentTime = when;
         //System.out.println((float)(currentTime-lastUpdate)/tickTime);
-        acc.set(force.scaleNC(1/mass));
-        vel.add(acc.scaleNC((float)(currentTime-lastUpdate)/tickTime));
-        pos.add(vel.scaleNC((float)(currentTime-lastUpdate)/tickTime));
-        lastUpdate = when;
+        acc.set(force.scaleNC((float)1/mass));
+        vel.add(acc.scaleNC((float)1/tickTime));
+        pos.add(vel.scaleNC((float)1/tickTime));
+        //vel.add(acc.scaleNC((float)(currentTime-lastUpdate)/tickTime));
+        //pos.add(vel.scaleNC((float)(currentTime-lastUpdate)/tickTime));
+        //lastUpdate = when;
     }
 
     public Vector2D getPos() {
@@ -57,4 +61,9 @@ public class Physics {
     public void setMass(float mass) {
         this.mass = mass;
     }
+
+    /*public Line2D getColLine(long tickTime){
+        Vector2D temp = pos.addNC(vel.scaleNC(1/tickTime));
+        return new Line2D.Float(pos.getX(),pos.getY(),temp.getX(),temp.getY());
+    }*/
 }

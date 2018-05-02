@@ -9,34 +9,39 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class Simulator implements ActionListener{
     private ArrayList<Particle> pList;
     private long tickTime;
-    private boolean quickSim;
+    //private boolean quickSim;
     private Timer timer;
-    private Time time;
+    //private Time time;
+    private int speed;
+    private int cycle;
 
     public Simulator(long tT){
         pList = new ArrayList<Particle>();
         tickTime = tT;
-        quickSim = false;
+        //quickSim = false;
         timer = new Timer(1,this);
-        time = new Time();
+        //time = new Time();
+        speed = 4;
+        cycle = 1;
     }
     private void addP(Particle p){
         pList.add(p);
     }
     public void addP(Vector2D p, Vector2D v, float m, int r, Particle.Type t){
-        pList.add(new Particle(p,v,m,r,t,time.time()));
+        pList.add(new Particle(p,v,m,r,t));
     }
     public void proc(){
         for(Particle p : pList){ //count forces --TODO--
-            p.setForce(new Vector2D(0.3F,-0.1F));
+            p.setForce(new Vector2D(3,-7));
         }
         for(Particle p : pList){
-            p.proc(time.time(), tickTime);
+            p.proc(tickTime);
         }
         //Check if particle is out of canvas
         //Check collisions
@@ -48,16 +53,30 @@ public class Simulator implements ActionListener{
         }
         return sList;
     }
+    /*public ArrayList<Line2D> getLines(){
+        ArrayList<Line2D> lList = new ArrayList<Line2D>();
+        for(Particle p : pList){
+            lList.add(p.getColLine(tickTime));
+        }
+        return lList;
+    }*/
     public void startSimulation(){
         timer.start();
-        time.unpause();
+        //time.unpause();
     }
     public void pauseSimulation(){
         timer.stop();
-        time.pause();
+        //time.pause();
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        proc();
+        if(cycle >= speed){
+            proc();
+            cycle = 1;
+        }
+        else{
+            cycle++;
+        }
     }
+    public void setSpeed(int a){speed = a;}
 }
