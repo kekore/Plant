@@ -7,15 +7,15 @@ import java.awt.geom.Ellipse2D;
 
 public class Circle {
     private Ellipse2D.Float circle;
-    private int r;
+    private int d;
     private Color color;
     Circle(Vector2D p, int a, Color c){
-        r=a;
-        circle = new Ellipse2D.Float(p.getX(),p.getY(),r,r);
+        d=a;
+        circle = new Ellipse2D.Float(p.getX()-d/2,p.getY()-d/2,d,d);
         color = c;
     }
     protected void setPos(Vector2D p){
-        circle = new Ellipse2D.Float(p.getX(),p.getY(),r,r);
+        circle = new Ellipse2D.Float(p.getX()-d/2,p.getY()-d/2,d,d);
     }
     public Color getColor(){
         return color;

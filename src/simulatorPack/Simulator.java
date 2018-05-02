@@ -2,13 +2,11 @@ package simulatorPack;
 
 import environment.Circle;
 import environment.Particle;
-import physicsPack.Time;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -53,13 +51,13 @@ public class Simulator implements ActionListener{
         }
         return sList;
     }
-    /*public ArrayList<Line2D> getLines(){
+    public ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
         for(Particle p : pList){
             lList.add(p.getColLine(tickTime));
         }
         return lList;
-    }*/
+    }
     public void startSimulation(){
         timer.start();
         //time.unpause();

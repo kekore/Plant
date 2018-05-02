@@ -20,10 +20,10 @@ public class Vector2D {
         y += v.y;
         return this;
     }
-    /*protected Vector2D addNC(Vector2D v){
+    protected Vector2D addNC(Vector2D v){
         Vector2D temp = new Vector2D(x,y);
         return temp.add(v);
-    }*/
+    }
     protected Vector2D set(Vector2D v)
     {
         x = v.x;

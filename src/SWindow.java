@@ -4,19 +4,12 @@ import physicsPack.Vector2D;
 import simulatorPack.Simulator;
 
 import javax.swing.*;
-import javax.swing.event.MouseInputListener;
-import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Random;
-
-import static java.lang.Math.random;
 
 public class SWindow extends JFrame implements ActionListener{
 
@@ -72,15 +65,15 @@ class SimPanel extends JPanel implements ActionListener{
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
         ArrayList<Circle> sList = simulator.getShapes();
-        //ArrayList<Line2D> lList = simulator.getLines();
+        ArrayList<Line2D> lList = simulator.getLines();
         for(Circle s : sList){
             g2d.setColor(s.getColor());
             g2d.draw(s.getEllipse());
         }
-        /*for(Line2D l : lList){
+        for(Line2D l : lList){
             g2d.setColor(Color.RED);
             g2d.draw(l);
-        }*/
+        }
     }
 
     @Override

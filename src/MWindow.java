@@ -1,8 +1,6 @@
 import javax.swing.*;
-import javax.tools.Tool;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Rectangle2D;
 
 public class MWindow extends JFrame{
 

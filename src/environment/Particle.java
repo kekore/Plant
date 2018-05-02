@@ -2,7 +2,6 @@ package environment;
 import physicsPack.*;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 public class Particle {
@@ -46,7 +45,7 @@ public class Particle {
     public Circle getShape(){
         return shape;
     }
-    /*public Line2D getColLine(long tickTime){
+    public Line2D getColLine(long tickTime){
         return physics.getColLine(tickTime);
-    }*/
+    }
 }

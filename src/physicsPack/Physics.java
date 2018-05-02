@@ -62,8 +62,8 @@ public class Physics {
         this.mass = mass;
     }
 
-    /*public Line2D getColLine(long tickTime){
-        Vector2D temp = pos.addNC(vel.scaleNC(1/tickTime));
+    public Line2D getColLine(long tickTime){
+        Vector2D temp = pos.addNC(vel.scaleNC((float)1/tickTime));
         return new Line2D.Float(pos.getX(),pos.getY(),temp.getX(),temp.getY());
-    }*/
+    }
 }
