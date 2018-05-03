@@ -1,4 +1,4 @@
-package environment;
+package environmentPack;
 
 import physicsPack.Vector2D;
 

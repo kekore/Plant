@@ -7,9 +7,9 @@ public class Vector2D {
         x = 0;
         y = 0;
     }
-    public Vector2D(float a, float b){
-        x = a;
-        y = b;
+    public Vector2D(float x, float y){
+        this.x = x;
+        this.y = y;
     }
     public double length(){
         return Math.sqrt(x*x+y*y);

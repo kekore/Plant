@@ -1,11 +1,11 @@
-package environment;
+package environmentPack;
 import physicsPack.*;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Particle {
-    private Physics physics;
+    protected Physics physics;
     //private Color color;
     private Circle shape;
 
@@ -14,8 +14,8 @@ public class Particle {
     }
     private Type type;
 
-    public Particle(Vector2D p, Vector2D v, float m, int r, Type t){
-        physics = new Physics(p,v,m);
+    public Particle(Vector2D p, Vector2D v, Vector2D f, float m, int r, Type t){
+        physics = new Physics(p,v,f,m);
         type = t;
         switch (type){
             case OXYGEN: {

@@ -10,11 +10,11 @@ public class Physics {
     private float mass;
     //private long lastUpdate;
 
-    public Physics(Vector2D p, Vector2D v, float m){
+    public Physics(Vector2D p, Vector2D v, Vector2D f, float m){
         pos = p;
         vel = v;
         acc = new Vector2D();
-        force = new Vector2D();
+        force = f;
         mass = m;
         //lastUpdate = when;
     }
@@ -63,7 +63,10 @@ public class Physics {
     }
 
     public Line2D getColLine(long tickTime){
-        Vector2D temp = pos.addNC(vel.scaleNC((float)1/tickTime));
-        return new Line2D.Float(pos.getX(),pos.getY(),temp.getX(),temp.getY());
+        Vector2D predictedA = force.scaleNC((float)1/mass);
+        Vector2D predictedV = vel.addNC(predictedA.scaleNC((float)1/tickTime));
+        Vector2D predictedP = pos.addNC(predictedV.scaleNC((float)1/tickTime));
+        //Vector2D tempP = pos.addNC(vel.scaleNC((float)1/tickTime));
+        return new Line2D.Float(pos.getX(),pos.getY(),predictedP.getX(),predictedP.getY());
     }
 }

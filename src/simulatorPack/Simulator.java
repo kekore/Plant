@@ -1,7 +1,8 @@
 package simulatorPack;
 
-import environment.Circle;
-import environment.Particle;
+import environmentPack.Circle;
+import environmentPack.Environment;
+import environmentPack.Particle;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
@@ -11,52 +12,43 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class Simulator implements ActionListener{
-    private ArrayList<Particle> pList;
+    //private ArrayList<Particle> pList;
+    private Environment environment;
     private long tickTime;
     //private boolean quickSim;
     private Timer timer;
     //private Time time;
+    private long time;
     private int speed;
     private int cycle;
 
-    public Simulator(long tT){
-        pList = new ArrayList<Particle>();
+    public Simulator(long tT, Environment e){
+        //pList = new ArrayList<Particle>();
+        if(e != null) environment = e;
+        else environment = new Environment();
         tickTime = tT;
         //quickSim = false;
         timer = new Timer(1,this);
         //time = new Time();
         speed = 4;
         cycle = 1;
+        time = 0;
     }
     private void addP(Particle p){
-        pList.add(p);
+        environment.addParticle(p);
     }
-    public void addP(Vector2D p, Vector2D v, float m, int r, Particle.Type t){
-        pList.add(new Particle(p,v,m,r,t));
+    public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
+        addP(new Particle(p,v,f,m,r,t));
     }
     public void proc(){
-        for(Particle p : pList){ //count forces --TODO--
-            p.setForce(new Vector2D(3,-7));
-        }
-        for(Particle p : pList){
-            p.proc(tickTime);
-        }
-        //Check if particle is out of canvas
-        //Check collisions
+        environment.proc(tickTime);
+        time++;
     }
     public ArrayList<Circle> getShapes(){
-        ArrayList<Circle> sList = new ArrayList<Circle>();
-        for(Particle p : pList){
-            sList.add(p.getShape());
-        }
-        return sList;
+        return environment.getShapes();
     }
     public ArrayList<Line2D> getLines(){
-        ArrayList<Line2D> lList = new ArrayList<Line2D>();
-        for(Particle p : pList){
-            lList.add(p.getColLine(tickTime));
-        }
-        return lList;
+        return environment.getLines(tickTime);
     }
     public void startSimulation(){
         timer.start();
@@ -77,4 +69,5 @@ public class Simulator implements ActionListener{
         }
     }
     public void setSpeed(int a){speed = a;}
+    public Long getTime(){return time;}
 }
