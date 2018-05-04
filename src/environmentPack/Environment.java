@@ -7,6 +7,11 @@ import java.util.ArrayList;
 
 public class Environment {
     private ArrayList<Particle> pList;
+    private ArrayList<Factory> fList;
+    private Tree tree;
+    private Sun sun;
+    private Rain rain;
+    private Wind wind;
 
     public Environment(){
         pList = new ArrayList<Particle>();
@@ -47,8 +52,13 @@ public class Environment {
         }
         return lList;
     }
-    /* public void reset(){
+
+    public void insertTree(Tree tree){
+        reset();
+        this.tree = tree;
+    }
+
+    public void reset(){
 
      }
-     */
 }

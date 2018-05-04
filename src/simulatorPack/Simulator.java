@@ -3,6 +3,7 @@ package simulatorPack;
 import environmentPack.Circle;
 import environmentPack.Environment;
 import environmentPack.Particle;
+import geneticAlgPack.GeneticAlg;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 public class Simulator implements ActionListener{
     //private ArrayList<Particle> pList;
+    private GeneticAlg geneticAlg;
     private Environment environment;
     private long tickTime;
     //private boolean quickSim;

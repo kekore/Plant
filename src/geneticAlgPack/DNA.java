@@ -6,7 +6,7 @@ public class DNA {
     int[] gene;
     Random generator;
 
-    DNA(){
+    public DNA(){
         generator = new Random();
         gene = new int[20];
         for(int g : gene){
