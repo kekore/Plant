@@ -8,7 +8,7 @@ public class MWindow extends JFrame{
 
     public MWindow(SWindow s, EWindow e){
         super("Menu");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //do zmiany
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //do zmiany... albo nie?
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,300);
         setLocation(screenSize.width/4-300,screenSize.height/4-150);
@@ -17,7 +17,7 @@ public class MWindow extends JFrame{
 
         simWindow = s;
         envWindow = e;
-        JPanel bP = new ButtonPanel(simWindow, envWindow);
+        JPanel bP = new MButtonPanel(simWindow, envWindow);
         add(bP);
 
         setResizable(false);
@@ -25,7 +25,7 @@ public class MWindow extends JFrame{
     }
 }
 
-class ButtonPanel extends JPanel{
+class MButtonPanel extends JPanel{
     private JButton s;
     private JButton w;
     private JButton t;
@@ -33,9 +33,9 @@ class ButtonPanel extends JPanel{
     private JButton h;
     private JButton envEditBut;
 
-    public ButtonPanel(SWindow simW, EWindow envW){
-        Dimension d = new Dimension(100,100);
-        setPreferredSize(d);
+    protected MButtonPanel(SWindow simW, EWindow envW){
+        //Dimension d = new Dimension(100,100); //niepotrzebne raczej
+        //setPreferredSize(d);
         s = new JButton("Symulacja");
         w = new JButton("Dodaj");
         t = new JButton("2x");

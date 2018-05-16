@@ -15,6 +15,8 @@ public class EWindow extends JFrame implements ActionListener {
         setLocation(screenSize.width/32,screenSize.height/2);
 
         overviewWindow = o;
+        JPanel bP = new EButtonPanel(overviewWindow);
+        add(bP);
 
         setResizable(false);
     }
@@ -32,5 +34,17 @@ public class EWindow extends JFrame implements ActionListener {
             }
         }
     }
+}
 
+class EButtonPanel extends JPanel{
+    private JButton addFactoryBut;
+
+    protected EButtonPanel(OWindow ovrW){
+        addFactoryBut = new JButton("Dodaj fabrykę");
+
+        addFactoryBut.addActionListener((ActionListener)ovrW);
+
+        setLayout(new GridLayout(2, 2, 20, 20));
+        add(addFactoryBut);
+    }
 }

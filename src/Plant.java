@@ -6,7 +6,7 @@ import java.awt.EventQueue;
 
 public class Plant {
     public static void main(String[] args) {
-        SimRunnable simR = new SimRunnable();
+        SimRunnable simR = new SimRunnable(); //TODO ogarnac invokeLater
         OvrRunnable ovrR = new OvrRunnable();
         EventQueue.invokeLater(ovrR);
         //while(!ovrR.isRan());
