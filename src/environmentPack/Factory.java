@@ -14,13 +14,13 @@ public class Factory {
     private Vector2D spawnPoint;
     private Vector2D startV;
 
-    Factory(Vector2D spawnPoint, Vector2D startVelocity){
+    public Factory(Vector2D spawnPoint, Vector2D startVelocity){
         this.spawnPoint = new Vector2D(spawnPoint);
         startV = new Vector2D(startVelocity);
         color = Color.BLACK;
-        chimney = new Rectangle2D.Float(20, 6, spawnPoint.getX()-3, spawnPoint.getY());
-        building = new Rectangle2D.Float(30, 14, spawnPoint.getX()-11, spawnPoint.getY()+20);
-        window = new Rectangle2D.Float(10, 10, spawnPoint.getX()-8, spawnPoint.getY()+23);
+        chimney = new Rectangle2D.Float(spawnPoint.getX()+3, spawnPoint.getY(), 6, 20);
+        building = new Rectangle2D.Float(spawnPoint.getX()-11, spawnPoint.getY()+20, 30, 16);
+        window = new Rectangle2D.Float(spawnPoint.getX()-8, spawnPoint.getY()+23, 10, 10);
     }
 
     protected ArrayList<Rectangle2D> getRects(){

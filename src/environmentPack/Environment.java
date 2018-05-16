@@ -35,6 +35,10 @@ public class Environment {
         pList.add(p);
     }
 
+    public void addFactory(Factory f){
+        fList.add(f);
+    }
+
     public void proc(long tickTime){
         //grow tree
         //move sun

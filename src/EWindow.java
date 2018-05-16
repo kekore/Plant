@@ -42,7 +42,7 @@ class EButtonPanel extends JPanel{
     protected EButtonPanel(OWindow ovrW){
         addFactoryBut = new JButton("Dodaj fabrykę");
 
-        addFactoryBut.addActionListener((ActionListener)ovrW);
+        addFactoryBut.addActionListener((ActionListener)ovrW.getPanel());
 
         setLayout(new GridLayout(2, 2, 20, 20));
         add(addFactoryBut);
