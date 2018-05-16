@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Environment {
-    //private int width;
+    //private int width; //TODO mozliwosc roznych wielkosci
     //private int height;
     private ArrayList<Particle> pList;
     private ArrayList<Factory> fList;
