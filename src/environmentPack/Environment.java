@@ -2,12 +2,14 @@ package environmentPack;
 
 import physicsPack.Vector2D;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Environment {
-    private int width;
-    private int height;
+    //private int width;
+    //private int height;
     private ArrayList<Particle> pList;
     private ArrayList<Factory> fList;
     private Tree tree;
@@ -15,12 +17,19 @@ public class Environment {
     private Rain rain;
     private Wind wind;
 
-    public Environment(int canvasWidth, int canvasHeight){
+    public Environment(){
+        //width = canvasWidth;
+        //height = canvasHeight;
+        pList = new ArrayList<Particle>();
+        fList = new ArrayList<Factory>();
+    }
+
+    /*public Environment(int canvasWidth, int canvasHeight){
         width = canvasWidth;
         height = canvasHeight;
         pList = new ArrayList<Particle>();
         fList = new ArrayList<Factory>();
-    }
+    }*/
 
     public void addParticle(Particle p){
         pList.add(p);
@@ -56,6 +65,14 @@ public class Environment {
             lList.add(p.physics.getColLine(tickTime));
         }
         return lList;
+    }
+
+    public ArrayList<Rectangle2D> getRects(){
+        ArrayList<Rectangle2D> rList = new ArrayList<Rectangle2D>();
+        for(Factory f : fList){
+            rList.addAll(f.getRects());
+        }
+        return rList;
     }
 
     public void insertTree(Tree tree){

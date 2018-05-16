@@ -23,7 +23,7 @@ public class Factory {
         window = new Rectangle2D.Float(10, 10, spawnPoint.getX()-8, spawnPoint.getY()+23);
     }
 
-    public ArrayList<Rectangle2D> getRects(){
+    protected ArrayList<Rectangle2D> getRects(){
         ArrayList<Rectangle2D> rects = new ArrayList<Rectangle2D>();
         rects.add(building);
         rects.add(chimney);

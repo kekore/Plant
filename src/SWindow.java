@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,7 +55,7 @@ class SimPanel extends JPanel implements ActionListener{
     Random generator;
     private JTextField timeText;
     private JTextField fpsText;
-    private long secondStart;
+    private long secStart;
     private int frames;
 
     SimPanel(){
@@ -77,7 +78,7 @@ class SimPanel extends JPanel implements ActionListener{
         add(fpsText);
 
         frames = 0;
-        secondStart = System.currentTimeMillis();
+        secStart = System.currentTimeMillis();
     }
 
     @Override
@@ -86,6 +87,7 @@ class SimPanel extends JPanel implements ActionListener{
         Graphics2D g2d = (Graphics2D)g;
         ArrayList<Circle> cList = simulator.getShapes();
         ArrayList<Line2D> lList = simulator.getLines();
+        ArrayList<Rectangle2D> rList = simulator.getRects();
         for(Circle c : cList){
             g2d.setColor(c.getColor());
             g2d.draw(c.getEllipse());
@@ -94,19 +96,23 @@ class SimPanel extends JPanel implements ActionListener{
             g2d.setColor(Color.RED);
             g2d.draw(l);
         }
+        for(Rectangle2D r : rList){
+            g2d.setColor(Color.BLACK);
+            g2d.draw(r);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
             repaint();
-            if(System.currentTimeMillis()-secondStart < 1000){
+            if(System.currentTimeMillis()-secStart < 1000){
                 frames++;
             }
             else{
                 fpsText.setText("FPS: " + new Integer(frames).toString());
                 frames = 0;
-                secondStart = System.currentTimeMillis();
+                secStart = System.currentTimeMillis();
             }
             timeText.setText("Time: " + simulator.getTime().toString());
         } else if (((JButton) e.getSource()).getText() == "Dodaj") {

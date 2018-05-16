@@ -7,9 +7,11 @@ import geneticAlgPack.GeneticAlg;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Simulator implements ActionListener{
@@ -51,6 +53,9 @@ public class Simulator implements ActionListener{
     }
     public ArrayList<Line2D> getLines(){
         return environment.getLines(tickTime);
+    }
+    public ArrayList<Rectangle2D> getRects(){
+        return environment.getRects();
     }
     public void startSimulation(){
         timer.start();
