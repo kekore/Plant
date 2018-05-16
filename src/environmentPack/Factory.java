@@ -18,7 +18,7 @@ public class Factory {
         this.spawnPoint = new Vector2D(spawnPoint);
         startV = new Vector2D(startVelocity);
         color = Color.BLACK;
-        chimney = new Rectangle2D.Float(spawnPoint.getX()+3, spawnPoint.getY(), 6, 20);
+        chimney = new Rectangle2D.Float(spawnPoint.getX()+3, spawnPoint.getY(), 6, 20); //TODO poprawic to
         building = new Rectangle2D.Float(spawnPoint.getX()-11, spawnPoint.getY()+20, 30, 16);
         window = new Rectangle2D.Float(spawnPoint.getX()-8, spawnPoint.getY()+23, 10, 10);
     }
