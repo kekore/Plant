@@ -47,7 +47,7 @@ public class Simulator implements ActionListener{
         time++;
     }
     public ArrayList<Circle> getShapes(){
-        return environment.getShapes();
+        return environment.getCircles();
     }
     public ArrayList<Line2D> getLines(){
         return environment.getLines(tickTime);

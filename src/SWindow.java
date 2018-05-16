@@ -84,11 +84,11 @@ class SimPanel extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        ArrayList<Circle> sList = simulator.getShapes();
+        ArrayList<Circle> cList = simulator.getShapes();
         ArrayList<Line2D> lList = simulator.getLines();
-        for(Circle s : sList){
-            g2d.setColor(s.getColor());
-            g2d.draw(s.getEllipse());
+        for(Circle c : cList){
+            g2d.setColor(c.getColor());
+            g2d.draw(c.getEllipse());
         }
         for(Line2D l : lList){
             g2d.setColor(Color.RED);

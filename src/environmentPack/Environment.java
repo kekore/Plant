@@ -6,6 +6,8 @@ import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public class Environment {
+    private int width;
+    private int height;
     private ArrayList<Particle> pList;
     private ArrayList<Factory> fList;
     private Tree tree;
@@ -13,8 +15,11 @@ public class Environment {
     private Rain rain;
     private Wind wind;
 
-    public Environment(){
+    public Environment(int canvasWidth, int canvasHeight){
+        width = canvasWidth;
+        height = canvasHeight;
         pList = new ArrayList<Particle>();
+        fList = new ArrayList<Factory>();
     }
 
     public void addParticle(Particle p){
@@ -36,10 +41,10 @@ public class Environment {
         //Check collisions
     }
 
-    public ArrayList<Circle> getShapes(){
+    public ArrayList<Circle> getCircles(){
         ArrayList<Circle> sList = new ArrayList<Circle>();
         for(Particle p : pList){
-            sList.add(p.getShape());
+            sList.add(p.getCircle());
         }
         return sList;
     }

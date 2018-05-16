@@ -11,26 +11,30 @@ public class Vector2D {
         this.x = x;
         this.y = y;
     }
+    public Vector2D(Vector2D v){
+        this.x = v.getX();
+        this.y = v.getY();
+    }
     public double length(){
         return Math.sqrt(x*x+y*y);
     }
-    protected Vector2D add(Vector2D v)
+    public Vector2D add(Vector2D v)
     {
         x += v.x;
         y += v.y;
         return this;
     }
-    protected Vector2D addNC(Vector2D v){
+    public Vector2D addNC(Vector2D v){
         Vector2D temp = new Vector2D(x,y);
         return temp.add(v);
     }
-    protected Vector2D set(Vector2D v)
+    public Vector2D set(Vector2D v)
     {
         x = v.x;
         y = v.y;
         return this;
     }
-    protected Vector2D scale(float a)
+    public Vector2D scale(float a)
     {
         x *= a;
         y *= a;

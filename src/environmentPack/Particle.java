@@ -50,10 +50,10 @@ public class Particle {
         physics.proc(tickTime);
         shape.setPos(physics.getPos());
     }
-    public Circle getShape(){
+    public Circle getCircle(){
         return shape;
     }
-    public Line2D getColLine(long tickTime){
+    /*public Line2D getColLine(long tickTime){
         return physics.getColLine(tickTime);
-    }
+    }*/
 }
