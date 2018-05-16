@@ -6,12 +6,14 @@ import java.awt.EventQueue;
 
 public class Plant {
     public static void main(String[] args) {
-        SimRunnable SimR = new SimRunnable();
-        EventQueue.invokeLater(SimR);
+        SimRunnable simR = new SimRunnable();
+        EnvRunnable envR = new EnvRunnable();
+        EventQueue.invokeLater(simR);
+        EventQueue.invokeLater(envR);
         EventQueue.invokeLater(new Runnable(){
             @Override
             public void run(){
-                new MWindow(SimR.getRef());
+                new MWindow(simR.getRef(),envR.getRef());
             }
         });
     }
@@ -26,4 +28,11 @@ class SimRunnable implements Runnable{
         return s;
     }
     private SWindow s;
+}
+
+class EnvRunnable implements Runnable{
+    @Override
+    public void run() { e = new EWindow(); }
+    protected EWindow getRef() { return e; }
+    private EWindow e;
 }

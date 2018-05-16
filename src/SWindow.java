@@ -11,11 +11,11 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
-
+// (S)imulation window
 public class SWindow extends JFrame implements ActionListener{
 
     public SWindow(){
-        super("Simulation");
+        super("Podgląd symulacji");
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //do zmiany
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,700);
