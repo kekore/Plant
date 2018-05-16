@@ -26,7 +26,7 @@ public class Environment {
         //move sun
         //spawn rain?
         //spawn toxic from factories
-        for(Particle p : pList){ //count forces (wind)
+        for(Particle p : pList){ //TODO count forces (wind)
             p.setForce(new Vector2D(0,-50));
         }
         for(Particle p : pList){
