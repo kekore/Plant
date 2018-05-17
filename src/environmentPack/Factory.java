@@ -4,9 +4,10 @@ import physicsPack.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Factory {
+public class Factory implements Serializable{
     private Rectangle2D.Float building;
     private Rectangle2D.Float chimney;
     private Rectangle2D.Float window;
@@ -18,9 +19,9 @@ public class Factory {
         this.spawnPoint = new Vector2D(spawnPoint);
         startV = new Vector2D(startVelocity);
         color = Color.BLACK;
-        chimney = new Rectangle2D.Float(spawnPoint.getX()+3, spawnPoint.getY(), 6, 20); //TODO poprawic to
-        building = new Rectangle2D.Float(spawnPoint.getX()-11, spawnPoint.getY()+20, 30, 16);
-        window = new Rectangle2D.Float(spawnPoint.getX()-8, spawnPoint.getY()+23, 10, 10);
+        chimney = new Rectangle2D.Float(spawnPoint.getX()-3, spawnPoint.getY(), 6, 20); //TODO poprawic to
+        building = new Rectangle2D.Float(spawnPoint.getX()-20, spawnPoint.getY()+20, 30, 16);
+        window = new Rectangle2D.Float(spawnPoint.getX()-17, spawnPoint.getY()+23, 10, 10);
     }
 
     protected ArrayList<Rectangle2D> getRects(){

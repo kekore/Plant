@@ -38,13 +38,21 @@ public class EWindow extends JFrame implements ActionListener {
 
 class EButtonPanel extends JPanel{
     private JButton addFactoryBut;
+    private JButton saveFileBut;
+    private JButton loadFileBut;
 
     protected EButtonPanel(OWindow ovrW){
         addFactoryBut = new JButton("Dodaj fabrykę");
+        saveFileBut = new JButton("Zapisz do pliku");
+        loadFileBut = new JButton("Wczytaj z pliku");
 
         addFactoryBut.addActionListener((ActionListener)ovrW.getPanel());
+        saveFileBut.addActionListener((ActionListener)ovrW.getPanel());
+        loadFileBut.addActionListener((ActionListener)ovrW.getPanel());
 
         setLayout(new GridLayout(2, 2, 20, 20));
         add(addFactoryBut);
+        add(saveFileBut);
+        add(loadFileBut);
     }
 }

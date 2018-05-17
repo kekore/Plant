@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
+import java.io.*;
 import java.util.ArrayList;
 
 // (O)verview window
@@ -53,6 +54,55 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
         addMouseListener(this);
     }
 
+    private int saveFile(){
+        int ret = 0;
+        try {
+            FileOutputStream fos = new FileOutputStream(new File("C:\\Users\\Eryk\\Desktop\\p\\environment.env"));
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            System.out.println("oos:");
+            oos.writeObject(environment);
+            oos.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            ret = 1;
+        } catch (IOException e) {
+            System.out.println("Error initializing stream!");
+            ret = 2;
+        } catch (Exception e) {
+            System.out.println("Unexpected exception!");
+            ret = 3;
+        }
+        return ret;
+    }
+
+    private int loadFile(){
+        int ret = 0;
+        try {
+            FileInputStream fis = new FileInputStream(new File("C:\\Users\\Eryk\\Desktop\\p\\environment.env"));
+            System.out.println("fis");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            System.out.println("ois");
+            environment = (Environment) ois.readObject();
+            //environment = read;
+            ois.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            ret = 1;
+        } catch (IOException e) {
+            System.out.println("Error initializing stream!");
+            ret = 2;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class not found exception!");
+            ret = 3;
+        } catch (Exception e) {
+            System.out.println("Unexpected exception!");
+            ret = 4;
+        }
+        return ret;
+    }
+
     @Override
     protected void paintComponent(Graphics g){ //TODO show vectors
         super.paintComponent(g);
@@ -68,10 +118,15 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
             repaint();
-        }
-        else if(((JButton)e.getSource()).getText() == "Dodaj fabrykę"){
-            System.out.println("fabryka");
+        } else if(((JButton)e.getSource()).getText() == "Dodaj fabrykę"){
+            System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
+        } else if(((JButton)e.getSource()).getText() == "Zapisz do pliku"){
+            System.out.println("Save file returned: " + saveFile()); //TODO change this
+        } else if (((JButton)e.getSource()).getText() == "Wczytaj z pliku"){
+            System.out.println(environment);
+            System.out.println("Load file returned: " + loadFile()); //TODO change this
+            System.out.println(environment);
         }
     }
 

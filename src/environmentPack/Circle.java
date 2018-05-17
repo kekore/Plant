@@ -4,8 +4,9 @@ import physicsPack.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.io.Serializable;
 
-public class Circle {
+public class Circle implements Serializable{
     private Ellipse2D.Float ellipse;
     private int d;
     private Color color;

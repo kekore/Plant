@@ -1,4 +1,6 @@
 package environmentPack;
 
-public class Rain {
+import java.io.Serializable;
+
+public class Rain implements Serializable{
 }

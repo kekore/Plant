@@ -1,6 +1,8 @@
 package physicsPack;
 
-public class Vector2D {
+import java.io.Serializable;
+
+public class Vector2D implements Serializable{
     private float x,y;
 
     public Vector2D(){

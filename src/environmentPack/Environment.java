@@ -5,9 +5,10 @@ import physicsPack.Vector2D;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Environment {
+public class Environment implements Serializable {
     //private int width; //TODO mozliwosc roznych wielkosci
     //private int height;
     private ArrayList<Particle> pList;

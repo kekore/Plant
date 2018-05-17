@@ -3,8 +3,9 @@ import physicsPack.*;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
+import java.io.Serializable;
 
-public class Particle {
+public class Particle implements Serializable{
     protected Physics physics;
     //private Color color;
     private Circle shape;

@@ -1,4 +1,6 @@
 package environmentPack;
 
-public class Sun {
+import java.io.Serializable;
+
+public class Sun implements Serializable{
 }
