@@ -1,8 +1,9 @@
 package geneticAlgPack;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class DNA {
+public class DNA implements Serializable{
     int[] gene;
     Random generator;
 

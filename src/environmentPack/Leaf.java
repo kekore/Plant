@@ -1,4 +1,6 @@
 package environmentPack;
 
-public class Leaf {
+import java.io.Serializable;
+
+public class Leaf implements Serializable{
 }

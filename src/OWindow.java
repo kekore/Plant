@@ -57,7 +57,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     private int saveFile(){
         int ret = 0;
         try {
-            FileOutputStream fos = new FileOutputStream(new File("C:\\Users\\Eryk\\Desktop\\p\\environment.env"));
+            FileOutputStream fos = new FileOutputStream(new File("environment.env"));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             System.out.println("oos:");
             oos.writeObject(environment);
@@ -79,7 +79,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     private int loadFile(){
         int ret = 0;
         try {
-            FileInputStream fis = new FileInputStream(new File("C:\\Users\\Eryk\\Desktop\\p\\environment.env"));
+            FileInputStream fis = new FileInputStream(new File("environment.env"));
             System.out.println("fis");
             ObjectInputStream ois = new ObjectInputStream(fis);
             System.out.println("ois");
