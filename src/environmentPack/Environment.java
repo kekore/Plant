@@ -8,20 +8,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Environment implements Serializable {
-    //private int width; //TODO mozliwosc roznych wielkosci
-    //private int height;
+    private final int width; //TODO mozliwosc roznych wielkosci
+    private final int height;
     private ArrayList<Particle> particleList;
     private ArrayList<Factory> factoryList;
     private ArrayList<ParticleSpawner> spawnerList;
+    private Ground ground;
     private Tree tree;
     private Sun sun;
     private Rain rain;
     private Wind wind;
     private long time;
 
-    public Environment(){
-        //width = canvasWidth;
-        //height = canvasHeight;
+    public Environment(int canvasWidth, int canvasHeight){
+        width = canvasWidth;
+        height = canvasHeight;
         particleList = new ArrayList<Particle>();
         factoryList = new ArrayList<Factory>();
         spawnerList = new ArrayList<ParticleSpawner>();

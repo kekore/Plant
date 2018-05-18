@@ -66,17 +66,20 @@ class SimPanel extends JPanel implements ActionListener{
         showInvis = false;
         timer.start();
         setLayout(null);
+        setBackground(Color.WHITE);
 
         timeText = new JTextField();
         timeText.setBounds(1,0,100,20);
         timeText.setEditable(false);
         timeText.setBorder(null);
+        timeText.setBackground(Color.WHITE);
         add(timeText);
 
         fpsText = new JTextField();
         fpsText.setBounds(1, 18, 60, 20);
         fpsText.setEditable(false);
         fpsText.setBorder(null);
+        fpsText.setBackground(Color.WHITE);
         add(fpsText);
 
         frames = 0;

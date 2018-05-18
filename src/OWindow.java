@@ -2,6 +2,8 @@ import environmentPack.*;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +14,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 // (O)verview window
-public class OWindow extends JFrame{
+public class OWindow extends JFrame implements ChangeListener, ActionListener{
     protected OvrPanel ovrPanel;
+    private int width;
+    private int height;
+    private boolean isApplied;
 
     public OWindow(){
         super("Podgląd środowiska");
@@ -21,16 +26,42 @@ public class OWindow extends JFrame{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,700);
         setLocation(screenSize.width/2,screenSize.height/2-350);
+        width = 600;
+        height = 700;
+        isApplied = false;
 
         ovrPanel = new OvrPanel();
         add(ovrPanel);
 
         setResizable(false);
     }
+
+    @Override
+    public void stateChanged (ChangeEvent e){
+        //System.out.println(((JSlider)e.getSource()).getName());
+        if(!isApplied) {
+            if (((JSlider) e.getSource()).getName() == "widthSlider") {
+                width = ((JSlider) e.getSource()).getValue();
+                setSize(width, height);
+            } else if (((JSlider) e.getSource()).getName() == "heightSlider") {
+                height = ((JSlider) e.getSource()).getValue();
+                setSize(width, height);
+            }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(((JButton)e.getSource()).getText() == "Zainicjuj"){
+            ovrPanel.initEnv(width,height);
+            isApplied = true;
+        }
+    }
 }
 
 class OvrPanel extends JPanel implements ActionListener, MouseListener{
     protected Environment environment;
+    private boolean isInitialized;
     private Timer timer;
     private enum Choice{
         NULL, FACTORY, SPAWNER
@@ -42,13 +73,18 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     private int y2;
 
     protected OvrPanel(){
-        environment = new Environment();
+        environment = new Environment(0,0);
         choice = Choice.NULL;
         timer = new Timer(15,this);
         timer.start();
+        setBackground(Color.WHITE);
         addMouseListener(this);
     }
-
+    protected void initEnv(int canvasWidth, int canvasHeight){
+        environment = new Environment(canvasWidth,canvasHeight);
+        isInitialized = true;
+    }
+    //TODO check if works properly - if all fields are loaded
     private int saveFile(){
         int ret = 0;
         try {
@@ -137,19 +173,21 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e){
-        x2 = e.getX();
-        y2 = e.getY();
-        System.out.println(x2 + " " + y2);
-        switch (choice){
-            case FACTORY: {
-                environment.addFactory(new Factory(new Vector2D(x1,y1), new Vector2D(x2-x1,y2-y1)));
-                System.out.println("Added factory");
-                break;
-            }
-            case SPAWNER: {
-                Particle p = new Particle(new Vector2D(x1,y1), new Vector2D(x2-x1,y2-y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
-                environment.addSpawner(new ParticleSpawner(p, 20));
-                break;
+        if(isInitialized) {
+            x2 = e.getX();
+            y2 = e.getY();
+            System.out.println(x2 + " " + y2);
+            switch (choice) {
+                case FACTORY: {
+                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1)));
+                    System.out.println("Added factory");
+                    break;
+                }
+                case SPAWNER: {
+                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
+                    environment.addSpawner(new ParticleSpawner(p, 20));
+                    break;
+                }
             }
         }
     }
