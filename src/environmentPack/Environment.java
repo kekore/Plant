@@ -2,7 +2,6 @@ package environmentPack;
 
 import physicsPack.Vector2D;
 
-import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
@@ -88,12 +87,20 @@ public class Environment implements Serializable {
         return lList;
     }
 
-    public ArrayList<Rectangle2D> getRects(){
-        ArrayList<Rectangle2D> rList = new ArrayList<Rectangle2D>();
+    public ArrayList<Rect> getRects(){
+        ArrayList<Rect> rList = new ArrayList<Rect>();
         for(Factory f : factoryList){
             rList.addAll(f.getRects());
         }
         return rList;
+    }
+
+    public ArrayList<Rect> getInvisRects(){
+        ArrayList<Rect> irList = new ArrayList<Rect>();
+        for(ParticleSpawner ps : spawnerList){
+            irList.add(ps.rectangle);
+        }
+        return irList;
     }
 
     public void insertTree(Tree tree){

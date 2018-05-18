@@ -1,7 +1,4 @@
-import environmentPack.Environment;
-import environmentPack.Factory;
-import environmentPack.Particle;
-import environmentPack.ParticleSpawner;
+import environmentPack.*;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
@@ -105,10 +102,11 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     protected void paintComponent(Graphics g){ //TODO show vectors
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        ArrayList<Rectangle2D> rList = environment.getRects();
-        for(Rectangle2D r : rList){
-            g2d.setColor(Color.BLACK);
-            g2d.draw(r);
+        ArrayList<Rect> rList = environment.getRects();
+        rList.addAll(environment.getInvisRects());
+        for(Rect r : rList){
+            g2d.setColor(r.color);
+            g2d.draw(r.rectangle);
         }
     }
 
@@ -149,7 +147,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
                 break;
             }
             case SPAWNER: {
-                Particle p = new Particle(new Vector2D(x1,y1), new Vector2D(x2-x1,y2-y1), new Vector2D(), 1, 10, Particle.Type.OXYGEN);
+                Particle p = new Particle(new Vector2D(x1,y1), new Vector2D(x2-x1,y2-y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
                 environment.addSpawner(new ParticleSpawner(p, 20));
                 break;
             }

@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Factory implements Serializable{
-    private Rectangle2D.Float building;
-    private Rectangle2D.Float chimney;
-    private Rectangle2D.Float window;
+    private Rect building;
+    private Rect chimney;
+    private Rect window;
     private Color color;
     private Vector2D spawnPoint;
     private Vector2D startV;
@@ -19,13 +19,16 @@ public class Factory implements Serializable{
         this.spawnPoint = new Vector2D(spawnPoint);
         startV = new Vector2D(startVelocity);
         color = Color.BLACK;
-        chimney = new Rectangle2D.Float(spawnPoint.getX()-3, spawnPoint.getY(), 6, 20); //TODO poprawic to
-        building = new Rectangle2D.Float(spawnPoint.getX()-20, spawnPoint.getY()+20, 30, 16);
-        window = new Rectangle2D.Float(spawnPoint.getX()-17, spawnPoint.getY()+23, 10, 10);
+        Rectangle2D.Float chimneyRect = new Rectangle2D.Float(spawnPoint.getX()-3, spawnPoint.getY(), 6, 20); //TODO poprawic to
+        Rectangle2D.Float buildingRect = new Rectangle2D.Float(spawnPoint.getX()-20, spawnPoint.getY()+20, 30, 16);
+        Rectangle2D.Float windowRect = new Rectangle2D.Float(spawnPoint.getX()-17, spawnPoint.getY()+23, 10, 10);
+        chimney = new Rect(chimneyRect, Color.BLACK);
+        building = new Rect(buildingRect, Color.BLACK);
+        window = new Rect(windowRect, Color.BLACK);
     }
 
-    protected ArrayList<Rectangle2D> getRects(){
-        ArrayList<Rectangle2D> rects = new ArrayList<Rectangle2D>();
+    protected ArrayList<Rect> getRects(){
+        ArrayList<Rect> rects = new ArrayList<Rect>();
         rects.add(building);
         rects.add(chimney);
         rects.add(window);

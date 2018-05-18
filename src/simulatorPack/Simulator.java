@@ -3,6 +3,7 @@ package simulatorPack;
 import environmentPack.Circle;
 import environmentPack.Environment;
 import environmentPack.Particle;
+import environmentPack.Rect;
 import geneticAlgPack.GeneticAlg;
 import physicsPack.Vector2D;
 
@@ -48,15 +49,16 @@ public class Simulator implements ActionListener{
         environment.proc(tickTime);
         //time++;
     }
-    public ArrayList<Circle> getShapes(){
+    public ArrayList<Circle> getCircles(){
         return environment.getCircles();
     }
     public ArrayList<Line2D> getLines(){
         return environment.getLines(tickTime);
     }
-    public ArrayList<Rectangle2D> getRects(){
+    public ArrayList<Rect> getRects(){
         return environment.getRects();
     }
+    public ArrayList<Rect> getInvisRects() { return environment.getInvisRects(); }
     public void startSimulation(){
         timer.start();
         //time.unpause();

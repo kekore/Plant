@@ -37,6 +37,7 @@ class MButtonPanel extends JPanel implements ActionListener{
     private JButton h;
     private JButton envEditBut;
     private JButton loadEnvBut;
+    private JButton showInvisBut;
 
     protected MButtonPanel(SWindow simW, EWindow envW){
         simWindow = simW;
@@ -50,6 +51,7 @@ class MButtonPanel extends JPanel implements ActionListener{
         h = new JButton("0.5x");
         envEditBut = new JButton("Edytor środowiska");
         loadEnvBut = new JButton("Załaduj środowisko z edytora");
+        showInvisBut = new JButton("Pokaż/ukryj");
 
         //s.addActionListener(this);
         s.addActionListener((ActionListener)simW);
@@ -60,6 +62,7 @@ class MButtonPanel extends JPanel implements ActionListener{
         h.addActionListener((ActionListener)simW.simPanel);
         envEditBut.addActionListener((ActionListener)envW);
         loadEnvBut.addActionListener((ActionListener)this);
+        showInvisBut.addActionListener((ActionListener)simW.simPanel);
 
 
         setLayout(new GridLayout(2, 2, 20, 20));
@@ -70,6 +73,7 @@ class MButtonPanel extends JPanel implements ActionListener{
         add(h);
         add(envEditBut);
         add(loadEnvBut);
+        add(showInvisBut);
         //simV = false;
     }
 

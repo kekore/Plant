@@ -8,9 +8,9 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 public class Circle implements Serializable{
-    private Ellipse2D.Float ellipse;
+    public Ellipse2D.Float ellipse;
     protected int d;
-    private Color color;
+    public Color color;
     Circle(Vector2D p, int a, Color c){
         d=a;
         ellipse = new Ellipse2D.Float(p.getX()-d/2,p.getY()-d/2,d,d);
@@ -18,11 +18,5 @@ public class Circle implements Serializable{
     }
     protected void setPos(Vector2D p){
         ellipse = new Ellipse2D.Float(p.getX()-d/2,p.getY()-d/2,d,d);
-    }
-    public Color getColor(){
-        return color;
-    }
-    public Ellipse2D.Float getEllipse(){
-        return ellipse;
     }
 }

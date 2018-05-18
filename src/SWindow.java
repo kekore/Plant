@@ -1,6 +1,7 @@
 import environmentPack.Circle;
 import environmentPack.Environment;
 import environmentPack.Particle;
+import environmentPack.Rect;
 import physicsPack.Vector2D;
 import simulatorPack.Simulator;
 
@@ -51,16 +52,18 @@ class SimPanel extends JPanel implements ActionListener{
 
     private Timer timer;
     private Simulator simulator;
-    Random generator;
+    //Random generator;
     private JTextField timeText;
     private JTextField fpsText;
     private long secStart;
     private int frames;
+    private boolean showInvis;
 
     protected SimPanel(){
         simulator = new Simulator(200,null);
         timer = new Timer(15,this);
-        generator = new Random();
+        //generator = new Random();
+        showInvis = false;
         timer.start();
         setLayout(null);
 
@@ -84,20 +87,21 @@ class SimPanel extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        ArrayList<Circle> cList = simulator.getShapes();
+        ArrayList<Circle> cList = simulator.getCircles();
         ArrayList<Line2D> lList = simulator.getLines();
-        ArrayList<Rectangle2D> rList = simulator.getRects();
+        ArrayList<Rect> rList = simulator.getRects();
+        if(showInvis) rList.addAll(simulator.getInvisRects());
         for(Circle c : cList){
-            g2d.setColor(c.getColor());
-            g2d.draw(c.getEllipse());
+            g2d.setColor(c.color);
+            g2d.draw(c.ellipse);
         }
         for(Line2D l : lList){
             g2d.setColor(Color.RED);
             g2d.draw(l);
         }
-        for(Rectangle2D r : rList){
-            g2d.setColor(Color.BLACK);
-            g2d.draw(r);
+        for(Rect r : rList){
+            g2d.setColor(r.color);
+            g2d.draw(r.rectangle);
         }
     }
 
@@ -129,6 +133,8 @@ class SimPanel extends JPanel implements ActionListener{
             simulator.setSpeed(1);
         } else if (((JButton) e.getSource()).getText() == "0.5x"){
             simulator.setSpeed(64);
+        } else if (((JButton) e.getSource()).getText() == "Pokaż/ukryj"){
+            showInvis = !showInvis;
         }
     }
     protected void setEnvironment(Environment environment){
