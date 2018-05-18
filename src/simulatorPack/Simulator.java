@@ -26,10 +26,10 @@ public class Simulator implements ActionListener{
     private int speed;
     private int cycle;
 
-    public Simulator(long tT, Environment e){
+    public Simulator(long tT, Environment environment){
         //pList = new ArrayList<Particle>();
-        if(e != null) environment = e;
-        else environment = new Environment();
+        if(environment != null) this.environment = environment;
+        else this.environment = new Environment();
         tickTime = tT;
         //quickSim = false;
         timer = new Timer(1,this);
@@ -44,7 +44,7 @@ public class Simulator implements ActionListener{
     public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
         addP(new Particle(p,v,f,m,r,t));
     }
-    public void proc(){
+    private void proc(){
         environment.proc(tickTime);
         //time++;
     }
@@ -76,5 +76,8 @@ public class Simulator implements ActionListener{
         }
     }
     public void setSpeed(int a){speed = a;}
+    public void setEnvironment(Environment environment){
+        this.environment = environment;
+    }
     public long getTime(){return environment.getTime();}
 }

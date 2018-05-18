@@ -44,6 +44,10 @@ public class Environment implements Serializable {
         factoryList.add(f);
     }
 
+    public void addSpawner(ParticleSpawner ps){
+        spawnerList.add(ps);
+    }
+
     public void proc(long tickTime){
         //grow tree
         //move sun
@@ -59,7 +63,7 @@ public class Environment implements Serializable {
         }
         //proceed spawners:
         for(ParticleSpawner ps : spawnerList){
-            Particle spawnerRet = ps.proc();
+            Particle spawnerRet = ps.proc(time);
             if(spawnerRet != null) particleList.add(spawnerRet);
         }
         //Check if particle is out of canvas

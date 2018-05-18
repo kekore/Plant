@@ -1,5 +1,7 @@
 import environmentPack.Environment;
 import environmentPack.Factory;
+import environmentPack.Particle;
+import environmentPack.ParticleSpawner;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 
 // (O)verview window
 public class OWindow extends JFrame{
-    private OvrPanel ovrPanel;
+    protected OvrPanel ovrPanel;
 
     public OWindow(){
         super("Podgląd środowiska");
@@ -28,17 +30,13 @@ public class OWindow extends JFrame{
 
         setResizable(false);
     }
-
-    protected OvrPanel getPanel(){
-        return ovrPanel;
-    }
 }
 
 class OvrPanel extends JPanel implements ActionListener, MouseListener{
-    private Environment environment;
+    protected Environment environment;
     private Timer timer;
     private enum Choice{
-        NULL, FACTORY
+        NULL, FACTORY, SPAWNER
     }
     private Choice choice;
     private int x1;
@@ -121,6 +119,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
         } else if(((JButton)e.getSource()).getText() == "Dodaj fabrykę"){
             System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
+        } else if(((JButton)e.getSource()).getText() == "Dodaj spawner"){
+            choice = Choice.SPAWNER;
         } else if(((JButton)e.getSource()).getText() == "Zapisz do pliku"){
             System.out.println("Save file returned: " + saveFile()); //TODO change this
         } else if (((JButton)e.getSource()).getText() == "Wczytaj z pliku"){
@@ -146,6 +146,12 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
             case FACTORY: {
                 environment.addFactory(new Factory(new Vector2D(x1,y1), new Vector2D(x2-x1,y2-y1)));
                 System.out.println("Added factory");
+                break;
+            }
+            case SPAWNER: {
+                Particle p = new Particle(new Vector2D(x1,y1), new Vector2D(x2-x1,y2-y1), new Vector2D(), 1, 10, Particle.Type.OXYGEN);
+                environment.addSpawner(new ParticleSpawner(p, 20));
+                break;
             }
         }
     }

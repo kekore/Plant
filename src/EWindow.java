@@ -1,3 +1,5 @@
+import environmentPack.Environment;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,24 +36,32 @@ public class EWindow extends JFrame implements ActionListener {
             }
         }
     }
+
+    protected Environment getEnvironment(){
+        return overviewWindow.ovrPanel.environment;
+    }
 }
 
 class EButtonPanel extends JPanel{
     private JButton addFactoryBut;
+    private JButton addSpawnerBut;
     private JButton saveFileBut;
     private JButton loadFileBut;
 
     protected EButtonPanel(OWindow ovrW){
         addFactoryBut = new JButton("Dodaj fabrykę");
+        addSpawnerBut = new JButton("Dodaj spawner");
         saveFileBut = new JButton("Zapisz do pliku");
         loadFileBut = new JButton("Wczytaj z pliku");
 
-        addFactoryBut.addActionListener((ActionListener)ovrW.getPanel());
-        saveFileBut.addActionListener((ActionListener)ovrW.getPanel());
-        loadFileBut.addActionListener((ActionListener)ovrW.getPanel());
+        addFactoryBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        addSpawnerBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        saveFileBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        loadFileBut.addActionListener((ActionListener)ovrW.ovrPanel);
 
         setLayout(new GridLayout(2, 2, 20, 20));
         add(addFactoryBut);
+        add(addSpawnerBut);
         add(saveFileBut);
         add(loadFileBut);
     }

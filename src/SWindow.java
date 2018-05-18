@@ -1,4 +1,5 @@
 import environmentPack.Circle;
+import environmentPack.Environment;
 import environmentPack.Particle;
 import physicsPack.Vector2D;
 import simulatorPack.Simulator;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Random;
 // (S)imulation window
 public class SWindow extends JFrame implements ActionListener{
+
+    protected SimPanel simPanel;
+    private boolean siming;
 
     public SWindow(){
         super("Podgląd symulacji");
@@ -41,15 +45,10 @@ public class SWindow extends JFrame implements ActionListener{
             }
         }
     }
-    protected SimPanel getPanel(){
-        return simPanel;
-    }
-
-    private SimPanel simPanel;
-    private boolean siming;
 }
 
 class SimPanel extends JPanel implements ActionListener{
+
     private Timer timer;
     private Simulator simulator;
     Random generator;
@@ -59,7 +58,7 @@ class SimPanel extends JPanel implements ActionListener{
     private int frames;
 
     protected SimPanel(){
-        simulator = new Simulator(100,null);
+        simulator = new Simulator(200,null);
         timer = new Timer(15,this);
         generator = new Random();
         timer.start();
@@ -131,6 +130,9 @@ class SimPanel extends JPanel implements ActionListener{
         } else if (((JButton) e.getSource()).getText() == "0.5x"){
             simulator.setSpeed(64);
         }
+    }
+    protected void setEnvironment(Environment environment){
+        simulator.setEnvironment(environment);
     }
     protected void start(){simulator.startSimulation();}
     protected void pause(){simulator.pauseSimulation();}

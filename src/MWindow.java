@@ -1,10 +1,12 @@
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_COLOR_BURNPeer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 // (M)ain window
 public class MWindow extends JFrame{
-    private SWindow simWindow;
-    private EWindow envWindow;
+    //private SWindow simWindow;
+    //private EWindow envWindow;
 
     public MWindow(SWindow s, EWindow e){
         super("Menu");
@@ -15,9 +17,9 @@ public class MWindow extends JFrame{
         setLayout(new GridLayout(1, 1, 20, 20));
         //setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        simWindow = s;
-        envWindow = e;
-        JPanel bP = new MButtonPanel(simWindow, envWindow);
+        //simWindow = s;
+        //envWindow = e;
+        JPanel bP = new MButtonPanel(s, e);
         add(bP);
 
         setResizable(false);
@@ -25,15 +27,20 @@ public class MWindow extends JFrame{
     }
 }
 
-class MButtonPanel extends JPanel{
+class MButtonPanel extends JPanel implements ActionListener{
+    private SWindow simWindow;
+    private EWindow envWindow;
     private JButton s;
     private JButton w;
     private JButton t;
     private JButton q;
     private JButton h;
     private JButton envEditBut;
+    private JButton loadEnvBut;
 
     protected MButtonPanel(SWindow simW, EWindow envW){
+        simWindow = simW;
+        envWindow = envW;
         //Dimension d = new Dimension(100,100); //niepotrzebne raczej
         //setPreferredSize(d);
         s = new JButton("Symulacja");
@@ -42,15 +49,18 @@ class MButtonPanel extends JPanel{
         q = new JButton("4x");
         h = new JButton("0.5x");
         envEditBut = new JButton("Edytor środowiska");
+        loadEnvBut = new JButton("Załaduj środowisko z edytora");
 
         //s.addActionListener(this);
         s.addActionListener((ActionListener)simW);
         //w.addActionListener(this);
-        w.addActionListener((ActionListener)simW.getPanel());
-        t.addActionListener((ActionListener)simW.getPanel());
-        q.addActionListener((ActionListener)simW.getPanel());
-        h.addActionListener((ActionListener)simW.getPanel());
+        w.addActionListener((ActionListener)simW.simPanel);
+        t.addActionListener((ActionListener)simW.simPanel);
+        q.addActionListener((ActionListener)simW.simPanel);
+        h.addActionListener((ActionListener)simW.simPanel);
         envEditBut.addActionListener((ActionListener)envW);
+        loadEnvBut.addActionListener((ActionListener)this);
+
 
         setLayout(new GridLayout(2, 2, 20, 20));
         add(s);
@@ -59,15 +69,14 @@ class MButtonPanel extends JPanel{
         add(q);
         add(h);
         add(envEditBut);
+        add(loadEnvBut);
         //simV = false;
     }
 
-    /*@Override
+    @Override
     public void actionPerformed(ActionEvent e){
-        Object source = e.getSource();
-        if(source == s && !simV){
-            simV = true;
+        if(((JButton) e.getSource()).getText() == "Załaduj środowisko z edytora"){
+            simWindow.simPanel.setEnvironment(envWindow.getEnvironment());
         }
     }
-    private boolean simV;*/
 }
