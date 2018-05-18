@@ -11,18 +11,22 @@ import java.util.ArrayList;
 public class Environment implements Serializable {
     //private int width; //TODO mozliwosc roznych wielkosci
     //private int height;
-    private ArrayList<Particle> pList;
-    private ArrayList<Factory> fList;
+    private ArrayList<Particle> particleList;
+    private ArrayList<Factory> factoryList;
+    private ArrayList<ParticleSpawner> spawnerList;
     private Tree tree;
     private Sun sun;
     private Rain rain;
     private Wind wind;
+    private long time;
 
     public Environment(){
         //width = canvasWidth;
         //height = canvasHeight;
-        pList = new ArrayList<Particle>();
-        fList = new ArrayList<Factory>();
+        particleList = new ArrayList<Particle>();
+        factoryList = new ArrayList<Factory>();
+        spawnerList = new ArrayList<ParticleSpawner>();
+        //time = 0;
     }
 
     /*public Environment(int canvasWidth, int canvasHeight){
@@ -33,11 +37,11 @@ public class Environment implements Serializable {
     }*/
 
     public void addParticle(Particle p){
-        pList.add(p);
+        particleList.add(p);
     }
 
     public void addFactory(Factory f){
-        fList.add(f);
+        factoryList.add(f);
     }
 
     public void proc(long tickTime){
@@ -45,19 +49,27 @@ public class Environment implements Serializable {
         //move sun
         //spawn rain?
         //spawn toxic from factories
-        for(Particle p : pList){ //TODO count forces (wind)
+        //count forces:
+        for(Particle p : particleList){ //TODO count forces (wind)
             p.setForce(new Vector2D(0,-50));
         }
-        for(Particle p : pList){
+        //proceed particles' physics:
+        for(Particle p : particleList){
             p.proc(tickTime);
+        }
+        //proceed spawners:
+        for(ParticleSpawner ps : spawnerList){
+            Particle spawnerRet = ps.proc();
+            if(spawnerRet != null) particleList.add(spawnerRet);
         }
         //Check if particle is out of canvas
         //Check collisions
+        time++;
     }
 
     public ArrayList<Circle> getCircles(){
         ArrayList<Circle> sList = new ArrayList<Circle>();
-        for(Particle p : pList){
+        for(Particle p : particleList){
             sList.add(p.getCircle());
         }
         return sList;
@@ -65,7 +77,7 @@ public class Environment implements Serializable {
 
     public ArrayList<Line2D> getLines(long tickTime){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
-        for(Particle p : pList){
+        for(Particle p : particleList){
             //lList.add(p.getColLine(tickTime));
             lList.add(p.physics.getColLine(tickTime));
         }
@@ -74,7 +86,7 @@ public class Environment implements Serializable {
 
     public ArrayList<Rectangle2D> getRects(){
         ArrayList<Rectangle2D> rList = new ArrayList<Rectangle2D>();
-        for(Factory f : fList){
+        for(Factory f : factoryList){
             rList.addAll(f.getRects());
         }
         return rList;
@@ -83,6 +95,10 @@ public class Environment implements Serializable {
     public void insertTree(Tree tree){
         reset();
         this.tree = tree;
+    }
+
+    public long getTime(){
+        return time;
     }
 
     public void reset(){

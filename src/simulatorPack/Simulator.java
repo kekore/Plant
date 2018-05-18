@@ -22,7 +22,7 @@ public class Simulator implements ActionListener{
     //private boolean quickSim;
     private Timer timer;
     //private Time time;
-    private long time;
+    //private long time;
     private int speed;
     private int cycle;
 
@@ -36,7 +36,7 @@ public class Simulator implements ActionListener{
         //time = new Time();
         speed = 4;
         cycle = 1;
-        time = 0;
+        //time = 0;
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -46,7 +46,7 @@ public class Simulator implements ActionListener{
     }
     public void proc(){
         environment.proc(tickTime);
-        time++;
+        //time++;
     }
     public ArrayList<Circle> getShapes(){
         return environment.getCircles();
@@ -76,5 +76,5 @@ public class Simulator implements ActionListener{
         }
     }
     public void setSpeed(int a){speed = a;}
-    public Long getTime(){return time;}
+    public long getTime(){return environment.getTime();}
 }

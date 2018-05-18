@@ -114,7 +114,7 @@ class SimPanel extends JPanel implements ActionListener{
                 frames = 0;
                 secStart = System.currentTimeMillis();
             }
-            timeText.setText("Time: " + simulator.getTime().toString());
+            timeText.setText("Time: " + simulator.getTime());
         } else if (((JButton) e.getSource()).getText() == "Dodaj") {
             for(int i = 0; i < 1; i++) {
                 /*Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);

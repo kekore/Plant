@@ -3,7 +3,7 @@ package physicsPack;
 import java.awt.geom.Line2D;
 import java.io.Serializable;
 
-public class Physics implements Serializable {
+public class Physics implements Serializable{
     private Vector2D pos;
     private Vector2D vel;
     private Vector2D acc;
