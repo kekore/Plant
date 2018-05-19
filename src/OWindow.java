@@ -195,19 +195,23 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
 
     @Override
     public void mouseReleased(MouseEvent e){
+        x2 = e.getX();
+        y2 = e.getY();
+        System.out.println(x2 + " " + y2);
         if(isInitialized) {
-            x2 = e.getX();
-            y2 = e.getY();
-            System.out.println(x2 + " " + y2);
             switch (choice) {
                 case FACTORY: {
-                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1)));
-                    System.out.println("Added factory");
+                    if(y1+36 < canvasHeight-groundLevel){
+                        environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30));
+                        System.out.println("Added factory");
+                    }
                     break;
                 }
                 case SPAWNER: {
-                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
-                    environment.addSpawner(new ParticleSpawner(p, 20));
+                    if(y1+3 < canvasHeight-groundLevel) {
+                        Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
+                        environment.addSpawner(new ParticleSpawner(p, 20));
+                    }
                     break;
                 }
             }

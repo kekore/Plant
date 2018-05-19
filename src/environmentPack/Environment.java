@@ -65,6 +65,11 @@ public class Environment implements Serializable {
         for(Particle p : particleList){
             p.proc(tickTime);
         }
+        //proceed factories:
+        for(Factory f : factoryList){
+            Particle factoryRet = f.proc(time);
+            if(factoryRet != null) particleList.add(factoryRet);
+        }
         //proceed spawners:
         for(ParticleSpawner ps : spawnerList){
             Particle spawnerRet = ps.proc(time);
