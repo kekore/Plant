@@ -8,36 +8,28 @@ import geneticAlgPack.GeneticAlg;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Simulator implements ActionListener{
-    //private ArrayList<Particle> pList;
     private GeneticAlg geneticAlg;
     private Environment environment;
     private long tickTime;
     //private boolean quickSim;
     private Timer timer;
-    //private Time time;
-    //private long time;
     private int speed;
     private int cycle;
 
     public Simulator(long tT, Environment environment){
-        //pList = new ArrayList<Particle>();
         if(environment != null) this.environment = environment;
         else this.environment = new Environment(600,700,100);
         tickTime = tT;
         //quickSim = false;
         timer = new Timer(1,this);
-        //time = new Time();
         speed = 4;
-        cycle = 1;
-        //time = 0;
+        cycle = 0;
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -47,7 +39,6 @@ public class Simulator implements ActionListener{
     }
     private void proc(){
         environment.proc(tickTime);
-        //time++;
     }
     public ArrayList<Circle> getCircles(){
         return environment.getCircles();
@@ -61,17 +52,15 @@ public class Simulator implements ActionListener{
     public ArrayList<Rect> getInvisRects() { return environment.getInvisRects(); }
     public void startSimulation(){
         timer.start();
-        //time.unpause();
     }
     public void pauseSimulation(){
         timer.stop();
-        //time.pause();
     }
     @Override
     public void actionPerformed(ActionEvent e){
         if(cycle >= speed){
             proc();
-            cycle = 1;
+            cycle = 0;
         }
         else{
             cycle++;

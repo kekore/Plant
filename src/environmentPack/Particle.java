@@ -2,15 +2,11 @@ package environmentPack;
 import physicsPack.*;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.io.Serializable;
 
 public class Particle implements Serializable, Cloneable{
     protected Physics physics;
-    //private Color color;
     protected Circle shape;
-    //private static int nextId = 0;
-    //protected int id;
 
     public enum Type{
         OXYGEN,CARBOXIDE,TOXIC,FOTON,DROP
@@ -20,7 +16,6 @@ public class Particle implements Serializable, Cloneable{
     public Particle(Vector2D p, Vector2D v, Vector2D f, float m, int d, Type t){
         physics = new Physics(p,v,f,m);
         type = t;
-        //id = nextId++;
         switch (type){
             case OXYGEN: {
                 shape = new Circle(p,d,Color.BLUE);
@@ -54,9 +49,6 @@ public class Particle implements Serializable, Cloneable{
         physics.proc(tickTime);
         shape.setPos(physics.getPos());
     }
-    /*public Line2D getColLine(long tickTime){
-        return physics.getColLine(tickTime);
-    }*/
 
     @Override
     public Particle clone(){

@@ -19,7 +19,6 @@ public class OWindow extends JFrame implements ChangeListener{
     protected OvrPanel ovrPanel;
     protected int width;
     protected int height;
-    //private boolean isApplied;
 
     public OWindow(){
         super("Podgląd środowiska");
@@ -29,7 +28,6 @@ public class OWindow extends JFrame implements ChangeListener{
         height = 700;
         setSize(width,height);
         setLocation(screenSize.width/2,screenSize.height/2-350);
-        //isApplied = false;
 
         ovrPanel = new OvrPanel();
         add(ovrPanel);
@@ -39,7 +37,6 @@ public class OWindow extends JFrame implements ChangeListener{
 
     @Override
     public void stateChanged (ChangeEvent e){
-        //System.out.println(((JSlider)e.getSource()).getName());
         if (((JSlider) e.getSource()).getName() == "widthSlider") {
             width = ((JSlider) e.getSource()).getValue();
             setSize(width, height);
@@ -152,7 +149,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         Rectangle2D.Float ground;
         ArrayList<Rect> rList = new ArrayList<Rect>();
         if(!isInitialized){
-            //ground = new Rectangle2D.Float(0,height-groundLevel,width,groundLevel);
             updateSize();
             ground = new Rectangle2D.Float(0,canvasHeight-groundLevel,canvasWidth,groundLevel);
             g2d.setColor(new Color(139,69,19));

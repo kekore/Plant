@@ -2,9 +2,7 @@ package environmentPack;
 
 import physicsPack.Vector2D;
 
-import java.awt.*;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -30,15 +28,8 @@ public class Environment implements Serializable {
 
         ground = new Ground(width,height,groundLevel);
 
-        //time = 0;
+        time = 0;
     }
-
-    /*public Environment(int canvasWidth, int canvasHeight){
-        width = canvasWidth;
-        height = canvasHeight;
-        pList = new ArrayList<Particle>();
-        fList = new ArrayList<Factory>();
-    }*/
 
     public void addParticle(Particle p){
         particleList.add(p);
@@ -91,7 +82,6 @@ public class Environment implements Serializable {
     public ArrayList<Line2D> getLines(long tickTime){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
         for(Particle p : particleList){
-            //lList.add(p.getColLine(tickTime));
             lList.add(p.physics.getColLine(tickTime));
         }
         return lList;

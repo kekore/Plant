@@ -1,7 +1,3 @@
-/*import java.awt.*;
-import java.awt.geom.*;
-import javax.swing.*;*/
-import javax.swing.*;
 import java.awt.EventQueue;
 
 public class Plant {

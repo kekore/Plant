@@ -1,4 +1,3 @@
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_COLOR_BURNPeer;
 import environmentPack.Environment;
 
 import javax.swing.*;
@@ -20,8 +19,7 @@ public class MWindow extends JFrame{
 
         //simWindow = s;
         //envWindow = e;
-        JPanel bP = new MButtonPanel(s, e);
-        add(bP);
+        add(new MButtonPanel(s, e));
 
         setResizable(false);
         setVisible(true);
@@ -75,7 +73,6 @@ class MButtonPanel extends JPanel implements ActionListener{
         add(envEditBut);
         add(loadEnvBut);
         add(showInvisBut);
-        //simV = false;
     }
 
     @Override

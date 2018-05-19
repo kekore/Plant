@@ -9,7 +9,6 @@ public class Physics implements Serializable{
     private Vector2D acc;
     private Vector2D force;
     private float mass;
-    //private long lastUpdate;
 
     public Physics(Vector2D p, Vector2D v, Vector2D f, float m){
         pos = p;
@@ -17,19 +16,13 @@ public class Physics implements Serializable{
         acc = new Vector2D();
         force = f;
         mass = m;
-        //lastUpdate = when;
     }
 
     public void proc(long tickTime)
     {
-        //long currentTime = when;
-        //System.out.println((float)(currentTime-lastUpdate)/tickTime);
         acc.set(force.scaleNC((float)1/mass));
         vel.add(acc.scaleNC((float)1/tickTime));
         pos.add(vel.scaleNC((float)1/tickTime));
-        //vel.add(acc.scaleNC((float)(currentTime-lastUpdate)/tickTime));
-        //pos.add(vel.scaleNC((float)(currentTime-lastUpdate)/tickTime));
-        //lastUpdate = when;
     }
 
     public Vector2D getPos() {
@@ -67,7 +60,6 @@ public class Physics implements Serializable{
         Vector2D predictedA = force.scaleNC((float)1/mass);
         Vector2D predictedV = vel.addNC(predictedA.scaleNC((float)1/tickTime));
         Vector2D predictedP = pos.addNC(predictedV.scaleNC((float)1/tickTime));
-        //Vector2D tempP = pos.addNC(vel.scaleNC((float)1/tickTime));
         return new Line2D.Float(pos.getX(),pos.getY(),predictedP.getX(),predictedP.getY());
     }
 }
