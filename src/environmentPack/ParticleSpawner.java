@@ -35,7 +35,7 @@ public class ParticleSpawner implements Serializable {
     protected Particle proc(long time,long tickTime){
         if(spawnerType != Type.STATIC)physics.proc(tickTime);
         if(time % frequency == 0){ //should work with == !
-            return new Particle(physics.getPos().clone(),partStartV.clone(),new Vector2D(),partMass,partD,partType);
+            return new Particle(new Vector2D(physics.getPos()),new Vector2D(partStartV),new Vector2D(),partMass,partD,partType);
         }
         else return null;
     }

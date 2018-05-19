@@ -75,6 +75,7 @@ class EButtonPanel extends JPanel{
         add(loadFileBut);
         add(new SizeSliders(ovrW));
         add(new OtherSliders(ovrW));
+        add(new RainSliders(ovrW));
         add(seedPlaceBut);
         add(initBut);
     }
@@ -110,16 +111,52 @@ class SizeSliders extends JPanel{
 
 class OtherSliders extends JPanel{
     private JSlider groundSlider;
+    private JSlider sunSlider;
 
     protected OtherSliders(OWindow ovrW){
         groundSlider = new JSlider(JSlider.HORIZONTAL, 0, 200, 100);
         groundSlider.setName("groundSlider");
-        groundSlider.setMinorTickSpacing(5);
+        groundSlider.setMinorTickSpacing(10);
         groundSlider.setMajorTickSpacing(50);
         groundSlider.setPaintTicks(true);
         groundSlider.setPaintLabels(true);
         groundSlider.addChangeListener(ovrW.ovrPanel);
 
+        sunSlider = new JSlider(JSlider.HORIZONTAL, 0, 24, 12);
+        sunSlider.setName("sunSlider");
+        sunSlider.setMinorTickSpacing(2);
+        sunSlider.setMajorTickSpacing(6);
+        sunSlider.setPaintTicks(true);
+        sunSlider.setPaintLabels(true);
+        sunSlider.addChangeListener(ovrW.ovrPanel);
+
         add(groundSlider);
+        add(sunSlider);
+    }
+}
+
+class RainSliders extends JPanel{
+    private JSlider rainFrequencySlider;
+    private JSlider rainIntensitySlider;
+
+    protected RainSliders(OWindow ovrW){
+        rainFrequencySlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        rainFrequencySlider.setName("rainFreqSlider");
+        rainFrequencySlider.setMinorTickSpacing(5);
+        rainFrequencySlider.setMajorTickSpacing(25);
+        rainFrequencySlider.setPaintTicks(true);
+        rainFrequencySlider.setPaintLabels(true);
+        rainFrequencySlider.addChangeListener(ovrW.ovrPanel);
+
+        rainIntensitySlider = new JSlider(JSlider.HORIZONTAL,0,100,50);
+        rainIntensitySlider.setName("rainIntSlider");
+        rainIntensitySlider.setMinorTickSpacing(5);
+        rainIntensitySlider.setMajorTickSpacing(25);
+        rainIntensitySlider.setPaintTicks(true);
+        rainIntensitySlider.setPaintLabels(true);
+        rainIntensitySlider.addChangeListener(ovrW.ovrPanel);
+
+        add(rainFrequencySlider);
+        add(rainIntensitySlider);
     }
 }

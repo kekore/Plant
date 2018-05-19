@@ -24,7 +24,7 @@ public class Environment implements Serializable {
     private Wind wind;
     private long time;
 
-    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX){
+    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int dayTime, int rainFreq, int rainInt){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();

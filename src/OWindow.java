@@ -40,14 +40,12 @@ public class OWindow extends JFrame implements ChangeListener{
         if (((JSlider) e.getSource()).getName() == "widthSlider") {
             width = ((JSlider) e.getSource()).getValue();
             setSize(width, height);
-            ovrPanel.isInitialized=false;
-            ovrPanel.environment=null;
+            ovrPanel.noInit();
             ovrPanel.updateSize();
         } else if (((JSlider) e.getSource()).getName() == "heightSlider") {
             height = ((JSlider) e.getSource()).getValue();
             setSize(width, height);
-            ovrPanel.isInitialized=false;
-            ovrPanel.environment=null;
+            ovrPanel.noInit();
             ovrPanel.updateSize();
         }
     }
@@ -67,9 +65,13 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     private int y1;
     private int x2;
     private int y2;
+    private boolean mousePressed;
+
     private int groundLevel;
     private int seedPosX;
-    private boolean mousePressed;
+    private int dayTime;
+    private int rainFrequency;
+    private int rainIntensity;
 
     protected OvrPanel(){
         canvasWidth = (int)getSize().getWidth();
@@ -82,14 +84,22 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         setBackground(Color.WHITE);
         addMouseListener(this);
         groundLevel = 100;
+        seedPosX = 20;
+        dayTime = 12;
+        rainFrequency = 50;
+        rainIntensity = 50;
     }
     protected void updateSize(){
         canvasWidth = (int)getSize().getWidth();
         canvasHeight = (int)getSize().getHeight();
     }
     protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX);
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,dayTime,rainFrequency,rainIntensity);
         isInitialized = true;
+    }
+    protected void noInit(){
+        isInitialized = false;
+        environment = null;
     }
     //TODO check if works properly - if all fields are loaded
     private int saveFile(){
@@ -228,8 +238,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
                 break;
             }
             case SEED: {
-                isInitialized = false;
-                environment = null;
+                noInit();
                 seedPosX = x1;
                 break;
             }
@@ -246,9 +255,17 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     @Override
     public void stateChanged (ChangeEvent e){
         if(((JSlider) e.getSource()).getName() == "groundSlider"){
-            isInitialized = false;
-            environment = null;
+            noInit();
             groundLevel = ((JSlider) e.getSource()).getValue();
+        } else if(((JSlider) e.getSource()).getName() == "sunSlider"){
+            noInit();
+            dayTime = ((JSlider) e.getSource()).getValue();
+        } else if(((JSlider) e.getSource()).getName() == "rainFreqSlider"){
+            noInit();
+            rainFrequency = ((JSlider) e.getSource()).getValue();
+        } else if(((JSlider) e.getSource()).getName() == "rainIntSlider"){
+            noInit();
+            rainIntensity = ((JSlider) e.getSource()).getValue();
         }
     }
 }

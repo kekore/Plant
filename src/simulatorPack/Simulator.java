@@ -24,7 +24,7 @@ public class Simulator implements ActionListener{
 
     public Simulator(long tT, Environment environment){
         if(environment != null) this.environment = environment;
-        else this.environment = new Environment(600,700,100,20);
+        else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
         //quickSim = false;
         timer = new Timer(1,this);

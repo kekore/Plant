@@ -2,7 +2,7 @@ package physicsPack;
 
 import java.io.Serializable;
 
-public class Vector2D implements Serializable, Cloneable{
+public class Vector2D implements Serializable{
     private float x,y;
 
     public Vector2D(){
@@ -58,7 +58,7 @@ public class Vector2D implements Serializable, Cloneable{
         return y;
     }
 
-    @Override
+    /*@Override
     public Vector2D clone(){
         Vector2D ret;
         try{
@@ -69,5 +69,5 @@ public class Vector2D implements Serializable, Cloneable{
         }
         return ret;
         //return (Vector2D) super.clone();
-    }
+    }*/
 }
