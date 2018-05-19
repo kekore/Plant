@@ -1,8 +1,11 @@
 package environmentPack;
 
+
 import physicsPack.Vector2D;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,12 +17,14 @@ public class Environment implements Serializable {
     private ArrayList<ParticleSpawner> spawnerList;
     private final Ground ground;
     private Tree tree;
+    private Vector2D seedPlace;
+    private Rect seedRect;
     private Sun sun;
     private Rain rain;
     private Wind wind;
     private long time;
 
-    public Environment(int canvasWidth, int canvasHeight, int groundLevel){
+    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();
@@ -27,6 +32,8 @@ public class Environment implements Serializable {
         spawnerList = new ArrayList<ParticleSpawner>();
 
         ground = new Ground(width,height,groundLevel);
+        seedPlace = new Vector2D(seedPosX,height-groundLevel);
+        seedRect = new Rect(new Rectangle2D.Float(seedPosX-3,height-groundLevel-3,6,6), Color.BLUE, true);
 
         time = 0;
     }
@@ -98,6 +105,7 @@ public class Environment implements Serializable {
 
     public ArrayList<Rect> getInvisRects(){
         ArrayList<Rect> irList = new ArrayList<Rect>();
+        irList.add(seedRect);
         for(ParticleSpawner ps : spawnerList){
             irList.add(ps.rectangle);
         }

@@ -60,7 +60,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     protected boolean isInitialized;
     private Timer timer;
     private enum Choice{
-        NULL, FACTORY, SPAWNER
+        NULL, FACTORY, SPAWNER, SEED
     }
     private Choice choice;
     private int x1;
@@ -68,6 +68,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     private int x2;
     private int y2;
     private int groundLevel;
+    private int seedPosX;
     private boolean mousePressed;
 
     protected OvrPanel(){
@@ -87,7 +88,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         canvasHeight = (int)getSize().getHeight();
     }
     protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel);
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX);
         isInitialized = true;
     }
     //TODO check if works properly - if all fields are loaded
@@ -147,12 +148,16 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
         Rectangle2D.Float ground;
+        Rectangle2D.Float seed;
         ArrayList<Rect> rList = new ArrayList<Rect>();
         if(!isInitialized){
             updateSize();
             ground = new Rectangle2D.Float(0,canvasHeight-groundLevel,canvasWidth,groundLevel);
             g2d.setColor(new Color(139,69,19));
             g2d.fill(ground);
+            seed = new Rectangle2D.Float(seedPosX-3,canvasHeight-groundLevel-3,6,6);
+            g2d.setColor(Color.BLUE);
+            g2d.fill(seed);
         } else {
             rList.addAll(environment.getRects());
             rList.addAll(environment.getInvisRects());
@@ -185,6 +190,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             System.out.println(environment);
             System.out.println("Load file returned: " + loadFile()); //TODO change this
             System.out.println(environment);
+        } else if (((JButton)e.getSource()).getText() == "Posadź ziarno"){
+            choice = Choice.SEED;
         } else if (((JButton)e.getSource()).getText() == "Zainicjuj"){
             initEnv();
         }
@@ -204,22 +211,26 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         x2 = e.getX();
         y2 = e.getY();
         System.out.println(x2 + " " + y2);
-        if(isInitialized) {
-            switch (choice) {
-                case FACTORY: {
-                    if(y1+36 < canvasHeight-groundLevel){
-                        environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30));
-                        System.out.println("Added factory");
+        switch (choice) {
+            case FACTORY: {
+                if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
+                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30));
+                    System.out.println("Added factory");
                     }
                     break;
                 }
-                case SPAWNER: {
-                    if(y1+3 < canvasHeight-groundLevel) {
-                        Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
-                        environment.addSpawner(new ParticleSpawner(p, 20));
-                    }
-                    break;
+            case SPAWNER: {
+                if (isInitialized && y1 + 3 < canvasHeight - groundLevel) {
+                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
+                    environment.addSpawner(new ParticleSpawner(p, 20));
                 }
+                break;
+            }
+            case SEED: {
+                isInitialized = false;
+                environment = null;
+                seedPosX = x1;
+                break;
             }
         }
     }

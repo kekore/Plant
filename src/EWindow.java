@@ -49,6 +49,7 @@ class EButtonPanel extends JPanel{
     private JButton addSpawnerBut;
     private JButton saveFileBut;
     private JButton loadFileBut;
+    private JButton seedPlaceBut;
     private JButton initBut;
 
     protected EButtonPanel(OWindow ovrW){
@@ -57,12 +58,14 @@ class EButtonPanel extends JPanel{
         addSpawnerBut = new JButton("Dodaj spawner");
         saveFileBut = new JButton("Zapisz do pliku");
         loadFileBut = new JButton("Wczytaj z pliku");
+        seedPlaceBut = new JButton("Posadź ziarno");
         initBut = new JButton("Zainicjuj");
 
         addFactoryBut.addActionListener((ActionListener)ovrW.ovrPanel);
         addSpawnerBut.addActionListener((ActionListener)ovrW.ovrPanel);
         saveFileBut.addActionListener((ActionListener)ovrW.ovrPanel);
         loadFileBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        seedPlaceBut.addActionListener((ActionListener)ovrW.ovrPanel);
         initBut.addActionListener((ActionListener)ovrW.ovrPanel);
 
         setLayout(new GridLayout(3, 3, 20, 20));
@@ -72,6 +75,7 @@ class EButtonPanel extends JPanel{
         add(loadFileBut);
         add(new SizeSliders(ovrW));
         add(new OtherSliders(ovrW));
+        add(seedPlaceBut);
         add(initBut);
     }
 }
