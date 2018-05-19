@@ -20,7 +20,7 @@ public class Physics implements Serializable{
 
     public void proc(long tickTime)
     {
-        acc.set(force.scaleNC((float)1/mass));
+        if(mass != 0)acc.set(force.scaleNC((float)1/mass));
         vel.add(acc.scaleNC((float)1/tickTime));
         pos.add(vel.scaleNC((float)1/tickTime));
     }
