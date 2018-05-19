@@ -17,8 +17,8 @@ public class Environment implements Serializable {
     private ArrayList<ParticleSpawner> spawnerList;
     private final Ground ground;
     private Tree tree;
-    private Vector2D seedPlace;
-    private Rect seedRect;
+    private final Vector2D seedPlace;
+    private final Rect seedRect;
     private Sun sun;
     private Rain rain;
     private Wind wind;

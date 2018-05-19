@@ -17,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Rect.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Rect.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Rect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="18" />
+            <state relative-caret-position="102">
+              <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -63,7 +63,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OWindow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="OWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/OWindow.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1721">
@@ -80,8 +80,8 @@
       <file leaf-file-name="Environment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="35" column="68" lean-forward="false" selection-start-line="35" selection-start-column="68" selection-end-line="35" selection-end-column="68" />
+            <state relative-caret-position="-1184">
+              <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -190,8 +190,8 @@
         <option value="$PROJECT_DIR$/src/environmentPack/Tree.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Rect.java" />
         <option value="$PROJECT_DIR$/src/simulatorPack/Simulator.java" />
-        <option value="$PROJECT_DIR$/src/environmentPack/Environment.java" />
         <option value="$PROJECT_DIR$/src/OWindow.java" />
+        <option value="$PROJECT_DIR$/src/environmentPack/Environment.java" />
       </list>
     </option>
   </component>
@@ -696,16 +696,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Rect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1037">
@@ -766,16 +756,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="35" column="68" lean-forward="false" selection-start-line="35" selection-start-column="68" selection-end-line="35" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/OWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1721">
@@ -784,6 +764,26 @@
             <element signature="imports" expanded="true" />
             <element signature="method#saveFile#0;class#OvrPanel#0" expanded="false" />
             <element signature="method#loadFile#0;class#OvrPanel#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1184">
+          <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Rect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
