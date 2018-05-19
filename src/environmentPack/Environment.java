@@ -35,7 +35,7 @@ public class Environment implements Serializable {
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
-        if(rainFreq != 0) rain = new Rain(rainFreq,rainInt,width);
+        if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
 
         time = 0;
     }
