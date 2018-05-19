@@ -2,6 +2,7 @@ package environmentPack;
 
 import physicsPack.Vector2D;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
@@ -13,19 +14,22 @@ public class Environment implements Serializable {
     private ArrayList<Particle> particleList;
     private ArrayList<Factory> factoryList;
     private ArrayList<ParticleSpawner> spawnerList;
-    private Ground ground;
+    private final Ground ground;
     private Tree tree;
     private Sun sun;
     private Rain rain;
     private Wind wind;
     private long time;
 
-    public Environment(int canvasWidth, int canvasHeight){
+    public Environment(int canvasWidth, int canvasHeight, int groundLevel){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();
         factoryList = new ArrayList<Factory>();
         spawnerList = new ArrayList<ParticleSpawner>();
+
+        ground = new Ground(width,height,groundLevel);
+
         //time = 0;
     }
 
@@ -74,7 +78,7 @@ public class Environment implements Serializable {
     public ArrayList<Circle> getCircles(){
         ArrayList<Circle> sList = new ArrayList<Circle>();
         for(Particle p : particleList){
-            sList.add(p.getCircle());
+            sList.add(p.shape);
         }
         return sList;
     }
@@ -93,6 +97,7 @@ public class Environment implements Serializable {
         for(Factory f : factoryList){
             rList.addAll(f.getRects());
         }
+        rList.add(ground.rectangle);
         return rList;
     }
 

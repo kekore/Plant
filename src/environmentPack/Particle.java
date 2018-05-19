@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Particle implements Serializable, Cloneable{
     protected Physics physics;
     //private Color color;
-    private Circle shape;
+    protected Circle shape;
     //private static int nextId = 0;
     //protected int id;
 
@@ -53,9 +53,6 @@ public class Particle implements Serializable, Cloneable{
     public void proc(long tickTime){
         physics.proc(tickTime);
         shape.setPos(physics.getPos());
-    }
-    public Circle getCircle(){
-        return shape;
     }
     /*public Line2D getColLine(long tickTime){
         return physics.getColLine(tickTime);

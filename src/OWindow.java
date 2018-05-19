@@ -14,21 +14,21 @@ import java.io.*;
 import java.util.ArrayList;
 
 // (O)verview window
-public class OWindow extends JFrame implements ChangeListener, ActionListener{
+public class OWindow extends JFrame implements ChangeListener{
     protected OvrPanel ovrPanel;
-    private int width;
-    private int height;
-    private boolean isApplied;
+    protected int width;
+    protected int height;
+    //private boolean isApplied;
 
     public OWindow(){
         super("Podgląd środowiska");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //?
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(600,700);
-        setLocation(screenSize.width/2,screenSize.height/2-350);
         width = 600;
         height = 700;
-        isApplied = false;
+        setSize(width,height);
+        setLocation(screenSize.width/2,screenSize.height/2-350);
+        //isApplied = false;
 
         ovrPanel = new OvrPanel();
         add(ovrPanel);
@@ -39,29 +39,27 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
     @Override
     public void stateChanged (ChangeEvent e){
         //System.out.println(((JSlider)e.getSource()).getName());
-        if(!isApplied) {
-            if (((JSlider) e.getSource()).getName() == "widthSlider") {
-                width = ((JSlider) e.getSource()).getValue();
-                setSize(width, height);
-            } else if (((JSlider) e.getSource()).getName() == "heightSlider") {
-                height = ((JSlider) e.getSource()).getValue();
-                setSize(width, height);
-            }
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e){
-        if(((JButton)e.getSource()).getText() == "Zainicjuj"){
-            ovrPanel.initEnv(width,height);
-            isApplied = true;
+        if (((JSlider) e.getSource()).getName() == "widthSlider") {
+            width = ((JSlider) e.getSource()).getValue();
+            setSize(width, height);
+            ovrPanel.isInitialized=false;
+            ovrPanel.environment=null;
+            ovrPanel.updateSize();
+        } else if (((JSlider) e.getSource()).getName() == "heightSlider") {
+            height = ((JSlider) e.getSource()).getValue();
+            setSize(width, height);
+            ovrPanel.isInitialized=false;
+            ovrPanel.environment=null;
+            ovrPanel.updateSize();
         }
     }
 }
 
-class OvrPanel extends JPanel implements ActionListener, MouseListener{
+class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeListener{
+    protected int canvasWidth;
+    protected int canvasHeight;
     protected Environment environment;
-    private boolean isInitialized;
+    protected boolean isInitialized;
     private Timer timer;
     private enum Choice{
         NULL, FACTORY, SPAWNER
@@ -71,21 +69,31 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     private int y1;
     private int x2;
     private int y2;
+    private int groundLevel;
 
     protected OvrPanel(){
-        environment = new Environment(0,0);
+        canvasWidth = (int)getSize().getWidth();
+        canvasHeight = (int)getSize().getHeight();
+        //environment = new Environment(canvasWidth,canvasHeight,0);
+        isInitialized = false;
         choice = Choice.NULL;
         timer = new Timer(15,this);
         timer.start();
         setBackground(Color.WHITE);
         addMouseListener(this);
+        groundLevel = 100;
     }
-    protected void initEnv(int canvasWidth, int canvasHeight){
-        environment = new Environment(canvasWidth,canvasHeight);
+    protected void updateSize(){
+        canvasWidth = (int)getSize().getWidth();
+        canvasHeight = (int)getSize().getHeight();
+    }
+    protected void initEnv(){
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel);
         isInitialized = true;
     }
     //TODO check if works properly - if all fields are loaded
     private int saveFile(){
+        if(!isInitialized) return 4;
         int ret = 0;
         try {
             FileOutputStream fos = new FileOutputStream(new File("environment.env"));
@@ -131,6 +139,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
             System.out.println("Unexpected exception!");
             ret = 4;
         }
+        if(ret == 0)isInitialized = true;
         return ret;
     }
 
@@ -138,11 +147,22 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     protected void paintComponent(Graphics g){ //TODO show vectors
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        ArrayList<Rect> rList = environment.getRects();
-        rList.addAll(environment.getInvisRects());
+        Rectangle2D.Float ground;
+        ArrayList<Rect> rList = new ArrayList<Rect>();
+        if(!isInitialized){
+            //ground = new Rectangle2D.Float(0,height-groundLevel,width,groundLevel);
+            updateSize();
+            ground = new Rectangle2D.Float(0,canvasHeight-groundLevel,canvasWidth,groundLevel);
+            g2d.setColor(new Color(139,69,19));
+            g2d.fill(ground);
+        } else {
+            rList.addAll(environment.getRects());
+            rList.addAll(environment.getInvisRects());
+        }
         for(Rect r : rList){
             g2d.setColor(r.color);
-            g2d.draw(r.rectangle);
+            if(!r.isFilled)g2d.draw(r.rectangle);
+            else g2d.fill(r.rectangle);
         }
     }
 
@@ -161,6 +181,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
             System.out.println(environment);
             System.out.println("Load file returned: " + loadFile()); //TODO change this
             System.out.println(environment);
+        } else if (((JButton)e.getSource()).getText() == "Zainicjuj"){
+            initEnv();
         }
     }
 
@@ -198,4 +220,13 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener{
     public void mouseExited(MouseEvent e){}
     @Override
     public void mouseClicked(MouseEvent e){}
+
+    @Override
+    public void stateChanged (ChangeEvent e){
+        if(((JSlider) e.getSource()).getName() == "groundSlider"){
+            isInitialized = false;
+            environment = null;
+            groundLevel = ((JSlider) e.getSource()).getValue();
+        }
+    }
 }

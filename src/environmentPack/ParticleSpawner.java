@@ -13,7 +13,7 @@ public class ParticleSpawner implements Serializable {
     public ParticleSpawner(Particle sample, int frequency){
         this.sample = sample;
         this.frequency = frequency;
-        rectangle = new Rect(new Rectangle2D.Float(sample.physics.getPos().getX()-3,sample.physics.getPos().getY()-3,6,6), Color.RED);
+        rectangle = new Rect(new Rectangle2D.Float(sample.physics.getPos().getX()-3,sample.physics.getPos().getY()-3,6,6), Color.RED, false);
     }
 
     protected Particle proc(long time){

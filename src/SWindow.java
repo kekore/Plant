@@ -104,7 +104,8 @@ class SimPanel extends JPanel implements ActionListener{
         }
         for(Rect r : rList){
             g2d.setColor(r.color);
-            g2d.draw(r.rectangle);
+            if(!r.isFilled)g2d.draw(r.rectangle);
+            else g2d.fill(r.rectangle);
         }
     }
 
@@ -116,7 +117,7 @@ class SimPanel extends JPanel implements ActionListener{
                 frames++;
             }
             else{
-                fpsText.setText("FPS: " + new Integer(frames).toString());
+                fpsText.setText("FPS: " + frames);
                 frames = 0;
                 secStart = System.currentTimeMillis();
             }
