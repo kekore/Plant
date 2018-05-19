@@ -22,9 +22,12 @@ public class Factory implements Serializable{
         Rectangle2D.Float chimneyRect = new Rectangle2D.Float(spawnPoint.getX()-3, spawnPoint.getY(), 6, 20); //TODO poprawic to
         Rectangle2D.Float buildingRect = new Rectangle2D.Float(spawnPoint.getX()-20, spawnPoint.getY()+20, 30, 16);
         Rectangle2D.Float windowRect = new Rectangle2D.Float(spawnPoint.getX()-17, spawnPoint.getY()+23, 10, 10);
-        chimney = new Rect(chimneyRect, Color.BLACK, true);
-        building = new Rect(buildingRect, Color.BLACK, false);
-        window = new Rect(windowRect, Color.BLACK, false);
+        //chimney = new Rect(chimneyRect, Color.BLACK, true);
+        chimney = new Rect(new Vector2D(spawnPoint.getX(),spawnPoint.getY()+10),6,20,Color.BLACK, true);
+        //building = new Rect(buildingRect, Color.BLACK, false);
+        building = new Rect(new Vector2D(spawnPoint.getX()-5,spawnPoint.getY()+28),30,16,Color.BLACK,false);
+        //window = new Rect(windowRect, Color.BLACK, false);
+        window = new Rect(new Vector2D(spawnPoint.getX()-12,spawnPoint.getY()+28),10,10,Color.BLACK,false);
     }
 
     protected ArrayList<Rect> getRects(){

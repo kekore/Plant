@@ -33,7 +33,7 @@ public class Environment implements Serializable {
 
         ground = new Ground(width,height,groundLevel);
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
-        seedRect = new Rect(new Rectangle2D.Float(seedPosX-3,height-groundLevel-3,6,6), Color.BLUE, true);
+        seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
         time = 0;
     }
@@ -70,7 +70,7 @@ public class Environment implements Serializable {
         }
         //proceed spawners:
         for(ParticleSpawner ps : spawnerList){
-            Particle spawnerRet = ps.proc(time);
+            Particle spawnerRet = ps.proc(time,tickTime);
             if(spawnerRet != null) particleList.add(spawnerRet);
         }
         //Check if particle is out of canvas
@@ -86,12 +86,20 @@ public class Environment implements Serializable {
         return sList;
     }
 
-    public ArrayList<Line2D> getLines(long tickTime){
+    public ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
-        for(Particle p : particleList){
+        /*for(Particle p : particleList){
             lList.add(p.physics.getColLine(tickTime));
-        }
+        }*/
         return lList;
+    }
+
+    public ArrayList<Line2D> getInvisLines(long tickTime){
+        ArrayList<Line2D> ilList = new ArrayList<Line2D>();
+        for(Particle p : particleList){
+            ilList.add(p.physics.getColLine(tickTime));
+        }
+        return ilList;
     }
 
     public ArrayList<Rect> getRects(){

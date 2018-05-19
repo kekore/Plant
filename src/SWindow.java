@@ -93,7 +93,10 @@ class SimPanel extends JPanel implements ActionListener{
         ArrayList<Circle> cList = simulator.getCircles();
         ArrayList<Line2D> lList = simulator.getLines();
         ArrayList<Rect> rList = simulator.getRects();
-        if(showInvis) rList.addAll(simulator.getInvisRects());
+        if(showInvis){
+            lList.addAll(simulator.getInvisLines());
+            rList.addAll(simulator.getInvisRects());
+        }
         for(Circle c : cList){
             g2d.setColor(c.color);
             g2d.draw(c.ellipse);

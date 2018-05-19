@@ -4,14 +4,14 @@ import physicsPack.*;
 import java.awt.*;
 import java.io.Serializable;
 
-public class Particle implements Serializable, Cloneable{
+public class Particle implements Serializable{
     protected Physics physics;
     protected Circle shape;
 
     public enum Type{
         OXYGEN,CARBOXIDE,TOXIC,FOTON,DROP
     }
-    private Type type;
+    protected Type type;
 
     public Particle(Vector2D p, Vector2D v, Vector2D f, float m, int d, Type t){
         physics = new Physics(p,v,f,m);
@@ -50,7 +50,7 @@ public class Particle implements Serializable, Cloneable{
         shape.setPos(physics.getPos());
     }
 
-    @Override
+    /*@Override
     public Particle clone(){
         Particle ret;
         try{
@@ -60,5 +60,5 @@ public class Particle implements Serializable, Cloneable{
             throw new RuntimeException();
         }
         return ret;
-    }
+    }*/
 }

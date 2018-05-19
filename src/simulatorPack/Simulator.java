@@ -44,7 +44,10 @@ public class Simulator implements ActionListener{
         return environment.getCircles();
     }
     public ArrayList<Line2D> getLines(){
-        return environment.getLines(tickTime);
+        return environment.getLines();
+    }
+    public ArrayList<Line2D> getInvisLines(){
+        return environment.getInvisLines(tickTime);
     }
     public ArrayList<Rect> getRects(){
         return environment.getRects();
