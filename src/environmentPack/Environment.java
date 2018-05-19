@@ -77,7 +77,7 @@ public class Environment implements Serializable {
             Particle spawnerRet = ps.proc(time,tickTime);
             if(spawnerRet != null) particleList.add(spawnerRet);
         }
-        //Check if particle is out of canvas:
+        //Check particles out of canvas and erase them:
         ArrayList<Particle> toErase = new ArrayList<Particle>();
         for(Particle p : particleList){
             if(p.physics.getPos().getX()<0 || p.physics.getPos().getX() > width){
