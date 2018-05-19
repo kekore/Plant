@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 public class Ground implements Serializable {
-    private int groundLevel;
+    protected int groundLevel;
     protected Rect rectangle;
 
     protected Ground(int width, int height, int groundLevel){

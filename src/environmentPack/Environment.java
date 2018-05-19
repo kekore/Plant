@@ -35,6 +35,8 @@ public class Environment implements Serializable {
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
+        if(rainFreq != 0) rain = new Rain(rainFreq,rainInt,width);
+
         time = 0;
     }
 
@@ -55,9 +57,11 @@ public class Environment implements Serializable {
         //move sun
         //spawn rain?
         //spawn toxic from factories
+        //rain:
+        if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
-            p.setForce(new Vector2D(0,-50));
+            p.setForce(new Vector2D(0,500));
         }
         //proceed particles' physics:
         for(Particle p : particleList){
@@ -73,7 +77,18 @@ public class Environment implements Serializable {
             Particle spawnerRet = ps.proc(time,tickTime);
             if(spawnerRet != null) particleList.add(spawnerRet);
         }
-        //Check if particle is out of canvas
+        //Check if particle is out of canvas:
+        ArrayList<Particle> toErase = new ArrayList<Particle>();
+        for(Particle p : particleList){
+            if(p.physics.getPos().getX()<0 || p.physics.getPos().getX() > width){
+                toErase.add(p);
+            } else if (p.physics.getPos().getY()<0 || p.physics.getPos().getY() > height-ground.groundLevel){
+                toErase.add(p);
+            }
+        }
+        for(Particle te : toErase){
+            particleList.remove(te);
+        }
         //Check collisions
         time++;
     }
