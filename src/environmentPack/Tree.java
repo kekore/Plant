@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Tree implements Serializable{
-    private DNA dna;
+    protected DNA dna;
     private ArrayList<Branch> branches;
     private int points;
     //private int satiety;
@@ -42,6 +42,10 @@ public class Tree implements Serializable{
 
     protected void grow(long time){
 
+    }
+
+    protected void addPoints(int p){
+        points = points + p;
     }
 
     public void reset(){
