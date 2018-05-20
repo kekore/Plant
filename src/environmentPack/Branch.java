@@ -33,6 +33,10 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         //green =
     }
 
+    protected void addSatiety(float n){
+        satiety = satiety + n;
+    }
+
     protected void addSatietyBuf(float n){
         satietyBuffer = satietyBuffer + n;
     }
