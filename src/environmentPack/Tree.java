@@ -3,6 +3,7 @@ package environmentPack;
 import geneticAlgPack.DNA;
 import physicsPack.Maths;
 
+import java.awt.geom.Line2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,11 +13,16 @@ public class Tree implements Serializable{
     private int points;
     private int branchGreen;
     private int leafGreen;
+    protected int seedX;
+    protected int seedY;
+    private boolean isSeeded;
     //private int satiety;
 
     Tree(DNA dna, int satiety){
         this.dna = dna;
         branches = new ArrayList<Branch>();
+        isSeeded = false;
+
         int rootBranchesN;
         if(dna.getGene(0) == 0) rootBranchesN = 1;
         else rootBranchesN = Math.abs(dna.getGene(0));
@@ -52,6 +58,12 @@ public class Tree implements Serializable{
         points = 0;
     }
 
+    protected void Seed(int seedX, int seedY){
+        this.seedX = seedX;
+        this.seedY = seedY;
+        isSeeded = true;
+    }
+
     private void addBranch(float angle){
         Branch newBranch = new Branch(this,null, angle);
         for(Branch b : branches){
@@ -84,12 +96,24 @@ public class Tree implements Serializable{
         }
     }
 
-    /*protected void grow(long time){
-
-    }*/
-
     protected void addPoints(int p){
         points = points + p;
+    }
+
+    protected ArrayList<Line2D> getLines(){
+        ArrayList<Line2D> lList = new ArrayList<Line2D>();
+        for(Branch b : branches){
+            lList.addAll(b.getLinesRec());
+        }
+        return lList;
+    }
+
+    protected ArrayList<Circle> getCircles(){
+        ArrayList<Circle> cList = new ArrayList<Circle>();
+        for(Branch b : branches){
+            cList.addAll(b.getCirclesRec());
+        }
+        return cList;
     }
 
     public void reset(){

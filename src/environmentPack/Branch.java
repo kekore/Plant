@@ -16,6 +16,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private int level;
     //private int green;
     private float angle;
+    private float lenght;
 
     private float satiety;
     private float satietyBuffer;
@@ -23,7 +24,8 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private int growCounter;
 
     protected Branch(Tree parentTree, Branch parentBranch, float angle){
-        line = new Line2D.Float(parentBranch.line.x2,parentBranch.line.y2,parentBranch.line.x2,parentBranch.line.y2);
+        if(parentBranch != null)line = new Line2D.Float(parentBranch.line.x2,parentBranch.line.y2,parentBranch.line.x2,parentBranch.line.y2);
+        else line = new Line2D.Float(parentTree.seedX,parentTree.seedY,parentTree.seedX,parentTree.seedY);
         this.parentBranch = parentBranch;
         this.parentTree = parentTree;
         branches = new ArrayList<Branch>();
@@ -46,8 +48,9 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         satiety = satiety + n;
     }
 
-    private void addSatietyBuf(float n){
+    private void addSatietyBuf(Branch giver, float n){
         satietyBuffer = satietyBuffer + n;
+        giver.satiety = giver.satiety - n;
     }
 
     private void receiveBuffer(){
@@ -67,12 +70,17 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     }
 
     private void distributeFood(){
-        int connectedBCount = branches.size();
-        if(level != 0) connectedBCount++;
+        int connectedBCount = branches.size();//add sons
+        connectedBCount = connectedBCount + brothers.size(); //add brothers
+        if(level != 0) connectedBCount++; //add parent if not root
+
         float portion = (satiety/2)/connectedBCount;
-        if(level != 0) parentBranch.addSatietyBuf(portion);
+        if(level != 0) parentBranch.addSatietyBuf(this,portion);
         for(Branch b : branches){
-            b.addSatietyBuf(portion);
+            b.addSatietyBuf(this,portion);
+        }
+        for(Branch b : brothers){
+            b.addSatietyBuf(this,portion);
         }
     }
 
@@ -87,6 +95,45 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
 
     protected void grow(Vector2D newHook){
 
+    }
+
+    protected void updateLine(Vector2D newHook){
+        float shiftX = newHook.getX()-line.x1;
+        float shiftY = newHook.getY()-line.y1;
+        float newX1 = line.x1+shiftX;
+        float newX2 = line.x2+shiftX;
+        float newY1 = line.y1+shiftY;
+        float newY2 = line.y2+shiftY;
+        line = new Line2D.Float(newX1,newY1,newX2,newY2);
+        for(Branch b : branches){
+            b.updateLine(new Vector2D(newX2,newY2));
+        }
+    }
+
+    protected ArrayList<Line2D> getLinesRec(){
+        ArrayList<Line2D> lList = new ArrayList<Line2D>();
+        lList.add(line);
+        for(Branch b : branches){
+            lList.addAll(b.getLinesRec());
+        }
+        return lList;
+    }
+
+    protected ArrayList<Circle> getCirclesRec(){
+        ArrayList<Circle> cList = new ArrayList<Circle>();
+        cList.addAll(getCircles());
+        for(Branch b : branches){
+            cList.addAll(b.getCirclesRec());
+        }
+        return cList;
+    }
+
+    private ArrayList<Circle> getCircles(){
+        ArrayList<Circle> cList = new ArrayList<Circle>();
+        for(Leaf l : leaves){
+            cList.add(l.shape);
+        }
+        return cList;
     }
 
     protected void doBranch(int n){

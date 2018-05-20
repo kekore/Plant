@@ -17,8 +17,8 @@ public class Vector2D implements Serializable{
         this.x = v.getX();
         this.y = v.getY();
     }
-    public double length(){
-        return Math.sqrt(x*x+y*y);
+    public float length(){
+        return (float)Math.sqrt(x*x+y*y);
     }
     public Vector2D add(Vector2D v)
     {

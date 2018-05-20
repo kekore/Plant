@@ -3,6 +3,7 @@ package environmentPack;
 import java.io.Serializable;
 
 public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES (?)
+    protected Circle shape;
     private Branch parentBranch;
     private Tree parentTree;
     //private int green;
