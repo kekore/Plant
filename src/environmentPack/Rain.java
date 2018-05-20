@@ -6,11 +6,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdego cyklu
+public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdego cyklu (cycle)
     private int frequency;
     private int intensity;
     protected boolean isRaining;
     private long startTime;
+    private int cycle;
     private int shift;
 
     private int[] xArray;
@@ -21,6 +22,7 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
         this.intensity = intensity;
         isRaining = true;
         startTime = 0;
+        cycle = 0;
         shift = 0;
 
         Random generator = new Random();
@@ -49,6 +51,7 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
         //int n = width*intensity/100;
         for(int i : xArray){
             pList.add(new Particle(new Vector2D((i+shift)%width,0),new Vector2D(),new Vector2D(),10,4,Particle.Type.DROP));
+            cycle++;
             shift = shift + 10;
         }
         /*for(long i = time % 2; i < intensity/2; i = i + 2){
