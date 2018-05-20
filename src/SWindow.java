@@ -92,6 +92,9 @@ class SimPanel extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
+
+        Line2D.Float line = new Line2D.Float(20,100,200,200);
+
         ArrayList<Circle> cList = simulator.getCircles();
         ArrayList<Line2D> lList = simulator.getLines();
         ArrayList<Rect> rList = simulator.getRects();
@@ -112,6 +115,7 @@ class SimPanel extends JPanel implements ActionListener{
             if(!r.isFilled)g2d.draw(r.rectangle);
             else g2d.fill(r.rectangle);
         }
+
     }
 
     @Override

@@ -148,8 +148,8 @@ public class Environment implements Serializable {
     }
 
     public void insertTree(Tree tree){
-        reset();
         this.tree = tree;
+        reset();
     }
 
     public long getTime(){
@@ -157,6 +157,10 @@ public class Environment implements Serializable {
     }
 
     public void reset(){
-
+        time = 0;
+        particleList.clear();
+        //tree.reset();
+        //sun.reset();
+        //rain.reset();
      }
 }

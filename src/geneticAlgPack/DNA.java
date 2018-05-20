@@ -4,17 +4,28 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class DNA implements Serializable{
-    int[] gene;
-    Random generator;
+    private int[] gene;
+    private static int genesAmount = 20;
 
     public DNA(){
-        generator = new Random();
-        gene = new int[20];
+        Random generator = new Random();
+        gene = new int[genesAmount];
         for(int g : gene){
             g = generator.nextInt(20);
         }
     }
-    DNA(int[] genes){
+
+    public DNA(int[] genes){
         gene = genes.clone();
+    }
+
+    public int getGene(int index){
+        int ret;
+        try{
+            ret = gene[index];
+        } catch (ArrayIndexOutOfBoundsException e){
+            throw new RuntimeException();
+        }
+        return ret;
     }
 }

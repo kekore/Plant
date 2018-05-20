@@ -4,10 +4,12 @@ import physicsPack.Vector2D;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 public class Circle implements Serializable{
     public Ellipse2D.Float ellipse;
+    //public Rectangle2D.Float hitbox;
     protected int d;
     public Color color;
     Circle(Vector2D p, int a, Color c){
