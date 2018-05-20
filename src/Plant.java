@@ -1,3 +1,5 @@
+import physicsPack.Maths;
+
 import java.awt.EventQueue;
 
 public class Plant {

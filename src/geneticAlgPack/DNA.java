@@ -11,7 +11,7 @@ public class DNA implements Serializable{
         Random generator = new Random();
         gene = new int[genesAmount];
         for(int g : gene){
-            g = generator.nextInt(20);
+            g = generator.nextInt(16)-8;
         }
     }
 
