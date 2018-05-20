@@ -4,12 +4,15 @@ package environmentPack;
 import physicsPack.Vector2D;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Environment implements Serializable {
+    private int windowWidth;
+    private int windowHeight;
     private final int width; //TODO mozliwosc roznych wielkosci
     private final int height;
     private ArrayList<Particle> particleList;
@@ -38,6 +41,15 @@ public class Environment implements Serializable {
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
 
         time = 0;
+    }
+
+    public void saveWindowSize(int windowWidth, int windowHeight){
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
+    }
+
+    public Dimension getWindowSize(){
+        return new Dimension(windowWidth,windowHeight);
     }
 
     public void addParticle(Particle p){

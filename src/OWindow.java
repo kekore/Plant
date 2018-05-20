@@ -15,7 +15,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 // (O)verview window
-public class OWindow extends JFrame implements ChangeListener{
+public class OWindow extends JFrame implements ChangeListener, ActionListener{
     protected OvrPanel ovrPanel;
     protected int width;
     protected int height;
@@ -42,11 +42,25 @@ public class OWindow extends JFrame implements ChangeListener{
             setSize(width, height);
             ovrPanel.noInit();
             ovrPanel.updateSize();
+            if(ovrPanel.seedPosX > ovrPanel.getSize().getWidth()-10) ovrPanel.seedPosX = (int)ovrPanel.getSize().getWidth()-20;
         } else if (((JSlider) e.getSource()).getName() == "heightSlider") {
             height = ((JSlider) e.getSource()).getValue();
             setSize(width, height);
             ovrPanel.noInit();
             ovrPanel.updateSize();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        if(((JButton)e.getSource()).getText() == "Zapisz do pliku"){
+            System.out.println("Save file returned: " + ovrPanel.saveFile(width,height)); //TODO change this
+        } else if(((JButton)e.getSource()).getText() == "Wczytaj z pliku"){
+            System.out.println("Load file returned: " + ovrPanel.loadFile());
+            Dimension size = ovrPanel.environment.getWindowSize();
+            width = size.width;
+            height = size.height;
+            setSize(size);
         }
     }
 }
@@ -68,7 +82,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     private boolean mousePressed;
 
     private int groundLevel;
-    private int seedPosX;
+    protected int seedPosX;
     private int dayTime;
     private int rainFrequency;
     private int rainIntensity;
@@ -102,9 +116,10 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         environment = null;
     }
     //TODO check if works properly - if all fields are loaded
-    private int saveFile(){
+    protected int saveFile(int windowWidth, int windowHeight){
         if(!isInitialized) return 4;
         int ret = 0;
+        environment.saveWindowSize(windowWidth, windowHeight);
         try {
             FileOutputStream fos = new FileOutputStream(new File("environment.env"));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -125,7 +140,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         return ret;
     }
 
-    private int loadFile(){
+    protected int loadFile(){ //TODO przeniesc do okna i wykminic ustawienie wielkosci okna
         int ret = 0;
         try {
             FileInputStream fis = new FileInputStream(new File("environment.env"));
@@ -194,12 +209,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             choice = Choice.FACTORY;
         } else if(((JButton)e.getSource()).getText() == "Dodaj spawner"){
             choice = Choice.SPAWNER;
-        } else if(((JButton)e.getSource()).getText() == "Zapisz do pliku"){
-            System.out.println("Save file returned: " + saveFile()); //TODO change this
-        } else if (((JButton)e.getSource()).getText() == "Wczytaj z pliku"){
-            System.out.println(environment);
-            System.out.println("Load file returned: " + loadFile()); //TODO change this
-            System.out.println(environment);
         } else if (((JButton)e.getSource()).getText() == "Posadź ziarno"){
             choice = Choice.SEED;
         } else if (((JButton)e.getSource()).getText() == "Zainicjuj"){

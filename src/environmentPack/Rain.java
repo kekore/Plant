@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Rain implements Serializable{
+public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdego cyklu
     private int frequency;
     private int intensity;
     protected boolean isRaining;
@@ -31,7 +31,7 @@ public class Rain implements Serializable{
     }
 
     protected boolean proc(long time){
-        if(time % (50*frequency) == 0){
+        if(time % (20*frequency) == 0){
             System.out.println("rain: " + time);
             System.out.println(time % (10*frequency));
             System.out.println(frequency);

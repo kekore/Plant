@@ -63,8 +63,8 @@ class EButtonPanel extends JPanel{
 
         addFactoryBut.addActionListener((ActionListener)ovrW.ovrPanel);
         addSpawnerBut.addActionListener((ActionListener)ovrW.ovrPanel);
-        saveFileBut.addActionListener((ActionListener)ovrW.ovrPanel);
-        loadFileBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        saveFileBut.addActionListener(ovrW);
+        loadFileBut.addActionListener(ovrW);
         seedPlaceBut.addActionListener((ActionListener)ovrW.ovrPanel);
         initBut.addActionListener((ActionListener)ovrW.ovrPanel);
 

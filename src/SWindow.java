@@ -35,9 +35,11 @@ public class SWindow extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText() == "Symulacja"){
             if(!siming) {
-                setVisible(true);
-                siming = true;
-                simPanel.start();
+                if(simPanel.simulator.isSet()) {
+                    setVisible(true);
+                    siming = true;
+                    simPanel.start();
+                }
             }
             else{
                 setVisible(true);
@@ -51,7 +53,7 @@ public class SWindow extends JFrame implements ActionListener{
 class SimPanel extends JPanel implements ActionListener{
 
     private Timer timer;
-    private Simulator simulator;
+    protected Simulator simulator;
     //Random generator;
     private JTextField timeText;
     private JTextField fpsText;

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Simulator implements ActionListener{
     private GeneticAlg geneticAlg;
     private Environment environment;
+    private boolean isSet;
     private long tickTime;
     //private boolean quickSim;
     private Timer timer;
@@ -23,8 +24,11 @@ public class Simulator implements ActionListener{
     private int cycle;
 
     public Simulator(long tT, Environment environment){
-        if(environment != null) this.environment = environment;
-        else this.environment = new Environment(600,700,100,20,12,50,50);
+        if(environment != null){
+            this.environment = environment;
+            isSet = true;
+        } else isSet = false;
+        //else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
         //quickSim = false;
         timer = new Timer(1,this);
@@ -72,6 +76,11 @@ public class Simulator implements ActionListener{
     public void setSpeed(int a){speed = a;}
     public void setEnvironment(Environment environment){
         this.environment = environment;
+        isSet = true;
     }
-    public long getTime(){return environment.getTime();}
+    public long getTime(){
+        if(!isSet) return 0;
+        return environment.getTime();
+    }
+    public boolean isSet() { return isSet; }
 }
