@@ -23,6 +23,7 @@ public class Individual {
         return tree;
     }
     public int getFitness(){
+        if(!tested) return -1;
         return fitness;
     }
 }
