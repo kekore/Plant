@@ -43,7 +43,7 @@ public class EWindow extends JFrame implements ActionListener {
     }
 }
 
-class EButtonPanel extends JPanel{
+class EButtonPanel extends JPanel{ //TODO cant edit when working
     //private OWindow overviewWindow;
     private JButton addFactoryBut;
     private JButton addSpawnerBut;

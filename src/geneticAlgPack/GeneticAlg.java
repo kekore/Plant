@@ -1,5 +1,7 @@
 package geneticAlgPack;
 
+import environmentPack.Tree;
+
 import java.util.ArrayList;
 
 public class GeneticAlg {
@@ -27,5 +29,19 @@ public class GeneticAlg {
         ArrayList<DNA> newGenDNAList = crossover.shuffle(populations.get(currentGen).DNAList);
         mutation.Mutate(newGenDNAList);
         populations.add(new Population(++currentGen,newGenDNAList));
+    }
+
+    public Individual getIndividual(int generation, int index){
+        Individual ret;
+        try{
+            ret = populations.get(generation).getIndividual(index);
+        } catch (IndexOutOfBoundsException e){
+            throw new RuntimeException();
+        }
+        return ret;
+    }
+
+    public Tree getTree(int generation, int index){
+        return getIndividual(generation,index).tree;
     }
 }

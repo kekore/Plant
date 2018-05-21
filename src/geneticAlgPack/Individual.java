@@ -4,7 +4,7 @@ import environmentPack.Tree;
 
 public class Individual {
     private DNA dna;
-    private Tree tree;
+    protected Tree tree;
     private int fitness;
     private boolean tested;
 

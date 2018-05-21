@@ -26,6 +26,7 @@ public class Environment implements Serializable {
     private Rain rain;
     private Wind wind;
     private long time;
+    private boolean isWorking; //TODO for denying editions
 
     public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int dayTime, int rainFreq, int rainInt){
         width = canvasWidth;
@@ -41,6 +42,7 @@ public class Environment implements Serializable {
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
 
         time = 0;
+        isWorking = false;
     }
 
     public void saveWindowSize(int windowWidth, int windowHeight){

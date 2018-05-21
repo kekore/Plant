@@ -15,4 +15,14 @@ public class Population {
             individuals.add(new Individual(dna));
         }
     }
+
+    protected Individual getIndividual(int index){
+        Individual ret;
+        try{
+            ret = individuals.get(index);
+        } catch (IndexOutOfBoundsException e){
+            throw new RuntimeException();
+        }
+        return ret;
+    }
 }
