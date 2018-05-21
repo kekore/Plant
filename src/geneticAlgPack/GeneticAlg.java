@@ -9,7 +9,7 @@ public class GeneticAlg {
     private Crossover crossover;
     private Mutation mutation;
 
-    GeneticAlg(int populationSize, int mutationProbability, int maxMutedGenes){
+    public GeneticAlg(int populationSize, int mutationProbability, int maxMutedGenes){
         populations = new ArrayList<Population>();
         popSize = populationSize;
         crossover = new Crossover(populationSize);
@@ -23,7 +23,9 @@ public class GeneticAlg {
         currentGen = 0;
     }
 
-    public void generateNewGen(){
-        //TODO
+    public void createNewGen(){
+        ArrayList<DNA> newGenDNAList = crossover.shuffle(populations.get(currentGen).DNAList);
+        mutation.Mutate(newGenDNAList);
+        populations.add(new Population(++currentGen,newGenDNAList));
     }
 }

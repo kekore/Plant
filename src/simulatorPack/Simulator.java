@@ -23,7 +23,7 @@ public class Simulator implements ActionListener{
     private int speed;
     private int cycle;
 
-    public Simulator(long tT, Environment environment){
+    public Simulator(long tT, Environment environment){ //TODO algorythm as parameter
         if(environment != null){
             this.environment = environment;
             isSet = true;
@@ -78,6 +78,7 @@ public class Simulator implements ActionListener{
         this.environment = environment;
         isSet = true;
     }
+    //TODO add setAlgorytm (?)
     public long getTime(){
         if(!isSet) return 0;
         return environment.getTime();

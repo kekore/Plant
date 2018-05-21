@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Population {
     private int generation;
     private ArrayList<Individual> individuals;
-    private ArrayList<DNA> DNAList;
+    protected ArrayList<DNA> DNAList;
 
     protected Population(int genNr, ArrayList<DNA> DNAList){
         this.DNAList = DNAList;
