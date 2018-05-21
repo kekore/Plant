@@ -33,7 +33,7 @@ public class SWindow extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(((JButton)e.getSource()).getText() == "Symulacja"){
+        if(((JButton)e.getSource()).getText().equals("Symulacja")){
             if(!siming) {
                 if(simPanel.simulator.isSet()) {
                     setVisible(true);
@@ -131,7 +131,7 @@ class SimPanel extends JPanel implements ActionListener{
                 secStart = System.currentTimeMillis();
             }
             timeText.setText("Time: " + simulator.getTime());
-        } else if (((JButton) e.getSource()).getText() == "Dodaj") {
+        } else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
             for(int i = 0; i < 1; i++) {
                 /*Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);
                 Vector2D v = new Vector2D((float)generator.nextInt(50) / 10+10, (float)generator.nextInt(50) / 10+10);*/
@@ -140,13 +140,13 @@ class SimPanel extends JPanel implements ActionListener{
                 Vector2D f = new Vector2D(0,-50);
                 simulator.addP(p, v, f, 1, 10, Particle.Type.OXYGEN);
             }
-        } else if (((JButton) e.getSource()).getText() == "2x"){
+        } else if (((JButton) e.getSource()).getText().equals("2x")){
             simulator.setSpeed(2);
-        } else if (((JButton) e.getSource()).getText() == "4x"){
+        } else if (((JButton) e.getSource()).getText().equals("4x")){
             simulator.setSpeed(1);
-        } else if (((JButton) e.getSource()).getText() == "0.5x"){
+        } else if (((JButton) e.getSource()).getText().equals("0.5x")){
             simulator.setSpeed(64);
-        } else if (((JButton) e.getSource()).getText() == "Pokaż/ukryj"){
+        } else if (((JButton) e.getSource()).getText().equals("Pokaż/ukryj")){
             showInvis = !showInvis;
         }
     }

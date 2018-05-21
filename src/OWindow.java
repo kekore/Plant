@@ -37,13 +37,13 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
 
     @Override
     public void stateChanged (ChangeEvent e){
-        if (((JSlider) e.getSource()).getName() == "widthSlider") {
+        if (((JSlider) e.getSource()).getName().equals("widthSlider")) {
             width = ((JSlider) e.getSource()).getValue();
             setSize(width, height);
             ovrPanel.noInit();
             ovrPanel.updateSize();
             if(ovrPanel.seedPosX > ovrPanel.getSize().getWidth()-10) ovrPanel.seedPosX = (int)ovrPanel.getSize().getWidth()-20;
-        } else if (((JSlider) e.getSource()).getName() == "heightSlider") {
+        } else if (((JSlider) e.getSource()).getName().equals("heightSlider")) {
             height = ((JSlider) e.getSource()).getValue();
             setSize(width, height);
             ovrPanel.noInit();
@@ -53,9 +53,9 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(((JButton)e.getSource()).getText() == "Zapisz do pliku"){
+        if(((JButton)e.getSource()).getText().equals("Zapisz do pliku")){
             System.out.println("Save file returned: " + ovrPanel.saveFile(width,height)); //TODO change this
-        } else if(((JButton)e.getSource()).getText() == "Wczytaj z pliku"){
+        } else if(((JButton)e.getSource()).getText().equals("Wczytaj z pliku")){
             System.out.println("Load file returned: " + ovrPanel.loadFile());
             Dimension size = ovrPanel.environment.getWindowSize();
             width = size.width;
@@ -204,14 +204,14 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
             repaint();
-        } else if(((JButton)e.getSource()).getText() == "Dodaj fabrykę"){
+        } else if(((JButton)e.getSource()).getText().equals("Dodaj fabrykę")){
             System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
-        } else if(((JButton)e.getSource()).getText() == "Dodaj spawner"){
+        } else if(((JButton)e.getSource()).getText().equals("Dodaj spawner")){
             choice = Choice.SPAWNER;
-        } else if (((JButton)e.getSource()).getText() == "Posadź ziarno"){
+        } else if (((JButton)e.getSource()).getText().equals("Posadź ziarno")){
             choice = Choice.SEED;
-        } else if (((JButton)e.getSource()).getText() == "Zainicjuj"){
+        } else if (((JButton)e.getSource()).getText().equals("Zainicjuj")){
             initEnv();
         }
     }
@@ -263,16 +263,16 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
 
     @Override
     public void stateChanged (ChangeEvent e){
-        if(((JSlider) e.getSource()).getName() == "groundSlider"){
+        if(((JSlider) e.getSource()).getName().equals("groundSlider")){
             noInit();
             groundLevel = ((JSlider) e.getSource()).getValue();
-        } else if(((JSlider) e.getSource()).getName() == "sunSlider"){
+        } else if(((JSlider) e.getSource()).getName().equals("sunSlider")){
             noInit();
             dayTime = ((JSlider) e.getSource()).getValue();
-        } else if(((JSlider) e.getSource()).getName() == "rainFreqSlider"){
+        } else if(((JSlider) e.getSource()).getName().equals("rainFreqSlider")){
             noInit();
             rainFrequency = ((JSlider) e.getSource()).getValue();
-        } else if(((JSlider) e.getSource()).getName() == "rainIntSlider"){
+        } else if(((JSlider) e.getSource()).getName().equals("rainIntSlider")){
             noInit();
             rainIntensity = ((JSlider) e.getSource()).getValue();
         }

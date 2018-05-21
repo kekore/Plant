@@ -25,7 +25,7 @@ public class EWindow extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(((JButton)e.getSource()).getText() == "Edytor środowiska"){
+        if(((JButton)e.getSource()).getText().equals("Edytor środowiska")){
             if(!isVisible()){
                 setVisible(true);
                 overviewWindow.setVisible(true);

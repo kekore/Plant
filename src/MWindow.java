@@ -77,7 +77,7 @@ class MButtonPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(((JButton) e.getSource()).getText() == "Załaduj środowisko z edytora"){
+        if(((JButton) e.getSource()).getText().equals("Załaduj środowisko z edytora")){
             Environment environment = envWindow.getEnvironment();
             if(environment != null){
                 simWindow.setSize(envWindow.overviewWindow.width,envWindow.overviewWindow.height);
