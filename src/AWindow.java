@@ -43,58 +43,32 @@ public class AWindow extends JFrame implements ActionListener{
 
 class APanel extends JPanel implements ChangeListener, ActionListener{
     protected GeneticAlg geneticAlg;
-    private JSlider popSizeSlider;
+    private PopPanel popPanel;
+    private FitPanel fitPanel;
+    private ProbPanel probPanel;
+    private MutPanel mutPanel;
+
     private int popSize;
-    private JSlider fittestAmountSlider;
     private int fittestAmount;
-    private JSlider mutProbSlider;
     private int mutProb;
-    private JSlider maxMutGenSlider;
     private int maxMutGen;
     private JButton initBut;
     protected boolean isInitialized;
 
     protected APanel(){
-        popSizeSlider = new JSlider(JSlider.HORIZONTAL,200,2000,200);
-        //widthSlider.setName("widthSlider");
-        popSizeSlider.setMinorTickSpacing(50);
-        popSizeSlider.setMajorTickSpacing(200);
-        popSizeSlider.setPaintTicks(true);
-        popSizeSlider.setPaintLabels(true);
-        popSizeSlider.addChangeListener(this);
-
-        fittestAmountSlider = new JSlider(JSlider.HORIZONTAL,50,500,50);
-        //widthSlider.setName("widthSlider");
-        fittestAmountSlider.setMinorTickSpacing(10);
-        fittestAmountSlider.setMajorTickSpacing(50);
-        fittestAmountSlider.setPaintTicks(true);
-        fittestAmountSlider.setPaintLabels(true);
-        fittestAmountSlider.addChangeListener(this);
-
-        mutProbSlider = new JSlider(JSlider.HORIZONTAL,0,100,1);
-        //widthSlider.setName("widthSlider");
-        mutProbSlider.setMinorTickSpacing(2);
-        mutProbSlider.setMajorTickSpacing(10);
-        mutProbSlider.setPaintTicks(true);
-        mutProbSlider.setPaintLabels(true);
-        mutProbSlider.addChangeListener(this);
-
-        maxMutGenSlider = new JSlider(JSlider.HORIZONTAL,1,5,3);
-        //widthSlider.setName("widthSlider");
-        //maxGenMutSlider.setMinorTickSpacing(1);
-        maxMutGenSlider.setMajorTickSpacing(1);
-        maxMutGenSlider.setPaintTicks(true);
-        maxMutGenSlider.setPaintLabels(true);
-        maxMutGenSlider.addChangeListener(this);
+        popPanel = new PopPanel(this);
+        fitPanel = new FitPanel(this);
+        probPanel = new ProbPanel(this);
+        mutPanel = new MutPanel(this);
 
         initBut = new JButton("Zainicjuj");
         initBut.addActionListener(this);
 
         setLayout(new GridLayout(3, 2, 20, 20));
-        add(popSizeSlider);
-        add(fittestAmountSlider);
-        add(mutProbSlider);
-        add(maxMutGenSlider);
+        add(popPanel);
+        add(fitPanel);
+        add(probPanel);
+        add(mutPanel);
         add(initBut);
     }
 
@@ -117,29 +91,123 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
 
     @Override
     public void stateChanged (ChangeEvent e){ //it can jump better
-        if(e.getSource() == popSizeSlider){
+        if(e.getSource() == popPanel.popSizeSlider){
             noInit();
-            popSizeSlider.setValue(((int)(popSizeSlider.getValue()/50))*50);
+            popPanel.popSizeSlider.setValue(((int)(popPanel.popSizeSlider.getValue()/50))*50);
             popSize = ((JSlider) e.getSource()).getValue();
             if(popSize < fittestAmount){
-                fittestAmountSlider.setValue(popSize);
+                fitPanel.fittestAmountSlider.setValue(popSize);
                 fittestAmount = popSize;
             }
             System.out.println(popSize);
-        } else if(e.getSource() == fittestAmountSlider){
+        } else if(e.getSource() == fitPanel.fittestAmountSlider){
             noInit();
-            fittestAmountSlider.setValue(((int)(fittestAmountSlider.getValue()/25))*25);
+            fitPanel.fittestAmountSlider.setValue(((int)(fitPanel.fittestAmountSlider.getValue()/25))*25);
             fittestAmount = ((JSlider) e.getSource()).getValue();
             if(fittestAmount > popSize){
-                popSizeSlider.setValue(fittestAmount);
+                popPanel.popSizeSlider.setValue(fittestAmount);
                 popSize = fittestAmount;
             }
-        } else if(e.getSource() == mutProbSlider){
+        } else if(e.getSource() == probPanel.mutProbSlider){
             noInit();
             mutProb = ((JSlider) e.getSource()).getValue();
-        } else if (e.getSource() == maxMutGenSlider){
+        } else if (e.getSource() == mutPanel.maxMutGenSlider){
             noInit();
             maxMutGen = ((JSlider) e.getSource()).getValue();
         }
+    }
+}
+
+class PopPanel extends JPanel{
+    private JTextField popSizeName;
+    protected JSlider popSizeSlider;
+
+    protected PopPanel(APanel a){
+        popSizeName = new JTextField("Wielkość populacji");
+        popSizeName.setEditable(false);
+        popSizeName.setBorder(null);
+        popSizeName.setHorizontalAlignment(JTextField.CENTER);
+
+        popSizeSlider = new JSlider(JSlider.HORIZONTAL,200,2000,200);
+        popSizeSlider.setMinorTickSpacing(50);
+        popSizeSlider.setMajorTickSpacing(200);
+        popSizeSlider.setPaintTicks(true);
+        popSizeSlider.setPaintLabels(true);
+        popSizeSlider.addChangeListener(a);
+
+        setLayout(new GridLayout(2,1));
+        add(popSizeName);
+        add(popSizeSlider);
+    }
+}
+
+class FitPanel extends JPanel{
+    private JTextField fittesName;
+    protected JSlider fittestAmountSlider;
+
+    protected FitPanel(APanel a){
+        fittesName = new JTextField("Ilość najlepszych osobników");
+        fittesName.setEditable(false);
+        fittesName.setBorder(null);
+        fittesName.setHorizontalAlignment(JTextField.CENTER);
+
+        fittestAmountSlider = new JSlider(JSlider.HORIZONTAL,50,500,50);
+        fittestAmountSlider.setMinorTickSpacing(10);
+        fittestAmountSlider.setMajorTickSpacing(50);
+        fittestAmountSlider.setPaintTicks(true);
+        fittestAmountSlider.setPaintLabels(true);
+        fittestAmountSlider.addChangeListener(a);
+
+        setLayout(new GridLayout(2,1));
+        add(fittesName);
+        add(fittestAmountSlider);
+    }
+}
+
+class ProbPanel extends JPanel{
+    private JTextField probName;
+    protected JSlider mutProbSlider;
+
+    protected ProbPanel(APanel a){
+        probName = new JTextField("Prawdopodobieństwo zajścia mutacji w procentach");
+        probName.setEditable(false);
+        probName.setBorder(null);
+        probName.setHorizontalAlignment(JTextField.CENTER);
+
+        mutProbSlider = new JSlider(JSlider.HORIZONTAL,0,100,1);
+        //widthSlider.setName("widthSlider");
+        mutProbSlider.setMinorTickSpacing(2);
+        mutProbSlider.setMajorTickSpacing(10);
+        mutProbSlider.setPaintTicks(true);
+        mutProbSlider.setPaintLabels(true);
+        mutProbSlider.addChangeListener(a);
+
+        setLayout(new GridLayout(2,1));
+        add(probName);
+        add(mutProbSlider);
+    }
+}
+
+class MutPanel extends JPanel{
+    private JTextField mutName;
+    protected JSlider maxMutGenSlider;
+
+    protected MutPanel(APanel a){
+        mutName = new JTextField("Maksymalna ilość zmutowanych genów w DNA");
+        mutName.setEditable(false);
+        mutName.setBorder(null);
+        mutName.setHorizontalAlignment(JTextField.CENTER);
+
+        maxMutGenSlider = new JSlider(JSlider.HORIZONTAL,1,5,3);
+        //widthSlider.setName("widthSlider");
+        //maxGenMutSlider.setMinorTickSpacing(1);
+        maxMutGenSlider.setMajorTickSpacing(1);
+        maxMutGenSlider.setPaintTicks(true);
+        maxMutGenSlider.setPaintLabels(true);
+        maxMutGenSlider.addChangeListener(a);
+
+        setLayout(new GridLayout(2,1));
+        add(mutName);
+        add(maxMutGenSlider);
     }
 }
