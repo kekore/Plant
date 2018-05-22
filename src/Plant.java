@@ -10,12 +10,15 @@ public class Plant {
         //while(!ovrR.isRan());
         //System.out.println(ovrR.getRef());
         EnvRunnable envR = new EnvRunnable(ovrR.getRef());
+        AlgRunnable algR = new AlgRunnable();
+
         EventQueue.invokeLater(simR);
         EventQueue.invokeLater(envR);
+        EventQueue.invokeLater(algR);
         EventQueue.invokeLater(new Runnable(){
             @Override
             public void run(){
-                new MWindow(simR.getRef(),envR.getRef());
+                new MWindow(simR.getRef(),envR.getRef(),algR.getRef());
             }
         });
     }
@@ -55,4 +58,14 @@ class OvrRunnable implements Runnable {
         return o;
     }
     private OWindow o;
+}
+
+class AlgRunnable implements Runnable{
+    AlgRunnable() { a = new AWindow(); }
+    @Override
+    public void run() {
+        //a = new AWindow();
+    }
+    protected AWindow getRef() { return a; }
+    private AWindow a;
 }

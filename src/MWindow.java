@@ -8,7 +8,7 @@ public class MWindow extends JFrame{
     //private SWindow simWindow;
     //private EWindow envWindow;
 
-    public MWindow(SWindow s, EWindow e){
+    public MWindow(SWindow s, EWindow e, AWindow a){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //do zmiany... albo nie?
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -19,26 +19,28 @@ public class MWindow extends JFrame{
 
         //simWindow = s;
         //envWindow = e;
-        add(new MButtonPanel(s, e));
+        add(new MButtonPanel(s, e, a));
 
         setResizable(false);
         setVisible(true);
     }
 }
 
-class MButtonPanel extends JPanel implements ActionListener{
+class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj algorytm z edytora
     private SWindow simWindow;
     private EWindow envWindow;
+    private AWindow algWindow;
     private JButton s;
     private JButton w;
     private JButton t;
     private JButton q;
     private JButton h;
     private JButton envEditBut;
+    private JButton algEditBut;
     private JButton loadEnvBut;
     private JButton showInvisBut;
 
-    protected MButtonPanel(SWindow simW, EWindow envW){
+    protected MButtonPanel(SWindow simW, EWindow envW, AWindow algW){
         simWindow = simW;
         envWindow = envW;
         //Dimension d = new Dimension(100,100); //niepotrzebne raczej
@@ -49,6 +51,7 @@ class MButtonPanel extends JPanel implements ActionListener{
         q = new JButton("4x");
         h = new JButton("0.5x");
         envEditBut = new JButton("Edytor środowiska");
+        algEditBut = new JButton("Edytor algorytmu");
         loadEnvBut = new JButton("Załaduj środowisko z edytora");
         showInvisBut = new JButton("Pokaż/ukryj");
 
@@ -60,17 +63,19 @@ class MButtonPanel extends JPanel implements ActionListener{
         q.addActionListener((ActionListener)simW.simPanel);
         h.addActionListener((ActionListener)simW.simPanel);
         envEditBut.addActionListener((ActionListener)envW);
+        algEditBut.addActionListener((ActionListener)algW);
         loadEnvBut.addActionListener((ActionListener)this);
         showInvisBut.addActionListener((ActionListener)simW.simPanel);
 
 
-        setLayout(new GridLayout(2, 2, 20, 20));
+        setLayout(new GridLayout(3, 4, 20, 20));
         add(s);
         add(w);
         add(t);
         add(q);
         add(h);
         add(envEditBut);
+        add(algEditBut);
         add(loadEnvBut);
         add(showInvisBut);
     }
@@ -84,5 +89,6 @@ class MButtonPanel extends JPanel implements ActionListener{
                 simWindow.simPanel.setEnvironment(environment);
             }
         }
+        //TODO zaladuj algorytm z AWindow do simWindow
     }
 }

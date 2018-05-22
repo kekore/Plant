@@ -4,7 +4,7 @@ import environmentPack.Tree;
 
 import java.util.ArrayList;
 
-public class GeneticAlg {
+public class GeneticAlg { //TODO make serializable (?) not important
     private ArrayList<Population> populations;
     private final int popSize;
     private final int fittestAmount;

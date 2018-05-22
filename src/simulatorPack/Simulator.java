@@ -24,7 +24,7 @@ public class Simulator implements ActionListener{
     private int cycle;
 
     public Simulator(long tT, Environment environment){ //TODO algorythm as parameter
-        if(environment != null){
+        if(environment != null){                        //TODO add quick simulation thread class
             this.environment = environment;
             isSet = true;
         } else isSet = false;
@@ -43,6 +43,7 @@ public class Simulator implements ActionListener{
     }
     private void proc(){
         environment.proc(tickTime);
+        //TODO have to check if simulation is finished and then do some genetic alg stuff
     }
     public ArrayList<Circle> getCircles(){
         return environment.getCircles();

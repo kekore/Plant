@@ -235,9 +235,9 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
                 if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
                     environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30));
                     System.out.println("Added factory");
-                    }
-                    break;
                 }
+                break;
+            }
             case SPAWNER: {
                 if (isInitialized && y1 + 3 < canvasHeight - groundLevel) {
                     Vector2D pos = new Vector2D(x1, y1);
