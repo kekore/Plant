@@ -119,6 +119,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     public void stateChanged (ChangeEvent e){
         if(e.getSource() == popSizeSlider){
             noInit();
+            popSizeSlider.setValue(((int)(popSizeSlider.getValue()/50))*50);
             popSize = ((JSlider) e.getSource()).getValue();
             if(popSize < fittestAmount){
                 fittestAmountSlider.setValue(popSize);
@@ -127,6 +128,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
             System.out.println(popSize);
         } else if(e.getSource() == fittestAmountSlider){
             noInit();
+            fittestAmountSlider.setValue(((int)(fittestAmountSlider.getValue()/25))*25);
             fittestAmount = ((JSlider) e.getSource()).getValue();
             if(fittestAmount > popSize){
                 popSizeSlider.setValue(fittestAmount);
