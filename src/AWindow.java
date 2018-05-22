@@ -116,7 +116,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     }
 
     @Override
-    public void stateChanged (ChangeEvent e){
+    public void stateChanged (ChangeEvent e){ //it can jump better
         if(e.getSource() == popSizeSlider){
             noInit();
             popSizeSlider.setValue(((int)(popSizeSlider.getValue()/50))*50);

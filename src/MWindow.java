@@ -38,6 +38,7 @@ class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj alg
     private JButton envEditBut;
     private JButton algEditBut;
     private JButton loadEnvBut;
+    private JButton loadAlgBut;
     private JButton showInvisBut;
 
     protected MButtonPanel(SWindow simW, EWindow envW, AWindow algW){
@@ -52,7 +53,8 @@ class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj alg
         h = new JButton("0.5x");
         envEditBut = new JButton("Edytor środowiska");
         algEditBut = new JButton("Edytor algorytmu");
-        loadEnvBut = new JButton("Załaduj środowisko z edytora");
+        loadEnvBut = new JButton("Załaduj środ. z edytora");
+        loadAlgBut = new JButton("Załaduj algorytm z edytora");
         showInvisBut = new JButton("Pokaż/ukryj");
 
         //s.addActionListener(this);
@@ -64,11 +66,12 @@ class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj alg
         h.addActionListener((ActionListener)simW.simPanel);
         envEditBut.addActionListener((ActionListener)envW);
         algEditBut.addActionListener((ActionListener)algW);
-        loadEnvBut.addActionListener((ActionListener)this);
+        loadEnvBut.addActionListener(this);
+        loadAlgBut.addActionListener(this);
         showInvisBut.addActionListener((ActionListener)simW.simPanel);
 
 
-        setLayout(new GridLayout(3, 4, 20, 20));
+        setLayout(new GridLayout(4, 3, 20, 20));
         add(s);
         add(w);
         add(t);
@@ -77,12 +80,13 @@ class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj alg
         add(envEditBut);
         add(algEditBut);
         add(loadEnvBut);
+        add(loadAlgBut);
         add(showInvisBut);
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(((JButton) e.getSource()).getText().equals("Załaduj środowisko z edytora")){
+        if(((JButton) e.getSource()).getText().equals("Załaduj środ. z edytora")){
             Environment environment = envWindow.getEnvironment();
             if(environment != null){
                 simWindow.setSize(envWindow.overviewWindow.width,envWindow.overviewWindow.height);
