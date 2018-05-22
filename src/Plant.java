@@ -1,65 +1,58 @@
-/*import java.awt.*;
-import java.awt.geom.*;
-import javax.swing.*;*/
-import javax.swing.*;
+import physicsPack.Maths;
+
 import java.awt.EventQueue;
 
 public class Plant {
     public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				JFrame frame = new DrawFrame();
-//				frame.setTitle("Plant");
-//				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//				frame.setVisible(true);
-//			}
-//		});
-
-        /*JFrame frame = new DrawFrame();
-        frame.setTitle("Plant");
-        frame.setSize(800, 600);
-        frame.setVisible(true);*/
-        JFrame m = new MWindow();
-        JFrame s = new SWindow();
-        /*EventQueue.invokeLater(new Runnable(){
+        SimRunnable simR = new SimRunnable(); //TODO ogarnac invokeLater
+        OvrRunnable ovrR = new OvrRunnable();
+        EventQueue.invokeLater(ovrR);
+        //while(!ovrR.isRan());
+        //System.out.println(ovrR.getRef());
+        EnvRunnable envR = new EnvRunnable(ovrR.getRef());
+        EventQueue.invokeLater(simR);
+        EventQueue.invokeLater(envR);
+        EventQueue.invokeLater(new Runnable(){
             @Override
             public void run(){
-                new MWindow();
+                new MWindow(simR.getRef(),envR.getRef());
             }
         });
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new SWindow();
-            }
-        });*/
     }
 }
 
-
-
-/* class DrawFrame extends JFrame
-{
-    private static final long serialVersionUID = 1L;
-
-    public DrawFrame()
-    {
-        add(new DrawComponent());
-        pack();
+class SimRunnable implements Runnable{
+    @Override
+    public void run() {
+        s = new SWindow();
     }
+    protected SWindow getRef(){
+        return s;
+    }
+    private SWindow s;
 }
 
-class DrawComponent extends JComponent
-{
-    //private static final int DEFAULT_WIDTH = 800;
-    //private static final int DEFAULT_HEIGHT = 600;
-    private static final long serialVersionUID = 1L;
-
-    public void paintComponent(Graphics g)
-    {
-        Graphics2D g2 = (Graphics2D) g;
-
-        Rectangle2D rect = new Rectangle2D.Double(10, 10, 40, 80);
-        g2.draw(rect);
+class EnvRunnable implements Runnable{
+    EnvRunnable(OWindow oRef){
+        o = oRef;
     }
-}*/
+    @Override
+    public void run() { e = new EWindow(o); }
+    protected EWindow getRef() { return e; }
+    private EWindow e;
+    private OWindow o;
+}
+
+class OvrRunnable implements Runnable {
+    OvrRunnable(){
+        o = new OWindow();
+    }
+    @Override
+    public void run() {
+        //o = new OWindow();
+    }
+    protected OWindow getRef() {
+        return o;
+    }
+    private OWindow o;
+}
