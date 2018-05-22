@@ -175,7 +175,6 @@ class ProbPanel extends JPanel{
         probName.setHorizontalAlignment(JTextField.CENTER);
 
         mutProbSlider = new JSlider(JSlider.HORIZONTAL,0,100,1);
-        //widthSlider.setName("widthSlider");
         mutProbSlider.setMinorTickSpacing(2);
         mutProbSlider.setMajorTickSpacing(10);
         mutProbSlider.setPaintTicks(true);
@@ -199,8 +198,6 @@ class MutPanel extends JPanel{
         mutName.setHorizontalAlignment(JTextField.CENTER);
 
         maxMutGenSlider = new JSlider(JSlider.HORIZONTAL,1,5,3);
-        //widthSlider.setName("widthSlider");
-        //maxGenMutSlider.setMinorTickSpacing(1);
         maxMutGenSlider.setMajorTickSpacing(1);
         maxMutGenSlider.setPaintTicks(true);
         maxMutGenSlider.setPaintLabels(true);

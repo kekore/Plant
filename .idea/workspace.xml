@@ -57,24 +57,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AWindow.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-424">
-              <caret line="171" column="82" lean-forward="false" selection-start-line="171" selection-start-column="82" selection-end-line="171" selection-end-column="82" />
+            <state relative-caret-position="103">
+              <caret line="199" column="64" lean-forward="false" selection-start-line="199" selection-start-column="64" selection-end-line="199" selection-end-column="64" />
               <folding>
                 <element signature="class#AWindow#0" expanded="false" />
-                <element signature="class#PopPanel#0" expanded="false" />
-                <element signature="class#FitPanel#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EWindow.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="EWindow.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/EWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1088">
+            <state relative-caret-position="782">
               <caret line="111" column="6" lean-forward="false" selection-start-line="111" selection-start-column="6" selection-end-line="111" selection-end-column="6" />
               <folding />
             </state>
@@ -743,14 +741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/EWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="111" column="6" lean-forward="false" selection-start-line="111" selection-start-column="6" selection-end-line="111" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/OWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -769,13 +759,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-424">
-          <caret line="171" column="82" lean-forward="false" selection-start-line="171" selection-start-column="82" selection-end-line="171" selection-end-column="82" />
+        <state relative-caret-position="103">
+          <caret line="199" column="64" lean-forward="false" selection-start-line="199" selection-start-column="64" selection-end-line="199" selection-end-column="64" />
           <folding>
             <element signature="class#AWindow#0" expanded="false" />
-            <element signature="class#PopPanel#0" expanded="false" />
-            <element signature="class#FitPanel#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="111" column="6" lean-forward="false" selection-start-line="111" selection-start-column="6" selection-end-line="111" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
