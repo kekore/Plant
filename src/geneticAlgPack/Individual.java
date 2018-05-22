@@ -1,9 +1,10 @@
 package geneticAlgPack;
 
 import environmentPack.Tree;
+import javafx.util.Pair;
 
 public class Individual {
-    private DNA dna;
+    protected DNA dna;
     protected Tree tree;
     private int fitness;
     private boolean tested;
@@ -25,5 +26,8 @@ public class Individual {
     public int getFitness(){
         if(!tested) return -1;
         return fitness;
+    }
+    protected Pair<DNA,Integer> getPair(){
+        return new Pair<DNA,Integer>(dna,new Integer(fitness));
     }
 }

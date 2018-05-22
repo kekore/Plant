@@ -1,11 +1,13 @@
 package geneticAlgPack;
 
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 
 public class Population {
     private int generation;
     private ArrayList<Individual> individuals;
-    protected ArrayList<DNA> DNAList;
+    private ArrayList<DNA> DNAList;
 
     protected Population(int genNr, ArrayList<DNA> DNAList){
         this.DNAList = DNAList;
@@ -24,5 +26,22 @@ public class Population {
             throw new RuntimeException();
         }
         return ret;
+    }
+
+    protected ArrayList<DNA> getFittest(int amount){ //TODO check if well done cause i was sleepy doing it :(
+        ArrayList<Pair<DNA,Integer>> pairs = new ArrayList<Pair<DNA,Integer>>();
+        for(Individual i : individuals){
+            pairs.add(i.getPair());
+        }
+        ArrayList<DNA> fittest = new ArrayList<DNA>();
+        for(int i = 0; i < amount; i++){
+            Pair<DNA,Integer> best = pairs.get(0);
+            for(int j = 0; j < pairs.size(); j++){
+                if(pairs.get(j).getValue() > best.getValue()) best = pairs.get(j);
+            }
+            fittest.add(best.getKey());
+            pairs.remove(best);
+        }
+        return fittest;
     }
 }
