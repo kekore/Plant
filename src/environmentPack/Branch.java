@@ -152,7 +152,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         branches.add(newBranch);
     }
 
-    protected void growRec(){
+    protected void growRec(){ //TODO grow leaves
         //System.out.println(satiety + " " + angle); //for debugging
         float lenghtFormula = getStaiety(((float)1/(float)(50*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));

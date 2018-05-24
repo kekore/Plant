@@ -29,8 +29,11 @@ public class Tree implements Serializable{
         this.seedX = seedX;
         this.seedY = seedY;
         //isSeeded = false;
-        firstBranchTime = (dna.getGene(3)+1)*500;
-        nextBranchTime = (dna.getGene(11)+1)*2000;
+        firstBranchTime = (int)Maths.sig(dna.getGene(3)/2) * 900 + 100;
+        //firstBranchTime = (Math.abs(dna.getGene(3))+1)*100; //TODO moze sigmoid tutaj?
+        nextBranchTime = (int)Maths.sig(dna.getGene(11)/2) * 1000 + 1000;
+        //nextBranchTime = (Math.abs(dna.getGene(11))+1);
+        //nextBranchTime = (dna.getGene(11)+1)*2000;
 
         int rootBranchesN;
         if(dna.getGene(0) == 0) rootBranchesN = 1;
@@ -88,7 +91,7 @@ public class Tree implements Serializable{
         for(Branch b : branches){ b.distributeFoodRec(); }
         for(Branch b : branches){ b.receiveBufferRec(); }
         for(Branch b : branches){ b.growRec(); }
-        if((time % firstBranchTime == 0 && levels == 0)||(time % nextBranchTime == 0 && levels > 0)){
+        if((time % firstBranchTime == 0 && levels == 0)||((time-firstBranchTime) % nextBranchTime == 0 && levels > 0)){
             System.out.println("BRANCH");
             levels++;
             for(Branch b : branches){ b.doBranchRec(); }
