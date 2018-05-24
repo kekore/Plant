@@ -115,16 +115,16 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     }
 
     private void distributeFood(){
-        int connectedBCount = branches.size();//add sons
-        connectedBCount = connectedBCount + brothers.size(); //add brothers
-        if(level != 0) connectedBCount++; //add parent if not root
+        int portionsCount = 2*branches.size();//add sons
+        portionsCount = portionsCount + brothers.size(); //add brothers
+        if(level != 0) portionsCount++; //add parent if not root
 
-        float portion = (satiety/2F)/(float)connectedBCount;
+        float portion = (satiety/2F)/(float)portionsCount;
         //System.out.println("FORUMULA: " + (satiety/128F)/(float)connectedBCount);
         //System.out.println("SATIETY: " + satiety);
         if(level != 0) parentBranch.addSatietyBuf(this,portion);
         for(Branch b : branches){
-            b.addSatietyBuf(this,portion);
+            b.addSatietyBuf(this,2*portion);
         }
         for(Branch b : brothers){
             b.addSatietyBuf(this,portion);
@@ -233,7 +233,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         if(parentTree.dna.getGene(7) == 0) branchesN = 1;
         else branchesN = Math.abs(parentTree.dna.getGene(7));
 
-        float generalAngle = (float)(Maths.sig(parentTree.dna.getGene(8)) * Math.PI - Math.PI); //~-180 to ~-45
+        float generalAngle = (float)(Maths.sig(parentTree.dna.getGene(8)/2) * Math.PI - Math.PI); //~-180 to ~-45
         float freeAngle = (float)Math.max(-Math.PI-generalAngle,generalAngle);
         boolean isOdd = branchesN%2 == 1;
         int divideN;
@@ -241,7 +241,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         float nextAngle;
         if(isOdd){
             divideN = (branchesN - 1)/2 + 1;
-            angleStep = (freeAngle/divideN) * Maths.sig(parentTree.dna.getGene(9));
+            angleStep = (freeAngle/divideN) * Maths.sig(parentTree.dna.getGene(9)/2);
             nextAngle = generalAngle+angleStep*(divideN-1);
             for(int i = 0; i < branchesN; i++){
                 newBranch(nextAngle);
@@ -249,7 +249,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
             }
         } else {
             divideN = branchesN / 2 + 1;
-            angleStep = (freeAngle / divideN) * Maths.sig(parentTree.dna.getGene(9));
+            angleStep = (freeAngle / divideN) * Maths.sig(parentTree.dna.getGene(9)/2);
             nextAngle = generalAngle + angleStep * (divideN - 1);
             for (int i = 0; i < branchesN + 1; i++) {
                 if (i == branchesN / 2) {

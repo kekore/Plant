@@ -43,7 +43,7 @@ public class Simulator implements ActionListener{
     public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
         addP(new Particle(p,v,f,m,r,t));
     }
-    private void proc(){
+    private void proc(){ //TODO count TICKS PER SECOND HERE
         timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
         environment.proc(tickTime);
         //TODO have to check if simulation is finished and then do some genetic alg stuff

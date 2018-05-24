@@ -36,7 +36,7 @@ public class Tree implements Serializable{
         if(dna.getGene(0) == 0) rootBranchesN = 1;
         else rootBranchesN = Math.abs(dna.getGene(0));
 
-        float generalAngle = (float)(Maths.sig(dna.getGene(1)) * (Math.PI/2) - (3*Math.PI/4)); //~-135 to ~-45
+        float generalAngle = (float)(Maths.sig(dna.getGene(1)/2) * (Math.PI/2) - (3*Math.PI/4)); //~-135 to ~-45
         float freeAngle = (float)Math.max(-Math.PI-generalAngle,generalAngle);
         boolean isOdd = rootBranchesN%2 == 1;
         int divideN;
@@ -44,7 +44,7 @@ public class Tree implements Serializable{
         float nextAngle;
         if(isOdd){
             divideN = (rootBranchesN - 1)/2 + 1;
-            angleStep = (freeAngle/divideN) * Maths.sig(dna.getGene(2));
+            angleStep = (freeAngle/divideN) * Maths.sig(dna.getGene(2)/2);
             nextAngle = generalAngle+angleStep*(divideN-1);
             for(int i = 0; i < rootBranchesN; i++){
                 addBranch(nextAngle, satiety/rootBranchesN);
@@ -52,7 +52,7 @@ public class Tree implements Serializable{
             }
         } else{
             divideN = rootBranchesN/2 + 1;
-            angleStep = (freeAngle/divideN) * Maths.sig(dna.getGene(2));
+            angleStep = (freeAngle/divideN) * Maths.sig(dna.getGene(2)/2);
             nextAngle = generalAngle+angleStep*(divideN-1);
             for(int i = 0; i < rootBranchesN+1; i++){
                 if(i == rootBranchesN/2){
