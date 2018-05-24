@@ -2,6 +2,7 @@ import environmentPack.Circle;
 import environmentPack.Environment;
 import environmentPack.Particle;
 import environmentPack.Rect;
+import geneticAlgPack.GeneticAlg;
 import physicsPack.Vector2D;
 import simulatorPack.Simulator;
 
@@ -57,6 +58,7 @@ class SimPanel extends JPanel implements ActionListener{
     //Random generator;
     private JTextField timeText;
     private JTextField fpsText;
+    private JTextField fitText;
     private long secStart;
     private int frames;
     private boolean showInvis;
@@ -83,6 +85,13 @@ class SimPanel extends JPanel implements ActionListener{
         fpsText.setBorder(null);
         fpsText.setBackground(Color.WHITE);
         add(fpsText);
+
+        fitText = new JTextField();
+        fitText.setBounds(1,36,100,20);
+        fitText.setEditable(false);
+        fitText.setBorder(null);
+        fitText.setBackground(Color.WHITE);
+        add(fitText);
 
         frames = 0;
         secStart = System.currentTimeMillis();
@@ -131,6 +140,9 @@ class SimPanel extends JPanel implements ActionListener{
                 secStart = System.currentTimeMillis();
             }
             timeText.setText("Time: " + simulator.getTime());
+            int fit = simulator.getPoints();
+            if(fit >= 0) fitText.setText("Fitness: " + fit);
+            else fitText.setText("Fitness: -");
         } else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
             for(int i = 0; i < 1; i++) {
                 /*Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);
@@ -153,6 +165,7 @@ class SimPanel extends JPanel implements ActionListener{
     protected void setEnvironment(Environment environment){
         simulator.setEnvironment(environment);
     }
+    protected void setAlgorithm(GeneticAlg geneticAlg) { simulator.setAlgorithm(geneticAlg); }
     protected void start(){simulator.startSimulation();}
     protected void pause(){simulator.pauseSimulation();}
 }

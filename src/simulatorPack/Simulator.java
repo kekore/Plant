@@ -42,8 +42,10 @@ public class Simulator implements ActionListener{
         addP(new Particle(p,v,f,m,r,t));
     }
     private void proc(){
+        //timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
         environment.proc(tickTime);
         //TODO have to check if simulation is finished and then do some genetic alg stuff
+        //timer.start();
     }
     public ArrayList<Circle> getCircles(){
         return environment.getCircles();
@@ -79,10 +81,17 @@ public class Simulator implements ActionListener{
         this.environment = environment;
         isSet = true;
     }
-    //TODO add setAlgorytm (?)
+    public void setAlgorithm(GeneticAlg geneticAlg){
+        this.geneticAlg = geneticAlg;
+        //isSet...
+    }
     public long getTime(){
         if(!isSet) return 0;
         return environment.getTime();
+    }
+    public int getPoints(){
+        if(!isSet) return -2;
+        return environment.getPoints();
     }
     public boolean isSet() { return isSet; }
 }

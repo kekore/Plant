@@ -1,4 +1,5 @@
 import environmentPack.Environment;
+import geneticAlgPack.GeneticAlg;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,10 +11,10 @@ public class MWindow extends JFrame{
 
     public MWindow(SWindow s, EWindow e, AWindow a){
         super("Menu");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //do zmiany... albo nie?
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,300);
-        setLocation(screenSize.width/4-300,screenSize.height/4-150);
+        setLocation(4,4);
         setLayout(new GridLayout(1, 1, 20, 20));
         //setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -44,6 +45,7 @@ class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj alg
     protected MButtonPanel(SWindow simW, EWindow envW, AWindow algW){
         simWindow = simW;
         envWindow = envW;
+        algWindow = algW;
         //Dimension d = new Dimension(100,100); //niepotrzebne raczej
         //setPreferredSize(d);
         s = new JButton("Symulacja");
@@ -93,6 +95,11 @@ class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj alg
                 simWindow.simPanel.setEnvironment(environment);
             }
         }
-        //TODO zaladuj algorytm z AWindow do simWindow
+        else if(((JButton) e.getSource()).getText().equals("Załaduj algorytm z edytora")){
+            GeneticAlg geneticAlg = algWindow.getAlgorithm();
+            if(geneticAlg != null){
+                simWindow.simPanel.setAlgorithm(geneticAlg);
+            }
+        }
     }
 }

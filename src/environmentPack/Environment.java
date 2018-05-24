@@ -157,6 +157,10 @@ public class Environment implements Serializable {
     public long getTime(){
         return time;
     }
+    public int getPoints(){
+        if(tree == null) return -1;
+        else return tree.points;
+    }
 
     public void reset(){
         time = 0;

@@ -61,7 +61,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
         probPanel = new ProbPanel(this);
         mutPanel = new MutPanel(this);
 
-        initBut = new JButton("Zainicjuj");
+        initBut = new JButton("Zastosuj");
         initBut.addActionListener(this);
 
         setLayout(new GridLayout(3, 2, 20, 20));
@@ -174,9 +174,9 @@ class ProbPanel extends JPanel{
         probName.setBorder(null);
         probName.setHorizontalAlignment(JTextField.CENTER);
 
-        mutProbSlider = new JSlider(JSlider.HORIZONTAL,0,100,1);
-        mutProbSlider.setMinorTickSpacing(2);
-        mutProbSlider.setMajorTickSpacing(10);
+        mutProbSlider = new JSlider(JSlider.HORIZONTAL,0,10,1);
+        //mutProbSlider.setMinorTickSpacing(2);
+        mutProbSlider.setMajorTickSpacing(1);
         mutProbSlider.setPaintTicks(true);
         mutProbSlider.setPaintLabels(true);
         mutProbSlider.addChangeListener(a);

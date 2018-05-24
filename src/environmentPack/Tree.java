@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Tree implements Serializable{
     protected DNA dna;
     private ArrayList<Branch> branches;
-    private int points;
+    protected int points;
     private int branchGreen;
     private int leafGreen;
     protected int seedX;

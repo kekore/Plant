@@ -13,14 +13,14 @@ public class EWindow extends JFrame implements ActionListener {
         super("Edytor środowiska");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(660,350);
-        setLocation(screenSize.width/32-30,screenSize.height/2-25);
+        setSize(660,400);
+        setLocation(screenSize.width/32-30,screenSize.height/2-75);
         //setLayout(new GridLayout(2,1));
 
         overviewWindow = o;
         add(new EButtonPanel(overviewWindow));
 
-        setResizable(false);
+        //setResizable(false);
     }
 
     @Override
@@ -55,7 +55,7 @@ class EButtonPanel extends JPanel{ //TODO cant edit when working
     protected EButtonPanel(OWindow ovrW){
         //overviewWindow = ovrW;
         addFactoryBut = new JButton("Dodaj fabrykę");
-        addSpawnerBut = new JButton("Dodaj spawner");
+        addSpawnerBut = new JButton("Dodaj źródło cząstek");
         saveFileBut = new JButton("Zapisz do pliku");
         loadFileBut = new JButton("Wczytaj z pliku");
         seedPlaceBut = new JButton("Posadź ziarno");
@@ -68,7 +68,7 @@ class EButtonPanel extends JPanel{ //TODO cant edit when working
         seedPlaceBut.addActionListener((ActionListener)ovrW.ovrPanel);
         initBut.addActionListener((ActionListener)ovrW.ovrPanel);
 
-        setLayout(new GridLayout(3, 3, 20, 20));
+        setLayout(new GridLayout(3, 3, 10, 10));
         add(addFactoryBut);
         add(addSpawnerBut);
         add(saveFileBut);
@@ -82,11 +82,19 @@ class EButtonPanel extends JPanel{ //TODO cant edit when working
 }
 
 class SizeSliders extends JPanel{
+    //private JTextField widthText;
     private JSlider widthSlider;
+    //private JTextField heightText;
     private JSlider heightSlider;
 
     protected SizeSliders(OWindow ovrW){
         setLayout(new GridLayout(2,1));
+
+        /*widthText = new JTextField("Szerokość obszaru");
+        widthText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        widthText.setEditable(false);
+        widthText.setBorder(null);
+        widthText.setHorizontalAlignment(JTextField.CENTER);*/
 
         widthSlider = new JSlider(JSlider.HORIZONTAL,400,1200,600);
         widthSlider.setName("widthSlider");
@@ -96,6 +104,12 @@ class SizeSliders extends JPanel{
         widthSlider.setPaintLabels(true);
         widthSlider.addChangeListener(ovrW);
 
+        /*heightText = new JTextField("Wysokość obszaru");
+        heightText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        heightText.setEditable(false);
+        heightText.setBorder(null);
+        heightText.setHorizontalAlignment(JTextField.CENTER);*/
+
         heightSlider = new JSlider(JSlider.HORIZONTAL,400,800,700);
         heightSlider.setName("heightSlider");
         heightSlider.setMinorTickSpacing(50);
@@ -104,7 +118,9 @@ class SizeSliders extends JPanel{
         heightSlider.setPaintLabels(true);
         heightSlider.addChangeListener(ovrW);
 
+        //add(widthText);
         add(widthSlider);
+        //add(heightText);
         add(heightSlider);
     }
 }

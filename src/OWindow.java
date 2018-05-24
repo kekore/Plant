@@ -27,7 +27,7 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
         width = 600;
         height = 700;
         setSize(width,height);
-        setLocation(screenSize.width/2,screenSize.height/2-350);
+        setLocation(screenSize.width/2,6);
 
         ovrPanel = new OvrPanel();
         add(ovrPanel);
@@ -207,7 +207,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         } else if(((JButton)e.getSource()).getText().equals("Dodaj fabrykę")){
             System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
-        } else if(((JButton)e.getSource()).getText().equals("Dodaj spawner")){
+        } else if(((JButton)e.getSource()).getText().equals("Dodaj źródło cząstek")){
             choice = Choice.SPAWNER;
         } else if (((JButton)e.getSource()).getText().equals("Posadź ziarno")){
             choice = Choice.SEED;
@@ -241,7 +241,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             case SPAWNER: {
                 if (isInitialized && y1 + 3 < canvasHeight - groundLevel) {
                     Vector2D pos = new Vector2D(x1, y1);
-                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 10, Particle.Type.TOXIC);
+                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 6, Particle.Type.TOXIC);
                     environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.STATIC,20,pos,new Vector2D(),new Vector2D(),10));
                 }
                 break;
