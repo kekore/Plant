@@ -76,10 +76,19 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
                 //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
+            case FOTON:{} //same as below
             case OXYGEN:{
                 //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
                 addSatiety(1.27F - ((float)green-128)/100);
                 parentTree.addPoints(1.27F - ((float)green-128)/100);
+                break;
+            }
+            case CARBOXIDE:{
+                parentTree.addPoints(-1);
+                break;
+            }
+            case TOXIC:{
+                parentTree.addPoints(-3);
                 break;
             }
         }

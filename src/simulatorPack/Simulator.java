@@ -24,6 +24,7 @@ public class Simulator implements ActionListener{
     private Timer timer;
     private int speed;
     private int cycle;
+    private long simulationTime;
 
     public Simulator(long tT, Environment environment){ //TODO algorythm as parameter
         if(environment != null){                        //TODO add quick simulation thread class

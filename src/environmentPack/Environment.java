@@ -42,6 +42,7 @@ public class Environment implements Serializable {
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
+        wind = new Wind(Wind.Direction.EAST,Wind.Direction.WEST);
 
         time = 1;
         isWorking = false;
@@ -82,6 +83,7 @@ public class Environment implements Serializable {
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
             p.setForce(new Vector2D(0,500));
+            p.physics.getForce().add(wind.getForce(time));
         }
         //proceed particles' physics:
         for(Particle p : particleList){
