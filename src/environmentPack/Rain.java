@@ -20,7 +20,7 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
         System.out.println(frequency + " " + intensity);
         this.frequency = frequency;
         this.intensity = intensity;
-        isRaining = true;
+        isRaining = false;
         startTime = 0;
         cycle = 0;
         shift = 0;
@@ -47,7 +47,7 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
 
     protected ArrayList<Particle> getParticles(long time, int width){
         ArrayList<Particle> pList = new ArrayList<Particle>();
-        if((time-startTime) % (1000/intensity) != 0) return pList;
+        if((time-startTime) % (1000/intensity) != 0) return pList; // not needed??
         //int n = width*intensity/100;
         for(int i : xArray){
             pList.add(new Particle(new Vector2D((i+shift)%width,0),new Vector2D(),new Vector2D(),10,4,Particle.Type.DROP));

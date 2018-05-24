@@ -38,3 +38,11 @@ public class DNA implements Serializable{
         }
     }
 }
+
+/*
+0 - początkowa ilość gałęzi
+1 - kąt główny (osi symetrii całego zerowego poziomu)
+2 - kąt między gałęziami zerowego poziomu
+3 - co jaki czas rozgałęziać się (*1000)
+4 - jaką część pokarmu przeznaczać na wzrost gałęzi(1/(|gen|+2)
+ */

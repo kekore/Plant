@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES (?)
     protected Circle shape;
+    protected float relativePos;
+    protected boolean side;
     private Branch parentBranch;
     private Tree parentTree;
     //private int green;

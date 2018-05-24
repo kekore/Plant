@@ -1,6 +1,7 @@
 package environmentPack;
 
 
+import geneticAlgPack.DNA;
 import physicsPack.Vector2D;
 
 import java.awt.*;
@@ -41,8 +42,12 @@ public class Environment implements Serializable {
 
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
 
-        time = 0;
+        time = 1;
         isWorking = false;
+
+        //int[20] dnaTest =
+        tree = new Tree(new DNA(new int[] {0,-20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}),300, seedPosX, height-groundLevel);
+        //tree.seed(seedPosX,height-groundLevel);
     }
 
     public void saveWindowSize(int windowWidth, int windowHeight){
@@ -103,6 +108,8 @@ public class Environment implements Serializable {
         for(Particle te : toErase){
             particleList.remove(te);
         }
+        //proceed tree:
+        tree.proc(time);
         //Check collisions
         time++;
     }
@@ -120,6 +127,7 @@ public class Environment implements Serializable {
         /*for(Particle p : particleList){
             lList.add(p.physics.getColLine(tickTime));
         }*/
+        lList.addAll(tree.getLines());
         return lList;
     }
 

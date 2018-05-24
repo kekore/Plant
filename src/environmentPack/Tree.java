@@ -2,6 +2,7 @@ package environmentPack;
 
 import geneticAlgPack.DNA;
 import physicsPack.Maths;
+import physicsPack.Vector2D;
 
 import java.awt.geom.Line2D;
 import java.io.Serializable;
@@ -13,15 +14,19 @@ public class Tree implements Serializable{
     protected int points;
     private int branchGreen;
     private int leafGreen;
-    protected int seedX;
-    protected int seedY;
+    protected float seedX;
+    protected float seedY;
     private boolean isSeeded;
+    private long branchTime;
     //private int satiety;
 
-    Tree(DNA dna, int satiety){
+    Tree(DNA dna, int satiety, float seedX, float seedY){
         this.dna = dna;
         branches = new ArrayList<Branch>();
-        isSeeded = false;
+        this.seedX = seedX;
+        this.seedY = seedY;
+        //isSeeded = false;
+        branchTime = (dna.getGene(3)+1)*500;
 
         int rootBranchesN;
         if(dna.getGene(0) == 0) rootBranchesN = 1;
@@ -38,7 +43,7 @@ public class Tree implements Serializable{
             angleStep = (freeAngle/2*divideN) * Maths.sig(dna.getGene(2));
             nextAngle = generalAngle+angleStep*(divideN-1);
             for(int i = 0; i < rootBranchesN; i++){
-                addBranch(nextAngle);
+                addBranch(nextAngle, satiety/rootBranchesN);
                 nextAngle = nextAngle - angleStep;
             }
         } else{
@@ -50,22 +55,15 @@ public class Tree implements Serializable{
                     nextAngle = nextAngle - angleStep;
                     continue;
                 }
-                addBranch(nextAngle);
+                addBranch(nextAngle, satiety/rootBranchesN);
                 nextAngle = nextAngle - angleStep;
             }
         }
 
         points = 0;
     }
-
-    protected void Seed(int seedX, int seedY){
-        this.seedX = seedX;
-        this.seedY = seedY;
-        isSeeded = true;
-    }
-
-    private void addBranch(float angle){
-        Branch newBranch = new Branch(this,null, angle);
+    private void addBranch(float angle, float initSatiety){
+        Branch newBranch = new Branch(this,null, angle, false, initSatiety); //TODO pomyslec czy moze rosnac liscie
         for(Branch b : branches){
             b.addBrother(newBranch);
             newBranch.addBrother(b);
@@ -73,27 +71,21 @@ public class Tree implements Serializable{
         branches.add(newBranch);
     }
 
-    /*Tree(int satiety){
-        dna = new DNA();
-        branches = new ArrayList<Branch>();
-        //leaves = new ArrayList<Leaf>();
-        //this.satiety = satiety;
-    }
-    Tree(int satiety, DNA dna){
-        this.dna = dna;
-        branches = new ArrayList<Branch>();
-        //leaves = new ArrayList<Leaf>();
-        //this.satiety = satiety;
+    /*protected void seed(int seedX, int seedY){
+        this.seedX = seedX;
+        this.seedY = seedY;
+
+        isSeeded = true;
     }*/
 
-    /*protected void addSatiety(int n){
-        satiety = satiety + n;
-    }*/
-
-    protected void proc(){
-        for(Branch b : branches){
-            b.distributeFoodRec();
+    protected void proc(long time){
+        for(Branch b : branches){ b.distributeFoodRec(); }
+        for(Branch b : branches){ b.receiveBufferRec(); }
+        for(Branch b : branches){ b.growRec(); }
+        if(time % branchTime == 0){
+            for(Branch b : branches){ b.doBranch(); }
         }
+        for(Branch b : branches){ b.updateLineRec(); }
     }
 
     protected void addPoints(int p){
@@ -119,4 +111,21 @@ public class Tree implements Serializable{
     public void reset(){
 
     }
+
+        /*Tree(int satiety){
+        dna = new DNA();
+        branches = new ArrayList<Branch>();
+        //leaves = new ArrayList<Leaf>();
+        //this.satiety = satiety;
+    }
+    Tree(int satiety, DNA dna){
+        this.dna = dna;
+        branches = new ArrayList<Branch>();
+        //leaves = new ArrayList<Leaf>();
+        //this.satiety = satiety;
+    }*/
+
+    /*protected void addSatiety(int n){
+        satiety = satiety + n;
+    }*/
 }
