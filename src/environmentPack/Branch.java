@@ -20,7 +20,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private ArrayList<Branch> brothers;
     private ArrayList<Leaf> leaves;
     private int level;
-    protected int green;
+    protected int green; //TODO przeniesc do tree
     private float angle;
     private float lenght;
     private boolean doesGrowLeaves;
@@ -31,12 +31,20 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private int growCounter;
 
     protected Branch(Tree parentTree, Branch parentBranch, float angle, boolean doesGrowLeaves, float initSatiety){
-        if(parentBranch != null)line = new Line2D.Float(parentBranch.line.x2,parentBranch.line.y2,parentBranch.line.x2,parentBranch.line.y2);
-        else line = new Line2D.Float(parentTree.seedX,parentTree.seedY,parentTree.seedX,parentTree.seedY);
-        x1 = parentTree.seedX;
-        y1 = parentTree.seedY;
-        x2 = parentTree.seedX;
-        y2 = parentTree.seedY;
+        if(parentBranch != null){
+            line = new Line2D.Float(parentBranch.line.x2,parentBranch.line.y2,parentBranch.line.x2,parentBranch.line.y2);
+            x1 = parentBranch.line.x2;
+            y1 = parentBranch.line.y2;
+            x2 = parentBranch.line.x2;
+            y2 = parentBranch.line.y2;
+        }
+        else {
+            line = new Line2D.Float(parentTree.seedX, parentTree.seedY, parentTree.seedX, parentTree.seedY);
+            x1 = parentTree.seedX;
+            y1 = parentTree.seedY;
+            x2 = parentTree.seedX;
+            y2 = parentTree.seedY;
+        }
         this.parentBranch = parentBranch;
         this.parentTree = parentTree;
         branches = new ArrayList<Branch>();
@@ -60,16 +68,16 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     }
 
     protected void gotParticle(Particle p){
-        System.out.println("green: "+green);
+        //System.out.println("green: "+green);
         switch (p.type){
             case DROP:{
                 addSatiety(((float)green-128)/100);
                 parentTree.addPoints(((float)green-128)/100);
-                System.out.println("DROP: "+(((float)green-128)/100));
+                //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
             case OXYGEN:{
-                System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
+                //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
                 addSatiety(1.27F - ((float)green-128)/100);
                 parentTree.addPoints(1.27F - ((float)green-128)/100);
                 break;
@@ -111,7 +119,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         connectedBCount = connectedBCount + brothers.size(); //add brothers
         if(level != 0) connectedBCount++; //add parent if not root
 
-        float portion = (satiety/128F)/(float)connectedBCount;
+        float portion = (satiety/2F)/(float)connectedBCount;
         //System.out.println("FORUMULA: " + (satiety/128F)/(float)connectedBCount);
         //System.out.println("SATIETY: " + satiety);
         if(level != 0) parentBranch.addSatietyBuf(this,portion);
@@ -123,20 +131,24 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         }
     }
 
-    /*protected void newBranch(){
-        Branch newBranch = new Branch(parentTree, this);
+    private void newBranch(float angle){
+        boolean doesGrowLeaves;
+        if(level+1 >= Math.abs(parentTree.dna.getGene(10))) doesGrowLeaves = true;
+        else doesGrowLeaves = false;
+        Branch newBranch = new Branch(parentTree, this, angle, doesGrowLeaves, 0);
         for(Branch b : branches){
             b.addBrother(newBranch);
             newBranch.addBrother(b);
         }
         branches.add(newBranch);
-    }*/
+    }
 
     protected void growRec(){
         //System.out.println(satiety + " " + angle); //for debugging
         float lenghtFormula = getStaiety(((float)1/(float)(50*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));
         growLineRec(countBGrowth(lenghtFormula));
+        for(Branch b: branches){ b.growRec(); }
     }
     private void growLineRec(Vector2D shift){
         x2 = x2 + shift.getX();
@@ -148,7 +160,6 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         y1 = y1 + shift.getY();
         x2 = x2 + shift.getX();
         y2 = y2 + shift.getY();
-
         for(Branch b : branches){ b.updateXYRec(shift); }
     }
 
@@ -210,7 +221,44 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         return cList;
     }
 
-    protected void doBranch(){
+    protected void doBranchRec(){
+        if(branches.size() == 0) doBranch();
+        else{
+            for(Branch b : branches) { b.doBranchRec(); }
+        }
+    }
 
+    private void doBranch(){
+        int branchesN;
+        if(parentTree.dna.getGene(7) == 0) branchesN = 1;
+        else branchesN = Math.abs(parentTree.dna.getGene(7));
+
+        float generalAngle = (float)(Maths.sig(parentTree.dna.getGene(8)) * Math.PI - Math.PI); //~-180 to ~-45
+        float freeAngle = (float)Math.max(-Math.PI-generalAngle,generalAngle);
+        boolean isOdd = branchesN%2 == 1;
+        int divideN;
+        float angleStep;
+        float nextAngle;
+        if(isOdd){
+            divideN = (branchesN - 1)/2 + 1;
+            angleStep = (freeAngle/divideN) * Maths.sig(parentTree.dna.getGene(9));
+            nextAngle = generalAngle+angleStep*(divideN-1);
+            for(int i = 0; i < branchesN; i++){
+                newBranch(nextAngle);
+                nextAngle = nextAngle - angleStep;
+            }
+        } else {
+            divideN = branchesN / 2 + 1;
+            angleStep = (freeAngle / divideN) * Maths.sig(parentTree.dna.getGene(9));
+            nextAngle = generalAngle + angleStep * (divideN - 1);
+            for (int i = 0; i < branchesN + 1; i++) {
+                if (i == branchesN / 2) {
+                    nextAngle = nextAngle - angleStep;
+                    continue;
+                }
+                newBranch(nextAngle);
+                nextAngle = nextAngle - angleStep;
+            }
+        }
     }
 }

@@ -41,10 +41,15 @@ public class DNA implements Serializable{
 
 /*
 0 - początkowa ilość gałęzi
-1 - kąt główny (osi symetrii całego zerowego poziomu)
+1 - kąt główny osi symetrii całego zerowego poziomu
 2 - kąt między gałęziami zerowego poziomu
-3 - co jaki czas rozgałęziać się (*1000)
+3 - czas pierwszego rozgałęzienia (*500)
 4 - jaką część pokarmu przeznaczać na wzrost gałęzi(1/(|gen|+2)
 5 - zieleń gałęzi
 6 - zieleń liści
+7 - ilość gałęzi w kolejnych rozgałęzieniach
+8 - kąt główny kolejnych poziomów
+9 - kąt między gałęziami kolejnych poziomów
+10 - od którego poziomu rosną liście
+11 - czas kolejnych rozgałęzień (*1000)
  */

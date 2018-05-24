@@ -11,22 +11,26 @@ import java.util.ArrayList;
 public class Tree implements Serializable{
     protected DNA dna;
     private ArrayList<Branch> branches;
+    protected int levels;
     protected float points;
     private int branchGreen;
     private int leafGreen;
     protected float seedX;
     protected float seedY;
     private boolean isSeeded;
-    private long branchTime;
+    private long firstBranchTime;
+    private long nextBranchTime;
     //private int satiety;
 
     Tree(DNA dna, int satiety, float seedX, float seedY){
         this.dna = dna;
         branches = new ArrayList<Branch>();
+        levels = 0;
         this.seedX = seedX;
         this.seedY = seedY;
         //isSeeded = false;
-        branchTime = (dna.getGene(3)+1)*500;
+        firstBranchTime = (dna.getGene(3)+1)*500;
+        nextBranchTime = (dna.getGene(11)+1)*2000;
 
         int rootBranchesN;
         if(dna.getGene(0) == 0) rootBranchesN = 1;
@@ -59,11 +63,13 @@ public class Tree implements Serializable{
                 nextAngle = nextAngle - angleStep;
             }
         }
-
         points = 0;
     }
     private void addBranch(float angle, float initSatiety){
-        Branch newBranch = new Branch(this,null, angle, false, initSatiety); //TODO pomyslec czy moze rosnac liscie
+        boolean doesGrowLeaves;
+        if(dna.getGene(10) == 0) doesGrowLeaves = true;
+        else doesGrowLeaves = false;
+        Branch newBranch = new Branch(this,null, angle, doesGrowLeaves, initSatiety); //TODO pomyslec czy moze rosnac liscie
         for(Branch b : branches){
             b.addBrother(newBranch);
             newBranch.addBrother(b);
@@ -82,8 +88,10 @@ public class Tree implements Serializable{
         for(Branch b : branches){ b.distributeFoodRec(); }
         for(Branch b : branches){ b.receiveBufferRec(); }
         for(Branch b : branches){ b.growRec(); }
-        if(time % branchTime == 0){
-            for(Branch b : branches){ b.doBranch(); }
+        if((time % firstBranchTime == 0 && levels == 0)||(time % nextBranchTime == 0 && levels > 0)){
+            System.out.println("BRANCH");
+            levels++;
+            for(Branch b : branches){ b.doBranchRec(); }
         }
         for(Branch b : branches){ b.updateLineRec(); }
     }

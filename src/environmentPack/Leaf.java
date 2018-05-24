@@ -8,7 +8,7 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     protected boolean side;
     private Branch parentBranch;
     private Tree parentTree;
-    //private int green;
+    //private int green; //TODO przeniesc do tree
     private int growCost;
     private int growCounter;
 
