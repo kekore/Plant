@@ -3,6 +3,7 @@ import environmentPack.Environment;
 import environmentPack.Particle;
 import environmentPack.Rect;
 import geneticAlgPack.GeneticAlg;
+import javafx.util.Pair;
 import physicsPack.Vector2D;
 import simulatorPack.Simulator;
 
@@ -107,6 +108,7 @@ class SimPanel extends JPanel implements ActionListener{
         ArrayList<Circle> cList = simulator.getCircles();
         ArrayList<Line2D> lList = simulator.getLines();
         ArrayList<Rect> rList = simulator.getRects();
+        ArrayList<Pair<Line2D,Color>> bList = simulator.getBranchLines();
         if(showInvis){
             lList.addAll(simulator.getInvisLines());
             rList.addAll(simulator.getInvisRects());
@@ -124,7 +126,10 @@ class SimPanel extends JPanel implements ActionListener{
             if(!r.isFilled)g2d.draw(r.rectangle);
             else g2d.fill(r.rectangle);
         }
-
+        for(Pair<Line2D,Color> pair : bList){
+            g2d.setColor(pair.getValue());
+            g2d.draw(pair.getKey());
+        }
     }
 
     @Override
@@ -140,7 +145,7 @@ class SimPanel extends JPanel implements ActionListener{
                 secStart = System.currentTimeMillis();
             }
             timeText.setText("Time: " + simulator.getTime());
-            int fit = simulator.getPoints();
+            int fit = (int)simulator.getPoints();
             if(fit >= 0) fitText.setText("Fitness: " + fit);
             else fitText.setText("Fitness: -");
         } else if (((JButton) e.getSource()).getText().equals("Dodaj")) {

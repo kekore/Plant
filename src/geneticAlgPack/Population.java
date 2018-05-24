@@ -29,13 +29,13 @@ public class Population {
     }
 
     protected ArrayList<DNA> getFittest(int amount){ //TODO check if well done cause i was sleepy doing it :(
-        ArrayList<Pair<DNA,Integer>> pairs = new ArrayList<Pair<DNA,Integer>>();
+        ArrayList<Pair<DNA,Float>> pairs = new ArrayList<Pair<DNA,Float>>();
         for(Individual i : individuals){
             pairs.add(i.getPair());
         }
         ArrayList<DNA> fittest = new ArrayList<DNA>();
         for(int i = 0; i < amount; i++){
-            Pair<DNA,Integer> best = pairs.get(0);
+            Pair<DNA,Float> best = pairs.get(0);
             for(int j = 0; j < pairs.size(); j++){
                 if(pairs.get(j).getValue() > best.getValue()) best = pairs.get(j);
             }

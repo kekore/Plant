@@ -2,6 +2,7 @@ package environmentPack;
 
 
 import geneticAlgPack.DNA;
+import javafx.util.Pair;
 import physicsPack.Vector2D;
 
 import java.awt.*;
@@ -46,7 +47,7 @@ public class Environment implements Serializable {
         isWorking = false;
 
         //int[20] dnaTest =
-        tree = new Tree(new DNA(new int[] {8,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}),300, seedPosX, height-groundLevel);
+        tree = new Tree(new DNA(new int[] {3,0,4,0,0,-8,0,0,0,0,0,0,0,0,0,0,0,0,0,0}),300, seedPosX, height-groundLevel);
         //tree.seed(seedPosX,height-groundLevel);
     }
 
@@ -142,8 +143,16 @@ public class Environment implements Serializable {
         /*for(Particle p : particleList){
             lList.add(p.physics.getColLine(tickTime));
         }*/
-        lList.addAll(tree.getLines());
+        //lList.addAll(tree.getLines());
         return lList;
+    }
+
+    public ArrayList<Pair<Line2D,Color>> getBranchLines(){
+        ArrayList<Pair<Line2D,Color>> array = new ArrayList<Pair<Line2D,Color>>();
+        for(Branch b : tree.getBranches()){
+            array.add(new Pair<Line2D,Color>(b.line,new Color(0,b.green,0)));
+        }
+        return array;
     }
 
     public ArrayList<Line2D> getInvisLines(long tickTime){
@@ -180,7 +189,7 @@ public class Environment implements Serializable {
     public long getTime(){
         return time;
     }
-    public int getPoints(){
+    public float getPoints(){
         if(tree == null) return -1;
         else return tree.points;
     }

@@ -1,5 +1,6 @@
 package environmentPack;
 
+import physicsPack.Maths;
 import physicsPack.Vector2D;
 import sun.security.krb5.internal.PAData;
 
@@ -19,7 +20,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private ArrayList<Branch> brothers;
     private ArrayList<Leaf> leaves;
     private int level;
-    //private int green;
+    protected int green;
     private float angle;
     private float lenght;
     private boolean doesGrowLeaves;
@@ -43,6 +44,8 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         leaves = new ArrayList<Leaf>();
         if(parentBranch == null) level = 0;
         else level = parentBranch.level+1;
+        green = (int)(Maths.sig(parentTree.dna.getGene(5)) * 128)+128;
+        System.out.println(green);
         this.angle = angle;
         this.doesGrowLeaves = doesGrowLeaves;
         //this.green = green;
@@ -57,14 +60,25 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     }
 
     protected void gotParticle(Particle p){
+        System.out.println("green: "+green);
         switch (p.type){
-            case DROP:{ addSatiety(4); }
-            case OXYGEN:{ addSatiety(10); }
+            case DROP:{
+                addSatiety(((float)green-128)/100);
+                parentTree.addPoints(((float)green-128)/100);
+                System.out.println("DROP: "+(((float)green-128)/100));
+                break;
+            }
+            case OXYGEN:{
+                System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
+                addSatiety(1.27F - ((float)green-128)/100);
+                parentTree.addPoints(1.27F - ((float)green-128)/100);
+                break;
+            }
         }
     }
     private void addSatiety(float n){
         satiety = satiety + n;
-        System.out.println(satiety);
+        //System.out.println(satiety);
     }
 
     protected float getStaiety(float n){
@@ -97,7 +111,9 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         connectedBCount = connectedBCount + brothers.size(); //add brothers
         if(level != 0) connectedBCount++; //add parent if not root
 
-        float portion = (satiety/32)/connectedBCount;
+        float portion = (satiety/128F)/(float)connectedBCount;
+        //System.out.println("FORUMULA: " + (satiety/128F)/(float)connectedBCount);
+        //System.out.println("SATIETY: " + satiety);
         if(level != 0) parentBranch.addSatietyBuf(this,portion);
         for(Branch b : branches){
             b.addSatietyBuf(this,portion);
@@ -137,7 +153,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     }
 
     protected void updateLineRec(){
-        System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
+        //System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
         line = new Line2D.Float(x1,y1,x2,y2);
         for(Branch b : branches){ b.updateLineRec(); }
     }
@@ -159,11 +175,11 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         return new Vector2D(lenght*(float)Math.cos(angle),lenght*(float)Math.sin(angle));
     }
 
-    protected ArrayList<Branch> pleaseAddYourselfToBranchListAndTellYourEveryChildToDoTheSameThankYou(){
+    protected ArrayList<Branch> getBranchesRec(){
         ArrayList<Branch> bList = new ArrayList<Branch>();
         bList.add(this);
         for(Branch b : branches){
-            bList.addAll(b.pleaseAddYourselfToBranchListAndTellYourEveryChildToDoTheSameThankYou());
+            bList.addAll(b.getBranchesRec());
         }
         return bList;
     }

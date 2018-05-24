@@ -5,9 +5,11 @@ import environmentPack.Environment;
 import environmentPack.Particle;
 import environmentPack.Rect;
 import geneticAlgPack.GeneticAlg;
+import javafx.util.Pair;
 import physicsPack.Vector2D;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
@@ -60,6 +62,9 @@ public class Simulator implements ActionListener{
         return environment.getRects();
     }
     public ArrayList<Rect> getInvisRects() { return environment.getInvisRects(); }
+    public ArrayList<Pair<Line2D,Color>> getBranchLines(){
+        return environment.getBranchLines();
+    }
     public void startSimulation(){
         timer.start();
     }
@@ -89,7 +94,7 @@ public class Simulator implements ActionListener{
         if(!isSet) return 0;
         return environment.getTime();
     }
-    public int getPoints(){
+    public float getPoints(){
         if(!isSet) return -2;
         return environment.getPoints();
     }

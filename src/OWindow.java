@@ -194,7 +194,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         }
 
         if(mousePressed){
-            Line2D.Float l = new Line2D.Float(x1,y1,(float)getMousePosition().getX(),(float)getMousePosition().getY());
+            Line2D.Float l = new Line2D.Float(x1,y1,(float)(getMousePosition().getX()),((float)getMousePosition().getY()));
             g2d.setColor(Color.RED);
             g2d.draw(l);
         }
@@ -218,10 +218,10 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
 
     @Override
     public void mousePressed(MouseEvent e){
-        mousePressed = true;
         x1 = e.getX();
         y1 = e.getY();
         System.out.println(x1 + " " + y1);
+        mousePressed = true;
     }
 
     @Override

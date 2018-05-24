@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Tree implements Serializable{
     protected DNA dna;
     private ArrayList<Branch> branches;
-    protected int points;
+    protected float points;
     private int branchGreen;
     private int leafGreen;
     protected float seedX;
@@ -88,14 +88,14 @@ public class Tree implements Serializable{
         for(Branch b : branches){ b.updateLineRec(); }
     }
 
-    protected void addPoints(int p){
+    protected void addPoints(float p){
         points = points + p;
     }
 
     protected ArrayList<Branch> getBranches(){
         ArrayList<Branch> bList = new ArrayList<Branch>();
         for(Branch b : branches){
-            bList.addAll(b.pleaseAddYourselfToBranchListAndTellYourEveryChildToDoTheSameThankYou());
+            bList.addAll(b.getBranchesRec());
         }
         return bList;
     }

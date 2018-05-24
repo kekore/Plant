@@ -45,4 +45,6 @@ public class DNA implements Serializable{
 2 - kąt między gałęziami zerowego poziomu
 3 - co jaki czas rozgałęziać się (*1000)
 4 - jaką część pokarmu przeznaczać na wzrost gałęzi(1/(|gen|+2)
+5 - zieleń gałęzi
+6 - zieleń liści
  */

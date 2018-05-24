@@ -6,7 +6,7 @@ import javafx.util.Pair;
 public class Individual {
     protected DNA dna;
     protected Tree tree;
-    private int fitness;
+    private float fitness;
     private boolean tested;
 
     Individual(DNA dna){
@@ -23,11 +23,11 @@ public class Individual {
     public Tree getTree(){
         return tree;
     }
-    public int getFitness(){
+    public float getFitness(){
         if(!tested) return -1;
         return fitness;
     }
-    protected Pair<DNA,Integer> getPair(){
-        return new Pair<DNA,Integer>(dna,new Integer(fitness));
+    protected Pair<DNA,Float> getPair(){
+        return new Pair<DNA,Float>(dna,new Float(fitness));
     }
 }
