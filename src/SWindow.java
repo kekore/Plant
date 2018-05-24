@@ -65,7 +65,7 @@ class SimPanel extends JPanel implements ActionListener{
 
     protected SimPanel(){
         simulator = new Simulator(200,null);
-        timer = new Timer(15,this);
+        timer = new Timer(1,this);
         //generator = new Random();
         showInvis = false;
         timer.start();

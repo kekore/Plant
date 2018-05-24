@@ -92,6 +92,14 @@ public class Tree implements Serializable{
         points = points + p;
     }
 
+    protected ArrayList<Branch> getBranches(){
+        ArrayList<Branch> bList = new ArrayList<Branch>();
+        for(Branch b : branches){
+            bList.addAll(b.pleaseAddYourselfToBranchListAndTellYourEveryChildToDoTheSameThankYou());
+        }
+        return bList;
+    }
+
     protected ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
         for(Branch b : branches){

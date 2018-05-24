@@ -1,6 +1,7 @@
 package environmentPack;
 
 import physicsPack.Vector2D;
+import sun.security.krb5.internal.PAData;
 
 import java.awt.geom.Line2D;
 import java.io.Serializable;
@@ -55,8 +56,15 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         brothers.add(b);
     }
 
-    protected void addSatiety(float n){
+    protected void gotParticle(Particle p){
+        switch (p.type){
+            case DROP:{ addSatiety(4); }
+            case OXYGEN:{ addSatiety(10); }
+        }
+    }
+    private void addSatiety(float n){
         satiety = satiety + n;
+        System.out.println(satiety);
     }
 
     protected float getStaiety(float n){
@@ -89,7 +97,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         connectedBCount = connectedBCount + brothers.size(); //add brothers
         if(level != 0) connectedBCount++; //add parent if not root
 
-        float portion = (satiety/2)/connectedBCount;
+        float portion = (satiety/32)/connectedBCount;
         if(level != 0) parentBranch.addSatietyBuf(this,portion);
         for(Branch b : branches){
             b.addSatietyBuf(this,portion);
@@ -149,6 +157,15 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
 
     private Vector2D countBGrowth(float lenght){
         return new Vector2D(lenght*(float)Math.cos(angle),lenght*(float)Math.sin(angle));
+    }
+
+    protected ArrayList<Branch> pleaseAddYourselfToBranchListAndTellYourEveryChildToDoTheSameThankYou(){
+        ArrayList<Branch> bList = new ArrayList<Branch>();
+        bList.add(this);
+        for(Branch b : branches){
+            bList.addAll(b.pleaseAddYourselfToBranchListAndTellYourEveryChildToDoTheSameThankYou());
+        }
+        return bList;
     }
 
     protected ArrayList<Line2D> getLinesRec(){

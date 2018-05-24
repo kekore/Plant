@@ -110,7 +110,22 @@ public class Environment implements Serializable {
         }
         //proceed tree:
         tree.proc(time);
-        //Check collisions
+        //Check collisions:
+        toErase.clear();
+        ArrayList<Branch> bList = tree.getBranches();
+        for(Particle p : particleList){
+            for(Branch b : bList){
+                if(ColChecker.doCollide(p,b)){
+                    b.gotParticle(p);
+                    toErase.add(p);
+                    break;
+                }
+            }
+        }
+        for(Particle te : toErase){
+            particleList.remove(te);
+        }
+        //increment time:
         time++;
     }
 

@@ -31,7 +31,7 @@ public class Simulator implements ActionListener{
         //else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
         //quickSim = false;
-        timer = new Timer(1,this);
+        timer = new Timer(10,this);
         speed = 4;
         cycle = 0;
     }
@@ -42,10 +42,10 @@ public class Simulator implements ActionListener{
         addP(new Particle(p,v,f,m,r,t));
     }
     private void proc(){
-        //timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
+        timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
         environment.proc(tickTime);
         //TODO have to check if simulation is finished and then do some genetic alg stuff
-        //timer.start();
+        timer.start();
     }
     public ArrayList<Circle> getCircles(){
         return environment.getCircles();
