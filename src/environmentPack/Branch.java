@@ -237,7 +237,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         }
     }
 
-    private void doBranch(){
+    private void doBranch(){ //TODO dodać gen który będzie lekko zmieniać kąt
         int branchesN;
         if(parentTree.dna.getGene(7) == 0) branchesN = 1;
         else branchesN = Math.abs(parentTree.dna.getGene(7));
