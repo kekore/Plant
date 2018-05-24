@@ -1,5 +1,6 @@
 package environmentPack;
 
+import javafx.util.Pair;
 import physicsPack.Vector2D;
 
 import java.io.Serializable;
@@ -14,7 +15,8 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
     private int cycle;
     private int shift;
 
-    private int[] xArray;
+    //private int[] xArray;
+    private ArrayList<Pair<Integer,Integer>> xmArray;
 
     protected Rain(int frequency, int intensity, int width){
         System.out.println(frequency + " " + intensity);
@@ -26,9 +28,12 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
         shift = 0;
 
         Random generator = new Random();
-        xArray = new int[intensity/2];
+        //xArray = new int[intensity/2];
+        xmArray = new ArrayList<Pair<Integer,Integer>>();
         for(int i = 0; i < intensity/2; i++){
-            xArray[i] = generator.nextInt(width);
+            //xArray[i] = generator.nextInt(width);
+
+            xmArray.add(new Pair<Integer, Integer>(new Integer(generator.nextInt(width)),new Integer(generator.nextInt(3)+3)));
         }
     }
 
@@ -49,8 +54,8 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
         ArrayList<Particle> pList = new ArrayList<Particle>();
         if((time-startTime) % (1000/intensity) != 0) return pList; // not needed??
         //int n = width*intensity/100;
-        for(int i : xArray){
-            pList.add(new Particle(new Vector2D((i+shift)%width,0),new Vector2D(),new Vector2D(),1,4,Particle.Type.DROP));
+        for(Pair<Integer,Integer> p : xmArray){
+            pList.add(new Particle(new Vector2D((p.getKey()+shift)%width,0),new Vector2D(0,20),new Vector2D(),p.getValue()-2,p.getValue(),Particle.Type.DROP));
             cycle++;
             shift = shift + 10;
         }
