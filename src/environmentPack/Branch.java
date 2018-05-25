@@ -155,6 +155,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     protected void growRec(){ //TODO grow leaves
         //System.out.println(satiety + " " + angle); //for debugging
         float lenghtFormula = getStaiety(((float)1/(float)(50*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
+        if(doesGrowLeaves);
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));
         growLineRec(countBGrowth(lenghtFormula));
         for(Branch b: branches){ b.growRec(); }
@@ -193,6 +194,10 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
 
     private Vector2D countBGrowth(float lenght){
         return new Vector2D(lenght*(float)Math.cos(angle),lenght*(float)Math.sin(angle));
+    }
+
+    private void growLeaves(){
+
     }
 
     protected ArrayList<Branch> getBranchesRec(){

@@ -77,4 +77,28 @@ public class Maths {
             y = (float)(1 / (1 + Math.exp(-x)));
         return y;
     }
+
+    static public float countXPrim(float xH, float x1, float y1, float x2, float y2, float d, boolean side){
+        float a;
+        float xPrim;
+        if(side){
+            a = xH + (d*d*(y1-y2)*(y1-y2))/(2*(float)Math.sqrt(d*d*(y1-y2)*(y1-y2)*(x1*x1-2*x1*x2+y1*y1-2*y1*y2+x2*x2+y2*y2)));
+        } else{
+            a = xH - (d*d*(y1-y2)*(y1-y2))/(2*(float)Math.sqrt(d*d*(y1-y2)*(y1-y2)*(x1*x1-2*x1*x2+y1*y1-2*y1*y2+x2*x2+y2*y2)));
+        }
+        xPrim = a - d/2;
+        return xPrim;
+    }
+
+    static public float countYPrim(float yH, float x1, float y1, float x2, float y2, float d, boolean side){
+        float b;
+        float yPrim;
+        if(side){
+            b = yH + (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
+        } else{
+            b = yH - (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
+        }
+        yPrim = b - d/2;
+        return yPrim;
+    }
 }

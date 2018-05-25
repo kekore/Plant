@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -102,8 +103,6 @@ class SimPanel extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-
-        Line2D.Float line = new Line2D.Float(20,100,200,200);
 
         ArrayList<Circle> cList = simulator.getCircles();
         ArrayList<Line2D> lList = simulator.getLines();
