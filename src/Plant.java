@@ -11,14 +11,16 @@ public class Plant {
         //System.out.println(ovrR.getRef());
         EnvRunnable envR = new EnvRunnable(ovrR.getRef());
         AlgRunnable algR = new AlgRunnable();
+        CatRunnable catR = new CatRunnable();
 
         EventQueue.invokeLater(simR);
         EventQueue.invokeLater(envR);
         EventQueue.invokeLater(algR);
+        EventQueue.invokeLater(catR);
         EventQueue.invokeLater(new Runnable(){
             @Override
             public void run(){
-                new MWindow(simR.getRef(),envR.getRef(),algR.getRef());
+                new MWindow(simR.getRef(),envR.getRef(),algR.getRef(),catR.getRef());
             }
         });
     }
@@ -68,4 +70,14 @@ class AlgRunnable implements Runnable{
     }
     protected AWindow getRef() { return a; }
     private AWindow a;
+}
+
+class CatRunnable implements Runnable{
+    CatRunnable() { c = new CWindow(); }
+    @Override
+    public void run() {
+        //c = new CWindow;
+    }
+    protected CWindow getRef() { return c; }
+    private CWindow c;
 }

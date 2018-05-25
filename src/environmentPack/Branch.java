@@ -81,16 +81,16 @@ public class Branch implements Serializable{
         //System.out.println("green: "+green);
         switch (p.type){
             case DROP:{
-                addSatiety(4F*((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints(4F*((float)parentTree.branchGreen-128)/100);
+                addSatiety(2F*((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints(2F*((float)parentTree.branchGreen-128)/100);
                 //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
             case FOTON:{} //same as below
             case OXYGEN:{
                 //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
-                addSatiety(5.08F - ((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints(5.08F - ((float)parentTree.branchGreen-128)/100);
+                addSatiety(2.54F - ((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints(2.54F - ((float)parentTree.branchGreen-128)/100);
                 break;
             }
             case CARBOXIDE:{

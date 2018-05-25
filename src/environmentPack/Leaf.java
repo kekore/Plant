@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES (?)
     protected Circle shape;
     private float relativePos;
-    private float d;
+    protected float d;
     private float xH;
     private float yH;
     protected boolean side;
@@ -40,24 +40,26 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     }
 
     protected void grow(float dd){
-        d = d + dd;
+        if(d+dd < 0) d = 0;
+        else d = d + dd;
         //System.out.println("DIAMETER: " + d);
     }
 
     protected void gotParticle(Particle p){
         switch (p.type){
             case DROP:{
-                parentBranch.addSatiety(8F*((float)parentTree.leafGreen-128)/100);
-                parentTree.addPoints(8F*((float)parentTree.leafGreen-128)/100);
+                parentBranch.addSatiety(4F*((float)parentTree.leafGreen-128)/100);
+                parentTree.addPoints(4F*((float)parentTree.leafGreen-128)/100);
                 break;
             }
             case FOTON: {}
             case OXYGEN:{
-                parentBranch.addSatiety(10.16F - ((float)parentTree.leafGreen-128)/100);
-                parentTree.addPoints(10.16F - ((float)parentTree.leafGreen-128)/100);
+                parentBranch.addSatiety(5.08F - ((float)parentTree.leafGreen-128)/100);
+                parentTree.addPoints(5.08F - ((float)parentTree.leafGreen-128)/100);
                 break;
             }
             case CARBOXIDE:{
+                grow(-3);
                 parentTree.addPoints(-3);
                 break;
             }

@@ -9,7 +9,7 @@ public class MWindow extends JFrame{
     //private SWindow simWindow;
     //private EWindow envWindow;
 
-    public MWindow(SWindow s, EWindow e, AWindow a){
+    public MWindow(SWindow s, EWindow e, AWindow a, CWindow c){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -20,7 +20,7 @@ public class MWindow extends JFrame{
 
         //simWindow = s;
         //envWindow = e;
-        add(new MButtonPanel(s, e, a));
+        add(new MButtonPanel(s, e, a, c));
 
         setResizable(false);
         setVisible(true);
@@ -31,6 +31,7 @@ class MButtonPanel extends JPanel implements ActionListener{
     private SWindow simWindow;
     private EWindow envWindow;
     private AWindow algWindow;
+    private CWindow catWindow;
     private JButton s;
     private JButton w;
     private JButton t;
@@ -41,11 +42,14 @@ class MButtonPanel extends JPanel implements ActionListener{
     private JButton loadEnvBut;
     private JButton loadAlgBut;
     private JButton showInvisBut;
+    private JButton catBut;
+    private JButton quickBut;
 
-    protected MButtonPanel(SWindow simW, EWindow envW, AWindow algW){
+    protected MButtonPanel(SWindow simW, EWindow envW, AWindow algW, CWindow catW){
         simWindow = simW;
         envWindow = envW;
         algWindow = algW;
+        catWindow = catW;
         //Dimension d = new Dimension(100,100); //niepotrzebne raczej
         //setPreferredSize(d);
         s = new JButton("Symulacja");
@@ -58,6 +62,8 @@ class MButtonPanel extends JPanel implements ActionListener{
         loadEnvBut = new JButton("Załaduj środ. z edytora");
         loadAlgBut = new JButton("Załaduj algorytm z edytora");
         showInvisBut = new JButton("Pokaż/ukryj");
+        catBut = new JButton("Katalog");
+        quickBut = new JButton("Szybka symulacja");
 
         //s.addActionListener(this);
         s.addActionListener((ActionListener)simW);
@@ -71,6 +77,8 @@ class MButtonPanel extends JPanel implements ActionListener{
         loadEnvBut.addActionListener(this);
         loadAlgBut.addActionListener(this);
         showInvisBut.addActionListener((ActionListener)simW.simPanel);
+        catBut.addActionListener((ActionListener) catW);
+        quickBut.addActionListener(simW.simPanel);
 
 
         setLayout(new GridLayout(4, 3, 20, 20));
@@ -84,6 +92,8 @@ class MButtonPanel extends JPanel implements ActionListener{
         add(loadEnvBut);
         add(loadAlgBut);
         add(showInvisBut);
+        add(catBut);
+        add(quickBut);
     }
 
     @Override

@@ -51,8 +51,10 @@ class EButtonPanel extends JPanel{ //TODO cant edit when working
     private JButton loadFileBut;
     private JButton seedPlaceBut;
     private JButton initBut;
+    private boolean page;
 
     protected EButtonPanel(OWindow ovrW){
+        page = false;
         //overviewWindow = ovrW;
         addFactoryBut = new JButton("Dodaj fabrykę");
         addSpawnerBut = new JButton("Dodaj źródło cząstek");
@@ -78,6 +80,10 @@ class EButtonPanel extends JPanel{ //TODO cant edit when working
         add(new RainSliders(ovrW));
         add(seedPlaceBut);
         add(initBut);
+    }
+
+    private void alterPage(){
+
     }
 }
 

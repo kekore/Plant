@@ -20,14 +20,15 @@ public class Simulator implements ActionListener{
     private Environment environment;
     private boolean isSet;
     private long tickTime;
-    //private boolean quickSim;
+    protected boolean quickSim;
     private Timer timer;
     private int speed;
     private int cycle;
-    private long simulationTime;
+    protected long simulationTime;
     private long secStart;
     private int actions;
     private int PPS;
+    private QuickSimThread thread;
 
     public Simulator(long tT, Environment environment){ //TODO algorythm as parameter
         if(environment != null){                        //TODO add quick simulation thread class
@@ -36,12 +37,14 @@ public class Simulator implements ActionListener{
         } else isSet = false;
         //else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
-        //quickSim = false;
+        quickSim = false;
         timer = new Timer(1,this);
         speed = 4;
         cycle = 0;
+        simulationTime = 5000;
         secStart = System.currentTimeMillis();
         actions=0;
+        thread = new QuickSimThread(this);
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -49,7 +52,7 @@ public class Simulator implements ActionListener{
     public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
         addP(new Particle(p,v,f,m,r,t));
     }
-    private void proc(){
+    protected void proc(){
         if(System.currentTimeMillis() - secStart < 1000){
             actions++;
         } else{
@@ -87,6 +90,7 @@ public class Simulator implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(cycle >= speed){
+            if(quickSim) return;
             proc();
             cycle = 0;
         }
@@ -119,4 +123,23 @@ public class Simulator implements ActionListener{
         return PPS;
     }
     public boolean isSet() { return isSet; }
+    public void alterQuickSim(){
+        if(!quickSim) {
+            quickSim = true;
+            timer.stop();
+            thread = new QuickSimThread(this);
+            thread.start();
+        } else{
+            quickSim = false;
+            try{
+                thread.join();
+            } catch (InterruptedException e){
+                throw new RuntimeException();
+            }
+            timer.start();
+        }
+    }
+    public boolean isQuickSim(){
+        return quickSim;
+    }
 }

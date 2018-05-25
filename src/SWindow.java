@@ -151,7 +151,7 @@ class SimPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
-            repaint();
+            if(!simulator.isQuickSim())repaint();
             if(System.currentTimeMillis()-secStart < 1000){
                 frames++;
             }
@@ -185,6 +185,8 @@ class SimPanel extends JPanel implements ActionListener{
             simulator.setSpeed(64);
         } else if (((JButton) e.getSource()).getText().equals("Pokaż/ukryj")){
             showInvis = !showInvis;
+        } else if (((JButton) e.getSource()).getText().equals("Szybka symulacja")){
+            simulator.alterQuickSim();
         }
     }
     protected void setEnvironment(Environment environment){

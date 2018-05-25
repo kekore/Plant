@@ -48,7 +48,7 @@ public class Environment implements Serializable {
         isWorking = false;
 
         //int[20] dnaTest =
-        tree = new Tree(new DNA(new int[] {2,8,8,0,4,-8,-8,2,-2,8,1,0,5,0,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
+        tree = new Tree(new DNA(new int[] {2,8,8,0,4,8,8,2,-2,8,1,0,5,0,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
         //tree.seed(seedPosX,height-groundLevel);
     }
 
