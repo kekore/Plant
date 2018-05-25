@@ -49,7 +49,7 @@ public class Simulator implements ActionListener{
     public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
         addP(new Particle(p,v,f,m,r,t));
     }
-    private void proc(){ //TODO count TICKS PER SECOND HERE
+    private void proc(){
         if(System.currentTimeMillis() - secStart < 1000){
             actions++;
         } else{

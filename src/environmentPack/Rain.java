@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdego cyklu (cycle)
-    private int frequency;
+    private int frequency;                  //TODO naprawic czestotliwosc
     private int intensity;
     protected boolean isRaining;
     private long startTime;

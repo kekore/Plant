@@ -8,7 +8,7 @@ import java.awt.geom.Line2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES (?)
+public class Branch implements Serializable{
     protected Line2D.Float line;
     protected float x1;
     protected float y1;
@@ -50,12 +50,13 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         brothers = new ArrayList<Branch>();
         leaves = new ArrayList<Leaf>();
         if(doesGrowLeaves){
-            float posStep = 1F/(1F+(float)parentTree.leavesAmount/2F);
+            float posStep = 1F/(1F+parentTree.leavesAmount/2);
             //System.out.println(1F/(1F+(float)parentTree.leavesAmount/2F));
             for(int i = 0; i < parentTree.leavesAmount/2; i++){
                 leaves.add(new Leaf(parentTree,this,(i+1)*posStep,true));
             }
-            posStep = 1F/(1F+(float) parentTree.leavesAmount-(float) parentTree.leavesAmount/2F);
+            posStep = 1F/(1F+parentTree.leavesAmount-parentTree.leavesAmount/2);
+            //System.out.println(1F/(1F+(float) parentTree.leavesAmount-(float) parentTree.leavesAmount/2F));
             for(int i = 0; i < parentTree.leavesAmount-parentTree.leavesAmount/2; i++){
                 leaves.add(new Leaf(parentTree,this,(i+1)*posStep,false));
             }
@@ -161,11 +162,11 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         branches.add(newBranch);
     }
 
-    protected void growRec(){ //TODO grow leaves
+    protected void growRec(){
         //System.out.println(satiety + " " + angle); //for debugging
         //float lenghtFormula = 10*getStaiety(((float)1/(float)(100*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
         float lenghtFormula = getStaiety((1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
-        System.out.println("BRANCH: "+(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
+        //System.out.println("BRANCH: "+(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
         if(doesGrowLeaves)growLeaves();
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));
         growLineRec(countBGrowth(lenghtFormula));
@@ -177,12 +178,12 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         for(Leaf l : leaves){ l.updatePoint(); }
         for(Branch b : branches){ b.updatePointsRec(shift); }
     }
-    private void updatePointsRec(Vector2D shift){ //TODO tutaj dodać przesuwanie liści
+    private void updatePointsRec(Vector2D shift){
         x1 = x1 + shift.getX();
         y1 = y1 + shift.getY();
         x2 = x2 + shift.getX();
         y2 = y2 + shift.getY();
-        System.out.println("updatePointsRec");
+        //System.out.println("updatePointsRec");
         for(Branch b : branches){ b.updatePointsRec(shift); }
     }
 
@@ -213,7 +214,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private void growLeaves(){
         //float leavesFormula = getStaiety((1-((float)1/(float)(25*(Math.abs(parentTree.dna.getGene(4))+2))))*satiety);
         float leavesFormula = getStaiety((1F-(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2)))*satiety*(1F/10F));
-        System.out.println("LEAVES: "+(1F-(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2)))*satiety*(1F/10F));
+        //System.out.println("LEAVES: "+(1F-(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2)))*satiety*(1F/10F));
         float leafPortion = leavesFormula/parentTree.leavesAmount;
         for(Leaf l : leaves){
             l.grow(leafPortion/5);
@@ -227,6 +228,15 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
             bList.addAll(b.getBranchesRec());
         }
         return bList;
+    }
+
+    protected ArrayList<Leaf> getLeavesRec(){
+        ArrayList<Leaf> lList = new ArrayList<Leaf>();
+        lList.addAll(leaves);
+        for(Branch b : branches){
+            lList.addAll(b.getLeavesRec());
+        }
+        return lList;
     }
 
     protected ArrayList<Line2D> getLinesRec(){

@@ -140,7 +140,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         return ret;
     }
 
-    protected int loadFile(){ //TODO przeniesc do okna i wykminic ustawienie wielkosci okna
+    protected int loadFile(){
         int ret = 0;
         try {
             FileInputStream fis = new FileInputStream(new File("environment.env"));

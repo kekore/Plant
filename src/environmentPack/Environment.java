@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Environment implements Serializable {
     private int windowWidth;
     private int windowHeight;
-    private final int width; //TODO mozliwosc roznych wielkosci
+    private final int width;
     private final int height;
     private ArrayList<Particle> particleList;
     private ArrayList<Factory> factoryList;
@@ -48,7 +48,7 @@ public class Environment implements Serializable {
         isWorking = false;
 
         //int[20] dnaTest =
-        tree = new Tree(new DNA(new int[] {2,8,8,0,4,0,4,2,3,8,0,0,4,0,0,0,0,0,0,0}),1000, seedPosX, height-groundLevel);
+        tree = new Tree(new DNA(new int[] {2,8,8,0,4,-8,-8,2,-2,8,1,0,5,0,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
         //tree.seed(seedPosX,height-groundLevel);
     }
 
@@ -115,8 +115,17 @@ public class Environment implements Serializable {
         tree.proc(time);
         //Check collisions:
         toErase.clear();
+        ArrayList<Leaf> lList = tree.getLeaves();
         ArrayList<Branch> bList = tree.getBranches();
         for(Particle p : particleList){
+            for(Leaf l : lList){
+                if(ColChecker.doCollide(p,l)){
+                    l.gotParticle(p);
+                    toErase.add(p);
+                    break;
+                }
+            }
+            if(toErase.contains(p)) continue;
             for(Branch b : bList){
                 if(ColChecker.doCollide(p,b)){
                     b.gotParticle(p);
@@ -197,7 +206,7 @@ public class Environment implements Serializable {
         else return tree.points;
     }
 
-    public void reset(){
+    private void reset(){
         time = 0;
         particleList.clear();
         //tree.reset();

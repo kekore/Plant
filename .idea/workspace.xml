@@ -20,13 +20,14 @@
       <file leaf-file-name="Branch.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Branch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+            <state relative-caret-position="274">
+              <caret line="58" column="14" lean-forward="false" selection-start-line="58" selection-start-column="14" selection-end-line="58" selection-end-column="14" />
               <folding>
-                <element signature="e#2701#2702#0" expanded="true" />
-                <element signature="e#2732#2733#0" expanded="true" />
-                <element signature="e#4053#4054#0" expanded="true" />
-                <element signature="e#4120#4121#0" expanded="true" />
+                <element signature="e#2744#2745#0" expanded="true" />
+                <element signature="e#2775#2776#0" expanded="true" />
+                <element signature="e#4096#4097#0" expanded="true" />
+                <element signature="e#4163#4164#0" expanded="true" />
+                <element signature="e#8595#8601#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -35,57 +36,40 @@
       <file leaf-file-name="Circle.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Circle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+            <state relative-caret-position="68">
+              <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Simulator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/simulatorPack/Simulator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="39" column="27" lean-forward="false" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
-              <folding>
-                <element signature="e#2112#2113#0" expanded="true" />
-                <element signature="e#2159#2160#0" expanded="true" />
-                <element signature="e#3571#3572#0" expanded="true" />
-                <element signature="e#3597#3598#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SWindow.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SWindow.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2584">
-              <caret line="169" column="36" lean-forward="false" selection-start-line="169" selection-start-column="36" selection-end-line="169" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Leaf.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Leaf.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Leaf.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="65" column="73" lean-forward="false" selection-start-line="65" selection-start-column="73" selection-end-line="65" selection-end-column="73" />
+            <state relative-caret-position="289">
+              <caret line="56" column="74" lean-forward="false" selection-start-line="56" selection-start-column="74" selection-end-line="56" selection-end-column="74" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1400#1401#0" expanded="true" />
-                <element signature="e#1442#1443#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Maths.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/physicsPack/Maths.java">
+      <file leaf-file-name="Rect.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/environmentPack/Rect.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="106" column="128" lean-forward="false" selection-start-line="106" selection-start-column="128" selection-end-line="106" selection-end-column="128" />
+            <state relative-caret-position="153">
+              <caret line="13" column="11" lean-forward="false" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ColChecker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/environmentPack/ColChecker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="26" lean-forward="false" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -94,12 +78,23 @@
       <file leaf-file-name="Tree.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Tree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="102" column="58" lean-forward="false" selection-start-line="102" selection-start-column="58" selection-end-line="102" selection-end-column="58" />
+            <state relative-caret-position="1616">
+              <caret line="124" column="21" lean-forward="false" selection-start-line="124" selection-start-column="21" selection-end-line="124" selection-end-column="21" />
               <folding>
-                <element signature="e#4036#4037#0" expanded="true" />
-                <element signature="e#4071#4072#0" expanded="true" />
+                <element signature="e#4032#4033#0" expanded="true" />
+                <element signature="e#4067#4068#0" expanded="true" />
+                <element signature="e#4383#4389#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Rain.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/environmentPack/Rain.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-658">
+              <caret line="10" column="73" lean-forward="false" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,31 +102,31 @@
       <file leaf-file-name="DNA.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/DNA.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-491">
+            <state relative-caret-position="-442">
               <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Environment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Environment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="50" column="48" lean-forward="false" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="48" />
+            <state relative-caret-position="324">
+              <caret line="50" column="63" lean-forward="false" selection-start-line="50" selection-start-column="63" selection-end-line="50" selection-end-column="63" />
               <folding>
-                <element signature="e#6116#6117#0" expanded="true" />
-                <element signature="e#6143#6144#0" expanded="true" />
+                <element signature="e#6392#6393#0" expanded="true" />
+                <element signature="e#6419#6420#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ColChecker.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/environmentPack/ColChecker.java">
+      <file leaf-file-name="Crossover.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Crossover.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+            <state relative-caret-position="119">
+              <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -171,25 +166,25 @@
         <option value="$PROJECT_DIR$/src/Plant.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/GeneticAlg.java" />
         <option value="$PROJECT_DIR$/src/AWindow.java" />
-        <option value="$PROJECT_DIR$/src/MWindow.java" />
         <option value="$PROJECT_DIR$/src/EWindow.java" />
-        <option value="$PROJECT_DIR$/src/environmentPack/ColChecker.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/Individual.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/Population.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Wind.java" />
-        <option value="$PROJECT_DIR$/src/environmentPack/Rain.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/DNA.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Rect.java" />
-        <option value="$PROJECT_DIR$/src/OWindow.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Particle.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Circle.java" />
         <option value="$PROJECT_DIR$/src/SWindow.java" />
+        <option value="$PROJECT_DIR$/src/physicsPack/Maths.java" />
+        <option value="$PROJECT_DIR$/src/environmentPack/ColChecker.java" />
+        <option value="$PROJECT_DIR$/src/OWindow.java" />
+        <option value="$PROJECT_DIR$/src/MWindow.java" />
         <option value="$PROJECT_DIR$/src/simulatorPack/Simulator.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Tree.java" />
-        <option value="$PROJECT_DIR$/src/physicsPack/Maths.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Branch.java" />
-        <option value="$PROJECT_DIR$/src/environmentPack/Leaf.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Environment.java" />
+        <option value="$PROJECT_DIR$/src/environmentPack/Rain.java" />
+        <option value="$PROJECT_DIR$/src/environmentPack/Leaf.java" />
       </list>
     </option>
   </component>
@@ -494,17 +489,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Plant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="70" column="1" lean-forward="false" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
-          <folding>
-            <element signature="e#674#675#0" expanded="false" />
-            <element signature="e#760#761#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/IdeaProjects/PlantWIP/Plant-WIP/src/SWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -540,79 +524,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Mutation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2890">
-          <caret line="177" column="10" lean-forward="false" selection-start-line="177" selection-start-column="10" selection-end-line="177" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1258">
-          <caret line="79" column="21" lean-forward="false" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1325">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/Ground.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/ParticleSpawner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="37" column="86" lean-forward="false" selection-start-line="37" selection-start-column="86" selection-end-line="37" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Crossover.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" column="109" lean-forward="false" selection-start-line="12" selection-start-column="109" selection-end-line="12" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/GeneticAlg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Population.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
-          <folding>
-            <element signature="e#911#928#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -632,25 +548,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/physicsPack/Vector2D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="20" column="21" lean-forward="false" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Wind.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="30" column="52" lean-forward="false" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2321#2322#0" expanded="false" />
-            <element signature="e#2388#2389#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/Factory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -659,18 +556,138 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Rain.java">
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Wind.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="57" column="93" lean-forward="false" selection-start-line="57" selection-start-column="93" selection-end-line="57" selection-end-column="93" />
+        <state relative-caret-position="154">
+          <caret line="30" column="52" lean-forward="false" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/ParticleSpawner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="37" column="86" lean-forward="false" selection-start-line="37" selection-start-column="86" selection-end-line="37" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Particle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="40" column="54" lean-forward="false" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2021">
+          <caret line="55" column="6" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Plant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="48" column="6" lean-forward="false" selection-start-line="48" selection-start-column="6" selection-end-line="48" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/OWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="142" column="29" lean-forward="false" selection-start-line="142" selection-start-column="29" selection-end-line="142" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="29" column="60" lean-forward="false" selection-start-line="29" selection-start-column="60" selection-end-line="29" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/EWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1258">
+          <caret line="79" column="21" lean-forward="false" selection-start-line="79" selection-start-column="21" selection-end-line="79" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1188">
+          <caret line="120" column="6" lean-forward="false" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simulatorPack/Simulator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-610">
+          <caret line="51" column="24" lean-forward="false" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/physicsPack/Vector2D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-152">
+          <caret line="20" column="21" lean-forward="false" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/physicsPack/Maths.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="82" column="27" lean-forward="false" selection-start-line="82" selection-start-column="27" selection-end-line="82" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Population.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Mutation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-115">
+          <caret line="7" column="16" lean-forward="false" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Individual.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
+        <state relative-caret-position="222">
           <caret line="28" column="5" lean-forward="true" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/GeneticAlg.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-424">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/Crossover.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -683,118 +700,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Particle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="40" column="54" lean-forward="false" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/OWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2754">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/Circle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="15" column="10" lean-forward="false" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        <state relative-caret-position="68">
+          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/ColChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="11" lean-forward="false" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+        <state relative-caret-position="255">
+          <caret line="15" column="26" lean-forward="false" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2584">
-          <caret line="169" column="36" lean-forward="false" selection-start-line="169" selection-start-column="36" selection-end-line="169" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/simulatorPack/Simulator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="39" column="27" lean-forward="false" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
-          <folding>
-            <element signature="e#2112#2113#0" expanded="true" />
-            <element signature="e#2159#2160#0" expanded="true" />
-            <element signature="e#3571#3572#0" expanded="true" />
-            <element signature="e#3597#3598#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/Tree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="102" column="58" lean-forward="false" selection-start-line="102" selection-start-column="58" selection-end-line="102" selection-end-column="58" />
+        <state relative-caret-position="1616">
+          <caret line="124" column="21" lean-forward="false" selection-start-line="124" selection-start-column="21" selection-end-line="124" selection-end-column="21" />
           <folding>
-            <element signature="e#4036#4037#0" expanded="true" />
-            <element signature="e#4071#4072#0" expanded="true" />
+            <element signature="e#4032#4033#0" expanded="true" />
+            <element signature="e#4067#4068#0" expanded="true" />
+            <element signature="e#4383#4389#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/physicsPack/Maths.java">
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Branch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="106" column="128" lean-forward="false" selection-start-line="106" selection-start-column="128" selection-end-line="106" selection-end-column="128" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Leaf.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="65" column="73" lean-forward="false" selection-start-line="65" selection-start-column="73" selection-end-line="65" selection-end-column="73" />
+        <state relative-caret-position="274">
+          <caret line="58" column="14" lean-forward="false" selection-start-line="58" selection-start-column="14" selection-end-line="58" selection-end-column="14" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1400#1401#0" expanded="true" />
-            <element signature="e#1442#1443#0" expanded="true" />
+            <element signature="e#2744#2745#0" expanded="true" />
+            <element signature="e#2775#2776#0" expanded="true" />
+            <element signature="e#4096#4097#0" expanded="true" />
+            <element signature="e#4163#4164#0" expanded="true" />
+            <element signature="e#8595#8601#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/geneticAlgPack/DNA.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-491">
+        <state relative-caret-position="-442">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Branch.java">
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        <state relative-caret-position="324">
+          <caret line="50" column="63" lean-forward="false" selection-start-line="50" selection-start-column="63" selection-end-line="50" selection-end-column="63" />
           <folding>
-            <element signature="e#2701#2702#0" expanded="true" />
-            <element signature="e#2732#2733#0" expanded="true" />
-            <element signature="e#4053#4054#0" expanded="true" />
-            <element signature="e#4120#4121#0" expanded="true" />
+            <element signature="e#6392#6393#0" expanded="true" />
+            <element signature="e#6419#6420#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Rain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-658">
+          <caret line="10" column="73" lean-forward="false" selection-start-line="10" selection-start-column="73" selection-end-line="10" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Leaf.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="50" column="48" lean-forward="false" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="48" />
+          <caret line="56" column="74" lean-forward="false" selection-start-line="56" selection-start-column="74" selection-end-line="56" selection-end-column="74" />
           <folding>
-            <element signature="e#6116#6117#0" expanded="true" />
-            <element signature="e#6143#6144#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -27,7 +27,7 @@ public class MWindow extends JFrame{
     }
 }
 
-class MButtonPanel extends JPanel implements ActionListener{ //TODO załaduj algorytm z edytora
+class MButtonPanel extends JPanel implements ActionListener{
     private SWindow simWindow;
     private EWindow envWindow;
     private AWindow algWindow;
