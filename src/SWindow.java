@@ -62,12 +62,13 @@ class SimPanel extends JPanel implements ActionListener{
     private JTextField fpsText;
     private JTextField fitText;
     private JTextField satText;
+    private JTextField ppsText;
     private long secStart;
     private int frames;
     private boolean showInvis;
 
     protected SimPanel(){
-        simulator = new Simulator(200,null);
+        simulator = new Simulator(100,null);
         timer = new Timer(1,this);
         //generator = new Random();
         showInvis = false;
@@ -102,6 +103,13 @@ class SimPanel extends JPanel implements ActionListener{
         satText.setBorder(null);
         satText.setBackground(Color.WHITE);
         add(satText);
+
+        ppsText = new JTextField();
+        ppsText.setBounds(1,68,60,20);
+        ppsText.setEditable(false);
+        ppsText.setBorder(null);
+        ppsText.setBackground(Color.WHITE);
+        add(ppsText);
 
         frames = 0;
         secStart = System.currentTimeMillis();
@@ -159,6 +167,7 @@ class SimPanel extends JPanel implements ActionListener{
             int sat = (int)simulator.getSatiety();
             if(sat >= 0) satText.setText("Satiety: " + sat);
             else satText.setText("Satiety: -");
+            ppsText.setText("PPS: "+simulator.getPPS());
         } else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
             for(int i = 0; i < 1; i++) {
                 /*Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);

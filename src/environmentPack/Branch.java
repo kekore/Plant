@@ -20,7 +20,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private ArrayList<Branch> brothers;
     private ArrayList<Leaf> leaves;
     private int level;
-    private float angle;
+    protected float angle;
     private float lenght;
     private boolean doesGrowLeaves;
 
@@ -80,16 +80,16 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         //System.out.println("green: "+green);
         switch (p.type){
             case DROP:{
-                addSatiety(((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints(((float)parentTree.branchGreen-128)/100);
+                addSatiety(4F*((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints(4F*((float)parentTree.branchGreen-128)/100);
                 //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
             case FOTON:{} //same as below
             case OXYGEN:{
                 //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
-                addSatiety(1.27F - ((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints(1.27F - ((float)parentTree.branchGreen-128)/100);
+                addSatiety(5.08F - ((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints(5.08F - ((float)parentTree.branchGreen-128)/100);
                 break;
             }
             case CARBOXIDE:{

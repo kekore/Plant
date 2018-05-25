@@ -25,6 +25,9 @@ public class Simulator implements ActionListener{
     private int speed;
     private int cycle;
     private long simulationTime;
+    private long secStart;
+    private int actions;
+    private int PPS;
 
     public Simulator(long tT, Environment environment){ //TODO algorythm as parameter
         if(environment != null){                        //TODO add quick simulation thread class
@@ -34,9 +37,11 @@ public class Simulator implements ActionListener{
         //else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
         //quickSim = false;
-        timer = new Timer(10,this);
+        timer = new Timer(1,this);
         speed = 4;
         cycle = 0;
+        secStart = System.currentTimeMillis();
+        actions=0;
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -45,6 +50,13 @@ public class Simulator implements ActionListener{
         addP(new Particle(p,v,f,m,r,t));
     }
     private void proc(){ //TODO count TICKS PER SECOND HERE
+        if(System.currentTimeMillis() - secStart < 1000){
+            actions++;
+        } else{
+            PPS = actions;
+            actions = 0;
+            secStart = System.currentTimeMillis();
+        }
         timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
         environment.proc(tickTime);
         //TODO have to check if simulation is finished and then do some genetic alg stuff
@@ -102,6 +114,9 @@ public class Simulator implements ActionListener{
     public float getSatiety(){
         if(!isSet) return -2;
         return environment.getSatiety();
+    }
+    public int getPPS(){
+        return PPS;
     }
     public boolean isSet() { return isSet; }
 }

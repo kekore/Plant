@@ -98,9 +98,9 @@ public class Tree implements Serializable{
         for(Branch b : branches){ b.receiveBufferRec(); }
         for(Branch b : branches){ b.growRec(); } //TODO opoznianie kolejnych branchowan
         if((time % firstBranchTime == 0 && levels == 0)||((time-firstBranchTime) % nextBranchTime == 0 && levels > 0)){
-            System.out.println("BRANCH");
+            /*System.out.println("BRANCH");
             levels++;
-            for(Branch b : branches){ b.doBranchRec(); }
+            for(Branch b : branches){ b.doBranchRec(); }*/
         }
         for(Branch b : branches){ b.updateShapesRec(); }
     }

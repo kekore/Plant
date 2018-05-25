@@ -1,5 +1,7 @@
 package physicsPack;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 public class Maths {
     static public float sigmoid(int x){
         float y = -1;
@@ -93,14 +95,20 @@ public class Maths {
         //float y11 = -y1;
         //float y22 = -y2;
         float b;
-        //System.out.println("yH x1 y1 x2 y2 d " + yH + " "+ x1 + " "+ y1 + " "+ x2 + " "+ y2 + " "+ d);
-        //System.out.println("POD PIERWIASTKIEM: "+ d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1));
-        //double pierwiastek = (double)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1));
-        //System.out.println("PIERWIASTEK: "+pierwiastek);
-        if(side){
-            b = yH + (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(-d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
+        System.out.println("yH x1 y1 x2 y2 d " + yH + " "+ x1 + " "+ y1 + " "+ x2 + " "+ y2 + " "+ d);
+        System.out.println("POD PIERWIASTKIEM: "+ d*d*(x1-x2)*(x1-x2)*(x1*x1-2F*x1*x2+y1*y1-2F*y2*y1+x2*x2-1F));
+        double pierwiastek = (double)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1));
+        System.out.println("PIERWIASTEK: "+pierwiastek);
+        System.out.println("IF: " + d*d*(x1-x2)*(x1-x2)*Math.sqrt(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1));
+        if(d*d*(x1-x2)*(x1-x2)*Math.sqrt(-(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)) != -0.0F) {
+            if (side) {
+                b = yH + (d*d*(x1-x2)*(x1-x2)) / (2*(float)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(-(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1))));
+            } else {
+                b = yH - (d*d*(x1-x2)*(x1-x2)) / (2*(float)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(-(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1))));
+            }
         } else{
-            b = yH - (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(-d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
+            System.out.println("COUNT B mianownik == 0");
+            b=yH;
         }
         return b;
     }

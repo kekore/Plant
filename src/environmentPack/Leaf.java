@@ -51,10 +51,21 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     }
 
     protected void updateShape(){
-        float cA = Maths.countA(xH,parentBranch.x1,parentBranch.y1,parentBranch.x2,parentBranch.y2,d,side);
+        /*float cA = Maths.countA(xH,parentBranch.x1,parentBranch.y1,parentBranch.x2,parentBranch.y2,d,side);
         System.out.println("cA: " + cA);
         float cB = Maths.countB(yH,parentBranch.x1,parentBranch.y1,parentBranch.x2,parentBranch.y2,d,side);
-        System.out.println("cB "+ cB);
-        shape = new Circle(new Vector2D(cA,cB),(int)d,new Color(0,parentTree.leafGreen,0),true);
+        System.out.println("cB "+ cB);*/
+        Vector2D cirCenter;
+        float cA,cB;
+        if(side){
+            cA = xH + (float)Math.cos(Math.PI/2-parentBranch.angle)*(d/2);
+            cB = yH + (float)-Math.sin(Math.PI/2-parentBranch.angle)*(d/2);
+            cirCenter = new Vector2D(cA,cB);
+        } else{
+            cA = xH + (float)-Math.cos(Math.PI/2-parentBranch.angle)*(d/2);
+            cB = yH + (float)Math.sin(Math.PI/2-parentBranch.angle)*(d/2);
+            cirCenter = new Vector2D(cA,cB);
+        }
+        shape = new Circle(cirCenter,(int)d,new Color(0,parentTree.leafGreen,0),true);
     }
 }
