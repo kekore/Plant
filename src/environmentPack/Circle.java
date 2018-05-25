@@ -11,11 +11,13 @@ public class Circle implements Serializable{
     public Ellipse2D.Float ellipse;
     protected Vector2D position;
     //public Rectangle2D.Float hitbox;
+    private boolean isFilled;
     protected int d;
     public Color color;
-    Circle(Vector2D p, int a, Color c){
+    Circle(Vector2D p, int a, Color c, boolean isFilled){
         position = p;
         d=a;
+        this.isFilled = isFilled;
         ellipse = new Ellipse2D.Float(p.getX()-d/2,p.getY()-d/2,d,d);
         color = c;
     }
@@ -23,4 +25,5 @@ public class Circle implements Serializable{
         position = p;
         ellipse = new Ellipse2D.Float(p.getX()-d/2,p.getY()-d/2,d,d);
     }
+    public boolean isFilled(){ return isFilled; }
 }

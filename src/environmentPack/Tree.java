@@ -15,6 +15,7 @@ public class Tree implements Serializable{
     protected float points;
     protected int branchGreen;
     protected int leafGreen;
+    protected int leavesAmount;
     protected float seedX;
     protected float seedY;
     private boolean isSeeded;
@@ -26,6 +27,12 @@ public class Tree implements Serializable{
         this.dna = dna;
         branches = new ArrayList<Branch>();
         levels = 0;
+        points = 0;
+        branchGreen = (int)(Maths.sig(dna.getGene(5)) * 128)+128;
+        System.out.println(branchGreen);
+        leafGreen = (int)(Maths.sig(dna.getGene(6)) * 128)+128;
+        if(dna.getGene(12)==0) leavesAmount = 1;
+        else leavesAmount = Math.abs(dna.getGene(12));
         this.seedX = seedX;
         this.seedY = seedY;
         //isSeeded = false;
@@ -66,11 +73,6 @@ public class Tree implements Serializable{
                 nextAngle = nextAngle - angleStep;
             }
         }
-
-        branchGreen = (int)(Maths.sig(dna.getGene(5)) * 128)+128;
-        System.out.println(branchGreen);
-        leafGreen = (int)(Maths.sig(dna.getGene(6)) * 128)+128;
-        points = 0;
     }
     private void addBranch(float angle, float initSatiety){
         boolean doesGrowLeaves;
@@ -100,7 +102,7 @@ public class Tree implements Serializable{
             levels++;
             for(Branch b : branches){ b.doBranchRec(); }
         }
-        for(Branch b : branches){ b.updateLineRec(); }
+        for(Branch b : branches){ b.updateShapesRec(); }
     }
 
     protected void addPoints(float p){

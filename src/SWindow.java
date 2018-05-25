@@ -61,6 +61,7 @@ class SimPanel extends JPanel implements ActionListener{
     private JTextField timeText;
     private JTextField fpsText;
     private JTextField fitText;
+    private JTextField satText;
     private long secStart;
     private int frames;
     private boolean showInvis;
@@ -95,6 +96,13 @@ class SimPanel extends JPanel implements ActionListener{
         fitText.setBackground(Color.WHITE);
         add(fitText);
 
+        satText = new JTextField();
+        satText.setBounds(1,52,100,20);
+        satText.setEditable(false);
+        satText.setBorder(null);
+        satText.setBackground(Color.WHITE);
+        add(satText);
+
         frames = 0;
         secStart = System.currentTimeMillis();
     }
@@ -114,7 +122,8 @@ class SimPanel extends JPanel implements ActionListener{
         }
         for(Circle c : cList){
             g2d.setColor(c.color);
-            g2d.draw(c.ellipse);
+            if(!c.isFilled()) g2d.draw(c.ellipse);
+            else g2d.fill(c.ellipse);
         }
         for(Line2D l : lList){
             g2d.setColor(Color.GREEN);
@@ -122,7 +131,7 @@ class SimPanel extends JPanel implements ActionListener{
         }
         for(Rect r : rList){
             g2d.setColor(r.color);
-            if(!r.isFilled)g2d.draw(r.rectangle);
+            if(!r.isFilled())g2d.draw(r.rectangle);
             else g2d.fill(r.rectangle);
         }
         for(Pair<Line2D,Color> pair : bList){
@@ -147,6 +156,9 @@ class SimPanel extends JPanel implements ActionListener{
             int fit = (int)simulator.getPoints();
             if(fit >= 0) fitText.setText("Fitness: " + fit);
             else fitText.setText("Fitness: -");
+            int sat = (int)simulator.getSatiety();
+            if(sat >= 0) satText.setText("Satiety: " + sat);
+            else satText.setText("Satiety: -");
         } else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
             for(int i = 0; i < 1; i++) {
                 /*Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);

@@ -10,10 +10,10 @@ import java.util.ArrayList;
 
 public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES (?)
     protected Line2D.Float line;
-    private float x1;
-    private float y1;
-    private float x2;
-    private float y2;
+    protected float x1;
+    protected float y1;
+    protected float x2;
+    protected float y2;
     private Branch parentBranch;
     private Tree parentTree;
     private ArrayList<Branch> branches;
@@ -24,7 +24,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private float lenght;
     private boolean doesGrowLeaves;
 
-    private float satiety;
+    protected float satiety;
     private float satietyBuffer;
     private int growCost;
     private int growCounter;
@@ -49,7 +49,17 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         branches = new ArrayList<Branch>();
         brothers = new ArrayList<Branch>();
         leaves = new ArrayList<Leaf>();
-
+        if(doesGrowLeaves){
+            float posStep = 1F/(1F+(float)parentTree.leavesAmount/2F);
+            //System.out.println(1F/(1F+(float)parentTree.leavesAmount/2F));
+            for(int i = 0; i < parentTree.leavesAmount/2; i++){
+                leaves.add(new Leaf(parentTree,this,(i+1)*posStep,true));
+            }
+            posStep = 1F/(1F+(float) parentTree.leavesAmount-(float) parentTree.leavesAmount/2F);
+            for(int i = 0; i < parentTree.leavesAmount-parentTree.leavesAmount/2; i++){
+                leaves.add(new Leaf(parentTree,this,(i+1)*posStep,false));
+            }
+        }
         if(parentBranch == null) level = 0;
         else level = parentBranch.level+1;
 
@@ -92,7 +102,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
             }
         }
     }
-    private void addSatiety(float n){
+    protected void addSatiety(float n){
         satiety = satiety + n;
         //System.out.println(satiety);
     }
@@ -153,7 +163,9 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
 
     protected void growRec(){ //TODO grow leaves
         //System.out.println(satiety + " " + angle); //for debugging
-        float lenghtFormula = getStaiety(((float)1/(float)(50*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
+        //float lenghtFormula = 10*getStaiety(((float)1/(float)(100*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
+        float lenghtFormula = getStaiety((1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
+        System.out.println("BRANCH: "+(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
         if(doesGrowLeaves)growLeaves();
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));
         growLineRec(countBGrowth(lenghtFormula));
@@ -162,20 +174,23 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private void growLineRec(Vector2D shift){
         x2 = x2 + shift.getX();
         y2 = y2 + shift.getY();
-        for(Branch b : branches){ b.updateXYRec(shift); }
+        for(Leaf l : leaves){ l.updatePoint(); }
+        for(Branch b : branches){ b.updatePointsRec(shift); }
     }
-    private void updateXYRec(Vector2D shift){
+    private void updatePointsRec(Vector2D shift){ //TODO tutaj dodać przesuwanie liści
         x1 = x1 + shift.getX();
         y1 = y1 + shift.getY();
         x2 = x2 + shift.getX();
         y2 = y2 + shift.getY();
-        for(Branch b : branches){ b.updateXYRec(shift); }
+        System.out.println("updatePointsRec");
+        for(Branch b : branches){ b.updatePointsRec(shift); }
     }
 
-    protected void updateLineRec(){
+    protected void updateShapesRec(){
         //System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
         line = new Line2D.Float(x1,y1,x2,y2);
-        for(Branch b : branches){ b.updateLineRec(); }
+        for(Leaf l : leaves){ l.updateShape(); }
+        for(Branch b : branches){ b.updateShapesRec(); }
     }
 
     /*protected void updateLineRec(){ updateLineRec(); }
@@ -196,7 +211,13 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     }
 
     private void growLeaves(){
-
+        //float leavesFormula = getStaiety((1-((float)1/(float)(25*(Math.abs(parentTree.dna.getGene(4))+2))))*satiety);
+        float leavesFormula = getStaiety((1F-(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2)))*satiety*(1F/10F));
+        System.out.println("LEAVES: "+(1F-(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2)))*satiety*(1F/10F));
+        float leafPortion = leavesFormula/parentTree.leavesAmount;
+        for(Leaf l : leaves){
+            l.grow(leafPortion/5);
+        }
     }
 
     protected ArrayList<Branch> getBranchesRec(){
@@ -225,7 +246,6 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         }
         return cList;
     }
-
     private ArrayList<Circle> getCircles(){
         ArrayList<Circle> cList = new ArrayList<Circle>();
         for(Leaf l : leaves){
@@ -254,7 +274,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         float nextAngle;
         if(isOdd){
             divideN = (branchesN - 1)/2 + 1;
-            angleStep = (freeAngle/divideN) * Maths.sig(parentTree.dna.getGene(9)/2);
+            angleStep = (freeAngle/divideN) * Maths.sig(parentTree.dna.getGene(9));
             nextAngle = generalAngle+angleStep*(divideN-1);
             for(int i = 0; i < branchesN; i++){
                 newBranch(nextAngle);
@@ -262,7 +282,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
             }
         } else {
             divideN = branchesN / 2 + 1;
-            angleStep = (freeAngle / divideN) * Maths.sig(parentTree.dna.getGene(9)/2);
+            angleStep = (freeAngle / divideN) * Maths.sig(parentTree.dna.getGene(9));
             nextAngle = generalAngle + angleStep * (divideN - 1);
             for (int i = 0; i < branchesN + 1; i++) {
                 if (i == branchesN / 2) {

@@ -78,27 +78,30 @@ public class Maths {
         return y;
     }
 
-    static public float countXPrim(float xH, float x1, float y1, float x2, float y2, float d, boolean side){
+    static public float countA(float xH, float x1, float y1, float x2, float y2, float d, boolean side){
         float a;
-        float xPrim;
         if(side){
             a = xH + (d*d*(y1-y2)*(y1-y2))/(2*(float)Math.sqrt(d*d*(y1-y2)*(y1-y2)*(x1*x1-2*x1*x2+y1*y1-2*y1*y2+x2*x2+y2*y2)));
         } else{
             a = xH - (d*d*(y1-y2)*(y1-y2))/(2*(float)Math.sqrt(d*d*(y1-y2)*(y1-y2)*(x1*x1-2*x1*x2+y1*y1-2*y1*y2+x2*x2+y2*y2)));
         }
-        xPrim = a - d/2;
-        return xPrim;
+        return a;
     }
 
-    static public float countYPrim(float yH, float x1, float y1, float x2, float y2, float d, boolean side){
+    static public float countB(float yH, float x1, float y1, float x2, float y2, float d, boolean side){
+        //float yHH = -yH;
+        //float y11 = -y1;
+        //float y22 = -y2;
         float b;
-        float yPrim;
+        //System.out.println("yH x1 y1 x2 y2 d " + yH + " "+ x1 + " "+ y1 + " "+ x2 + " "+ y2 + " "+ d);
+        //System.out.println("POD PIERWIASTKIEM: "+ d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1));
+        //double pierwiastek = (double)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1));
+        //System.out.println("PIERWIASTEK: "+pierwiastek);
         if(side){
-            b = yH + (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
+            b = yH + (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(-d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
         } else{
-            b = yH - (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
+            b = yH - (d*d*(x1-x2)*(x1-x2))/(2*(float)Math.sqrt(-d*d*(x1-x2)*(x1-x2)*(x1*x1-2*x1*x2+y1*y1-2*y2*y1+x2*x2-1)));
         }
-        yPrim = b - d/2;
-        return yPrim;
+        return b;
     }
 }

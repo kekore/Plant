@@ -189,7 +189,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         }
         for(Rect r : rList){
             g2d.setColor(r.color);
-            if(!r.isFilled)g2d.draw(r.rectangle);
+            if(!r.isFilled())g2d.draw(r.rectangle);
             else g2d.fill(r.rectangle);
         }
 

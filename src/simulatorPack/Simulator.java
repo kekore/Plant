@@ -99,5 +99,9 @@ public class Simulator implements ActionListener{
         if(!isSet) return -2;
         return environment.getPoints();
     }
+    public float getSatiety(){
+        if(!isSet) return -2;
+        return environment.getSatiety();
+    }
     public boolean isSet() { return isSet; }
 }

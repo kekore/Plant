@@ -18,27 +18,27 @@ public class Particle implements Serializable{
         type = t;
         switch (type){
             case OXYGEN: {
-                shape = new Circle(p,d,Color.BLUE);
+                shape = new Circle(p,d,Color.BLUE,false);
                 break;
             }
             case CARBOXIDE: {
-                shape = new Circle(p,d,Color.DARK_GRAY);
+                shape = new Circle(p,d,Color.DARK_GRAY,false);
                 break;
             }
             case TOXIC: {
-                shape = new Circle(p,d,Color.MAGENTA);
+                shape = new Circle(p,d,Color.MAGENTA,false);
                 break;
             }
             case FOTON: {
-                shape = new Circle(p,d,Color.YELLOW);
+                shape = new Circle(p,d,Color.YELLOW,false);
                 break;
             }
             case DROP: {
-                shape = new Circle(p,d,Color.CYAN);
+                shape = new Circle(p,d,Color.CYAN,false);
                 break;
             }
             default: {
-                shape = new Circle(p,d,Color.RED);
+                shape = new Circle(p,d,Color.RED,false);
             }
         }
     }

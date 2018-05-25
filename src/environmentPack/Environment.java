@@ -48,7 +48,7 @@ public class Environment implements Serializable {
         isWorking = false;
 
         //int[20] dnaTest =
-        tree = new Tree(new DNA(new int[] {3,3,4,0,0,0,0,2,3,1,0,0,0,0,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
+        tree = new Tree(new DNA(new int[] {3,3,4,0,4,0,0,2,3,8,1,0,4,0,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
         //tree.seed(seedPosX,height-groundLevel);
     }
 
@@ -137,6 +137,7 @@ public class Environment implements Serializable {
         for(Particle p : particleList){
             sList.add(p.shape);
         }
+        sList.addAll(tree.getCircles());
         return sList;
     }
 
@@ -152,7 +153,7 @@ public class Environment implements Serializable {
     public ArrayList<Pair<Line2D,Color>> getBranchLines(){
         ArrayList<Pair<Line2D,Color>> array = new ArrayList<Pair<Line2D,Color>>();
         for(Branch b : tree.getBranches()){
-            array.add(new Pair<Line2D,Color>(b.line,new Color(0,b.green,0)));
+            array.add(new Pair<Line2D,Color>(b.line,new Color(0,tree.branchGreen,0)));
         }
         return array;
     }
@@ -202,5 +203,15 @@ public class Environment implements Serializable {
         //tree.reset();
         //sun.reset();
         //rain.reset();
+     }
+
+     public float getSatiety(){
+        if(tree==null) return -1;
+        ArrayList<Branch> bList = tree.getBranches();
+        float satiety=0;
+        for(Branch b : bList){
+            satiety = satiety + b.satiety;
+        }
+        return satiety;
      }
 }
