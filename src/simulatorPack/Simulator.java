@@ -124,6 +124,7 @@ public class Simulator implements ActionListener{
     }
     public boolean isSet() { return isSet; }
     public void alterQuickSim(){
+        if(environment==null) return;
         if(!quickSim) {
             quickSim = true;
             timer.stop();
