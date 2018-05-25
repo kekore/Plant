@@ -13,8 +13,8 @@ public class Tree implements Serializable{
     private ArrayList<Branch> branches;
     protected int levels;
     protected float points;
-    private int branchGreen;
-    private int leafGreen;
+    protected int branchGreen;
+    protected int leafGreen;
     protected float seedX;
     protected float seedY;
     private boolean isSeeded;
@@ -66,6 +66,10 @@ public class Tree implements Serializable{
                 nextAngle = nextAngle - angleStep;
             }
         }
+
+        branchGreen = (int)(Maths.sig(dna.getGene(5)) * 128)+128;
+        System.out.println(branchGreen);
+        leafGreen = (int)(Maths.sig(dna.getGene(6)) * 128)+128;
         points = 0;
     }
     private void addBranch(float angle, float initSatiety){

@@ -20,7 +20,6 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     private ArrayList<Branch> brothers;
     private ArrayList<Leaf> leaves;
     private int level;
-    protected int green; //TODO przeniesc do tree
     private float angle;
     private float lenght;
     private boolean doesGrowLeaves;
@@ -50,10 +49,10 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         branches = new ArrayList<Branch>();
         brothers = new ArrayList<Branch>();
         leaves = new ArrayList<Leaf>();
+
         if(parentBranch == null) level = 0;
         else level = parentBranch.level+1;
-        green = (int)(Maths.sig(parentTree.dna.getGene(5)) * 128)+128;
-        System.out.println(green);
+
         this.angle = angle;
         this.doesGrowLeaves = doesGrowLeaves;
         //this.green = green;
@@ -71,16 +70,16 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
         //System.out.println("green: "+green);
         switch (p.type){
             case DROP:{
-                addSatiety(((float)green-128)/100);
-                parentTree.addPoints(((float)green-128)/100);
+                addSatiety(((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints(((float)parentTree.branchGreen-128)/100);
                 //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
             case FOTON:{} //same as below
             case OXYGEN:{
                 //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
-                addSatiety(1.27F - ((float)green-128)/100);
-                parentTree.addPoints(1.27F - ((float)green-128)/100);
+                addSatiety(1.27F - ((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints(1.27F - ((float)parentTree.branchGreen-128)/100);
                 break;
             }
             case CARBOXIDE:{
@@ -155,7 +154,7 @@ public class Branch implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOX
     protected void growRec(){ //TODO grow leaves
         //System.out.println(satiety + " " + angle); //for debugging
         float lenghtFormula = getStaiety(((float)1/(float)(50*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
-        if(doesGrowLeaves);
+        if(doesGrowLeaves)growLeaves();
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));
         growLineRec(countBGrowth(lenghtFormula));
         for(Branch b: branches){ b.growRec(); }
