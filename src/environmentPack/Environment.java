@@ -41,7 +41,7 @@ public class Environment implements Serializable {
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
-        sun = new Sun(sunTime,sunSide,width,height-groundLevel);
+        if(sunTime != 0) sun = new Sun(sunTime,sunSide,width,height-groundLevel);
         //spawnerList.addAll(sun.getSpawners());
 
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
@@ -84,7 +84,7 @@ public class Environment implements Serializable {
         //rain:
         if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
         //sun:
-        particleList.addAll(sun.proc(time));
+        if(sun != null) particleList.addAll(sun.proc(time));
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
             p.setForce(new Vector2D(0,500));
