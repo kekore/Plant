@@ -13,17 +13,21 @@ public class Individual {
         this.dna = dna;
         tested = false;
     }
-    protected void setTree(Tree tree){
+    /*protected void setTree(Tree tree){
         this.tree = tree;
-    }
-    protected void setTested(int fitness){
-        this.fitness = fitness;
+    }*/
+    protected void setTested(Tree tree, float fitness){
+        if(tested) throw new RuntimeException();
         tested = true;
+        this.tree = tree;
+        this.fitness = fitness;
     }
-    public Tree getTree(){
+    public DNA getDna(){ return dna; }
+    private Tree getTree(){
+        if(!tested) throw new RuntimeException();
         return tree;
     }
-    public float getFitness(){
+    protected float getFitness(){
         if(!tested) return -1;
         return fitness;
     }

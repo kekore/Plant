@@ -1,10 +1,8 @@
 package simulatorPack;
 
-import environmentPack.Circle;
-import environmentPack.Environment;
-import environmentPack.Particle;
-import environmentPack.Rect;
+import environmentPack.*;
 import geneticAlgPack.GeneticAlg;
+import geneticAlgPack.Individual;
 import javafx.util.Pair;
 import physicsPack.Vector2D;
 
@@ -24,27 +22,27 @@ public class Simulator implements ActionListener{
     private Timer timer;
     private int speed;
     private int cycle;
-    protected long simulationTime;
+    protected final long simulationTime;
     private long secStart;
     private int actions;
     private int PPS;
     private QuickSimThread thread;
+    private boolean isWorking;
+    private Individual currentIndividual;
 
-    public Simulator(long tT, Environment environment){ //TODO algorythm as parameter
-        if(environment != null){                        //TODO add quick simulation thread class
-            this.environment = environment;
-            isSet = true;
-        } else isSet = false;
+    public Simulator(long tT, long simulationTime){ //TODO algorythm as parameter
+        isSet = false;
         //else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
         quickSim = false;
         timer = new Timer(1,this);
         speed = 4;
         cycle = 0;
-        simulationTime = 5000;
+        this.simulationTime = simulationTime;
         secStart = System.currentTimeMillis();
         actions=0;
         thread = new QuickSimThread(this);
+        isWorking=false;
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -60,25 +58,34 @@ public class Simulator implements ActionListener{
             actions = 0;
             secStart = System.currentTimeMillis();
         }
-        timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
+        //timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
         environment.proc(tickTime);
         //TODO have to check if simulation is finished and then do some genetic alg stuff
-        timer.start();
+        //timer.start();
     }
+
     public ArrayList<Circle> getCircles(){
+        if(environment == null) return new ArrayList<Circle>();
         return environment.getCircles();
     }
     public ArrayList<Line2D> getLines(){
+        if(environment == null) return new ArrayList<Line2D>();
         return environment.getLines();
     }
     public ArrayList<Line2D> getInvisLines(){
+        if(environment == null) return new ArrayList<Line2D>();
         return environment.getInvisLines(tickTime);
     }
     public ArrayList<Rect> getRects(){
+        if(environment == null) return new ArrayList<Rect>();
         return environment.getRects();
     }
-    public ArrayList<Rect> getInvisRects() { return environment.getInvisRects(); }
+    public ArrayList<Rect> getInvisRects() {
+        if(environment == null) return new ArrayList<Rect>();
+        return environment.getInvisRects();
+    }
     public ArrayList<Pair<Line2D,Color>> getBranchLines(){
+        if(environment == null) return new ArrayList<Pair<Line2D,Color>>();
         return environment.getBranchLines();
     }
     public void startSimulation(){
@@ -89,6 +96,7 @@ public class Simulator implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e){
+        timer.stop();
         if(cycle >= speed){
             if(quickSim) return;
             proc();
@@ -97,15 +105,23 @@ public class Simulator implements ActionListener{
         else{
             cycle++;
         }
+        if(environment.getTime() == GeneticAlg.simulationTime) endSimulation();
+        timer.start();
     }
+    private void endSimulation(){
+
+    }
+
     public void setSpeed(int a){speed = a;}
     public void setEnvironment(Environment environment){
+        if(isSet) return;
         this.environment = environment;
-        isSet = true;
+        if(geneticAlg != null)isSet = true;
     }
     public void setAlgorithm(GeneticAlg geneticAlg){
+        if(isSet) return;
         this.geneticAlg = geneticAlg;
-        //isSet...
+        if(environment != null)isSet = true;
     }
     public long getTime(){
         if(!isSet) return 0;
@@ -142,5 +158,13 @@ public class Simulator implements ActionListener{
     }
     public boolean isQuickSim(){
         return quickSim;
+    }
+
+    public void simulateGeneration(){
+        if(isWorking || !isSet) return;
+        isWorking = true;
+        currentIndividual = geneticAlg.getNextIndividual();
+        environment.insertTree(currentIndividual.getDna(),GeneticAlg.startSatiety);
+        startSimulation();
     }
 }

@@ -70,6 +70,13 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
         add(probPanel);
         add(mutPanel);
         add(initBut);
+
+        isInitialized=false;
+
+        popSize=200; //TODO !!!!
+        fittestAmount=50;//TODO !!!!
+        mutProb=1;
+        maxMutGen=3;
     }
 
     private void initAlg(){

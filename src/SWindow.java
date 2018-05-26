@@ -37,7 +37,7 @@ public class SWindow extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText().equals("Symulacja")){
-            if(!siming) {
+            /*if(!siming) {
                 if(simPanel.simulator.isSet()) {
                     setVisible(true);
                     siming = true;
@@ -48,6 +48,11 @@ public class SWindow extends JFrame implements ActionListener{
                 setVisible(true);
                 siming = false;
                 simPanel.pause();
+            }*/
+            if(isVisible()){
+                setVisible(false);
+            } else {
+                setVisible(true);
             }
         }
     }
@@ -63,12 +68,13 @@ class SimPanel extends JPanel implements ActionListener{
     private JTextField fitText;
     private JTextField satText;
     private JTextField ppsText;
+    private JTextField progressText;
     private long secStart;
     private int frames;
     private boolean showInvis;
 
     protected SimPanel(){
-        simulator = new Simulator(200,null);
+        simulator = new Simulator(200, GeneticAlg.simulationTime);
         timer = new Timer(1,this);
         //generator = new Random();
         showInvis = false;
@@ -110,6 +116,14 @@ class SimPanel extends JPanel implements ActionListener{
         ppsText.setBorder(null);
         ppsText.setBackground(Color.WHITE);
         add(ppsText);
+
+        progressText = new JTextField();
+        progressText.setBounds(getSize().width/2-50,getSize().height/2-10,100,20);
+        progressText.setEditable(false);
+        progressText.setBorder(null);
+        progressText.setBackground(Color.WHITE);
+        add(progressText);
+        progressText.setVisible(false);
 
         frames = 0;
         secStart = System.currentTimeMillis();
@@ -168,16 +182,16 @@ class SimPanel extends JPanel implements ActionListener{
             if(sat >= 0) satText.setText("Satiety: " + sat);
             else satText.setText("Satiety: -");
             ppsText.setText("PPS: "+simulator.getPPS());
-        } else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
+        } /*else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
             for(int i = 0; i < 1; i++) {
-                /*Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);
-                Vector2D v = new Vector2D((float)generator.nextInt(50) / 10+10, (float)generator.nextInt(50) / 10+10);*/
+                //Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);
+                //Vector2D v = new Vector2D((float)generator.nextInt(50) / 10+10, (float)generator.nextInt(50) / 110);
                 Vector2D p = new Vector2D(50,50);
                 Vector2D v = new Vector2D(30,200);
                 Vector2D f = new Vector2D(0,-50);
                 simulator.addP(p, v, f, 1, 10, Particle.Type.OXYGEN);
             }
-        } else if (((JButton) e.getSource()).getText().equals("2x")){
+        }*/ else if (((JButton) e.getSource()).getText().equals("2x")){
             simulator.setSpeed(2);
         } else if (((JButton) e.getSource()).getText().equals("4x")){
             simulator.setSpeed(1);
@@ -187,6 +201,8 @@ class SimPanel extends JPanel implements ActionListener{
             showInvis = !showInvis;
         } else if (((JButton) e.getSource()).getText().equals("Szybka symulacja")){
             simulator.alterQuickSim();
+        } else if (((JButton) e.getSource()).getText().equals("Zasymuluj generację")){
+            simulator.simulateGeneration();
         }
     }
     protected void setEnvironment(Environment environment){

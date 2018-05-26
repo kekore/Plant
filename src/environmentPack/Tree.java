@@ -23,7 +23,7 @@ public class Tree implements Serializable{
     private long nextBranchTime;
     //private int satiety;
 
-    Tree(DNA dna, int satiety, float seedX, float seedY){
+    Tree(DNA dna, float satiety, float seedX, float seedY){
         this.dna = dna;
         branches = new ArrayList<Branch>();
         levels = 0;

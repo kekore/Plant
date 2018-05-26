@@ -34,7 +34,7 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         if(sunSide){
             spinningVector = new Vector2D(distance,0);
             spinningVector.rotate((1F-(float)sunTime/100F)*((float)dayTime/2F)*angleStep);
-            System.out.println("COONSTRUCTOR SPINNING: " + spinningVector.getX() + " " + spinningVector.getY());
+            //System.out.println("COONSTRUCTOR SPINNING: " + spinningVector.getX() + " " + spinningVector.getY());
         } else {
             spinningVector = new Vector2D(-distance,0);
             spinningVector.rotate(-(1F-(float)sunTime/100F)*((float)dayTime/2F)*angleStep);
@@ -63,7 +63,7 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         System.out.println("RC x y: " + roofCenter.getX() + " " + roofCenter.getY());
         roof = new Line2D.Float(center.getX(),center.getY(),roofCenter.getX(),roofCenter.getY());
 
-        ArrayList<Vector2D> spawningPosList = new ArrayList<Vector2D>();
+        /*ArrayList<Vector2D> spawningPosList = new ArrayList<Vector2D>();
         for(int i = 0; i < spawnersAmount/2; i++){
             Vector2D relPos = spinningVector.getPerpendicular(true, fotonsSpacing*(i+1));
             spawningPosList.add(roofCenter.addNC(relPos));
@@ -71,11 +71,24 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         for(int i = 0; i < spawnersAmount - spawnersAmount/2; i++){
             Vector2D relPos = spinningVector.getPerpendicular(false, fotonsSpacing*i);
             spawningPosList.add(roofCenter.addNC(relPos));
-        }
+        }*/
 
         Vector2D velocity = spinningVector.scaleToNC(-100F);
         ArrayList<Particle> pList = new ArrayList<Particle>();
         if(time % frequency == 0){
+
+
+            ArrayList<Vector2D> spawningPosList = new ArrayList<Vector2D>();
+            for(int i = 0; i < spawnersAmount/2; i++){
+                Vector2D relPos = spinningVector.getPerpendicular(true, fotonsSpacing*(i+1));
+                spawningPosList.add(roofCenter.addNC(relPos));
+            }
+            for(int i = 0; i < spawnersAmount - spawnersAmount/2; i++){
+                Vector2D relPos = spinningVector.getPerpendicular(false, fotonsSpacing*i);
+                spawningPosList.add(roofCenter.addNC(relPos));
+            }
+
+
             rList.clear();
             for(Vector2D spawnPos : spawningPosList){
                 pList.add(new Particle(spawnPos,new Vector2D(velocity),new Vector2D(),0,2,Particle.Type.FOTON));

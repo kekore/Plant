@@ -30,7 +30,12 @@ public class Environment implements Serializable {
     private long time;
     private boolean isWorking; //TODO for denying editions
 
-    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int sunTime, boolean sunSide, int rainFreq, int rainInt){
+    private int sunTime;
+    private boolean sunSide;
+    private int rainFreq;
+    private int rainInt;
+
+    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int sunTime, boolean sunSide, int rainFreq, int rainInt, Wind.Direction dir1, Wind.Direction dir2){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();
@@ -41,17 +46,21 @@ public class Environment implements Serializable {
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
+        this.sunTime = sunTime;
+        this.sunSide = sunSide;
         if(sunTime != 0) sun = new Sun(sunTime,sunSide,width,height-groundLevel);
         //spawnerList.addAll(sun.getSpawners());
 
+        this.rainFreq=rainFreq;
+        this.rainInt=rainInt;
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
-        wind = new Wind(Wind.Direction.EAST,Wind.Direction.WEST);
+        wind = new Wind(dir1,dir2);
 
         time = 1;
         isWorking = false;
 
         //int[20] dnaTest =
-        tree = new Tree(new DNA(new int[] {2,8,8,0,4,8,8,2,2,8,1,0,5,-8,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
+        //tree = new Tree(new DNA(new int[] {2,8,8,0,4,8,8,2,2,8,1,0,5,-8,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
         //tree.seed(seedPosX,height-groundLevel);
     }
 
@@ -77,9 +86,6 @@ public class Environment implements Serializable {
     }
 
     public void proc(long tickTime){
-        //grow tree
-        //move sun
-        //spawn rain?
         //spawn toxic from factories
         //rain:
         if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
@@ -87,7 +93,7 @@ public class Environment implements Serializable {
         if(sun != null) particleList.addAll(sun.proc(time));
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
-            p.setForce(new Vector2D(0,500));
+            p.setForce(new Vector2D(0,400));
             p.physics.getForce().add(wind.getForce(time));
         }
         /*for(ParticleSpawner ps : spawnerList){ //count sun forces
@@ -156,7 +162,7 @@ public class Environment implements Serializable {
         for(Particle p : particleList){
             sList.add(p.shape);
         }
-        sList.addAll(tree.getCircles());
+        if(tree != null)sList.addAll(tree.getCircles());
         return sList;
     }
 
@@ -171,6 +177,7 @@ public class Environment implements Serializable {
 
     public ArrayList<Pair<Line2D,Color>> getBranchLines(){
         ArrayList<Pair<Line2D,Color>> array = new ArrayList<Pair<Line2D,Color>>();
+        if(tree == null) return array;
         for(Branch b : tree.getBranches()){
             array.add(new Pair<Line2D,Color>(b.line,new Color(0,tree.branchGreen,0)));
         }
@@ -205,8 +212,8 @@ public class Environment implements Serializable {
         return irList;
     }
 
-    public void insertTree(Tree tree){
-        this.tree = tree;
+    public void insertTree(DNA dna, float startSatiety){
+        this.tree = new Tree(dna,startSatiety,seedPlace.getX(),seedPlace.getY());
         reset();
     }
 
@@ -219,11 +226,11 @@ public class Environment implements Serializable {
     }
 
     private void reset(){
-        time = 0;
+        time = 1;
         particleList.clear();
         //tree.reset();
-        //sun.reset();
-        //rain.reset();
+        sun = new Sun(sunTime,sunSide,width,height-ground.groundLevel);
+        rain =  new Rain(rainFreq,rainInt,width);
      }
 
      public float getSatiety(){

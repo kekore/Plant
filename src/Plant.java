@@ -5,11 +5,12 @@ import java.awt.EventQueue;
 public class Plant {
     public static void main(String[] args) {
         SimRunnable simR = new SimRunnable(); //TODO ogarnac invokeLater
-        OvrRunnable ovrR = new OvrRunnable();
-        EventQueue.invokeLater(ovrR);
+        //OvrRunnable ovrR = new OvrRunnable();
+        //EventQueue.invokeLater(ovrR);
         //while(!ovrR.isRan());
         //System.out.println(ovrR.getRef());
-        EnvRunnable envR = new EnvRunnable(ovrR.getRef());
+        //EnvRunnable envR = new EnvRunnable(ovrR.getRef());
+        EnvRunnable envR = new EnvRunnable();
         AlgRunnable algR = new AlgRunnable();
         CatRunnable catR = new CatRunnable();
 
@@ -37,7 +38,7 @@ class SimRunnable implements Runnable{
     private SWindow s;
 }
 
-class EnvRunnable implements Runnable{
+/*class EnvRunnable implements Runnable{
     EnvRunnable(OWindow oRef){
         o = oRef;
     }
@@ -46,9 +47,16 @@ class EnvRunnable implements Runnable{
     protected EWindow getRef() { return e; }
     private EWindow e;
     private OWindow o;
+}*/
+
+class EnvRunnable implements Runnable{
+    @Override
+    public void run() { e = new EWindow(); }
+    protected EWindow getRef() { return e; }
+    private EWindow e;
 }
 
-class OvrRunnable implements Runnable {
+/*class OvrRunnable implements Runnable {
     OvrRunnable(){
         o = new OWindow();
     }
@@ -60,7 +68,7 @@ class OvrRunnable implements Runnable {
         return o;
     }
     private OWindow o;
-}
+}*/
 
 class AlgRunnable implements Runnable{
     AlgRunnable() { a = new AWindow(); }

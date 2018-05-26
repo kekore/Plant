@@ -17,10 +17,11 @@ import java.util.ArrayList;
 // (O)verview window
 public class OWindow extends JFrame implements ChangeListener, ActionListener{
     protected OvrPanel ovrPanel;
+    private EWindow eWindow;
     protected int width;
     protected int height;
 
-    public OWindow(){
+    public OWindow(EWindow e){
         super("Podgląd środowiska");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //?
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,6 +30,7 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
         setSize(width,height);
         setLocation(screenSize.width/2,6);
 
+        eWindow = e;
         ovrPanel = new OvrPanel();
         add(ovrPanel);
 
@@ -56,7 +58,8 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
         if(((JButton)e.getSource()).getText().equals("Zapisz do pliku")){
             System.out.println("Save file returned: " + ovrPanel.saveFile(width,height)); //TODO change this
         } else if(((JButton)e.getSource()).getText().equals("Wczytaj z pliku")){
-            System.out.println("Load file returned: " + ovrPanel.loadFile());
+            //System.out.println("Load file returned: " + ovrPanel.loadFile());
+            if(ovrPanel.loadFile() == 0) eWindow.alterPage();
             Dimension size = ovrPanel.environment.getWindowSize();
             width = size.width;
             height = size.height;
@@ -86,6 +89,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     private int sunTime;
     private int rainFrequency;
     private int rainIntensity;
+    private Wind.Direction dir1;
+    private Wind.Direction dir2;
 
     protected OvrPanel(){
         canvasWidth = (int)getSize().getWidth();
@@ -102,13 +107,15 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         sunTime = 12;
         rainFrequency = 50;
         rainIntensity = 50;
+        dir1 = Wind.Direction.EAST;
+        dir2 = Wind.Direction.WEST;
     }
     protected void updateSize(){
         canvasWidth = (int)getSize().getWidth();
         canvasHeight = (int)getSize().getHeight();
     }
     protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,Math.abs(sunTime*100/24),sunTime>0,rainFrequency,rainIntensity);
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,Math.abs(sunTime*100/24),sunTime>0,rainFrequency,rainIntensity,dir1,dir2);
         isInitialized = true;
     }
     protected void noInit(){
@@ -223,6 +230,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             sunTime = 12;
             rainFrequency = 50;
             rainIntensity = 50;
+            dir1 = Wind.Direction.EAST;
+            dir2 = Wind.Direction.WEST;
         }
     }
 
@@ -230,7 +239,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     public void mousePressed(MouseEvent e){
         x1 = e.getX();
         y1 = e.getY();
-        System.out.println(x1 + " " + y1);
+        //System.out.println(x1 + " " + y1);
         mousePressed = true;
     }
 
@@ -239,12 +248,12 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         mousePressed = false;
         x2 = e.getX();
         y2 = e.getY();
-        System.out.println(x2 + " " + y2);
+        //System.out.println(x2 + " " + y2);
         switch (choice) {
             case FACTORY: {
                 if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
                     environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30));
-                    System.out.println("Added factory");
+                    //System.out.println("Added factory");
                 }
                 break;
             }
@@ -286,6 +295,22 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         } else if(((JSlider) e.getSource()).getName().equals("rainIntSlider")){
             noInit();
             rainIntensity = ((JSlider) e.getSource()).getValue();
+        } else if(((JSlider) e.getSource()).getName().equals("firstWindSlider")){
+            noInit();
+            switch (((JSlider) e.getSource()).getValue()){
+                case 0: { dir1 = Wind.Direction.NORTH; }
+                case 1: { dir1 = Wind.Direction.EAST; }
+                case 2: { dir1 = Wind.Direction.SOUTH; }
+                case 3: { dir1 = Wind.Direction.WEST; }
+            }
+        } else if(((JSlider) e.getSource()).getName().equals("secondWindSlider")){
+            noInit();
+            switch (((JSlider) e.getSource()).getValue()){
+                case 0: { dir2 = Wind.Direction.NORTH; }
+                case 1: { dir2 = Wind.Direction.EAST; }
+                case 2: { dir2 = Wind.Direction.SOUTH; }
+                case 3: { dir2 = Wind.Direction.WEST; }
+            }
         }
     }
 }

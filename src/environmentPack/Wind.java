@@ -16,7 +16,7 @@ public class Wind implements Serializable{
         NORTH,EAST,SOUTH,WEST
     }
 
-    protected Wind(Direction dir1, Direction dir2){
+    protected Wind(Direction dir1, Direction dir2){ //TODO use nosie
         Random generator = new Random();
         noise = new ArrayList<Vector2D>();
         for(int i = 0; i < noiseAmount; i++){
@@ -68,6 +68,7 @@ public class Wind implements Serializable{
     }
 
     protected Vector2D getForce(long time){
-        return template.get((int)(Math.floor(time/200)%10));
+        Vector2D force = (template.get((int)(Math.floor(time/200)%templateAmount))).addNC(noise.get((int)(Math.floor(time/200)%templateAmount)));
+        return force;
     }
 }

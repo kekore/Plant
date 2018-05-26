@@ -32,8 +32,9 @@ class MButtonPanel extends JPanel implements ActionListener{
     private EWindow envWindow;
     private AWindow algWindow;
     private CWindow catWindow;
+    private JButton simOneBut;
     private JButton s;
-    private JButton w;
+    //private JButton w;
     private JButton t;
     private JButton q;
     private JButton h;
@@ -52,8 +53,9 @@ class MButtonPanel extends JPanel implements ActionListener{
         catWindow = catW;
         //Dimension d = new Dimension(100,100); //niepotrzebne raczej
         //setPreferredSize(d);
+        simOneBut = new JButton("Zasymuluj generację");
         s = new JButton("Symulacja");
-        w = new JButton("Dodaj");
+        //w = new JButton("Dodaj");
         t = new JButton("2x");
         q = new JButton("4x");
         h = new JButton("0.5x");
@@ -66,24 +68,26 @@ class MButtonPanel extends JPanel implements ActionListener{
         quickBut = new JButton("Szybka symulacja");
 
         //s.addActionListener(this);
-        s.addActionListener((ActionListener)simW);
+        simOneBut.addActionListener(simW.simPanel);
+        s.addActionListener(simW);
         //w.addActionListener(this);
-        w.addActionListener((ActionListener)simW.simPanel);
-        t.addActionListener((ActionListener)simW.simPanel);
-        q.addActionListener((ActionListener)simW.simPanel);
-        h.addActionListener((ActionListener)simW.simPanel);
-        envEditBut.addActionListener((ActionListener)envW);
-        algEditBut.addActionListener((ActionListener)algW);
+        //w.addActionListener((ActionListener)simW.simPanel);
+        t.addActionListener(simW.simPanel);
+        q.addActionListener(simW.simPanel);
+        h.addActionListener(simW.simPanel);
+        envEditBut.addActionListener(envW);
+        algEditBut.addActionListener(algW);
         loadEnvBut.addActionListener(this);
         loadAlgBut.addActionListener(this);
-        showInvisBut.addActionListener((ActionListener)simW.simPanel);
-        catBut.addActionListener((ActionListener) catW);
+        showInvisBut.addActionListener(simW.simPanel);
+        catBut.addActionListener(catW);
         quickBut.addActionListener(simW.simPanel);
 
 
         setLayout(new GridLayout(4, 3, 20, 20));
+        add(simOneBut);
         add(s);
-        add(w);
+        //add(w);
         add(t);
         add(q);
         add(h);

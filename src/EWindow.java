@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Hashtable;
 
 //(E)nvironment window
 public class EWindow extends JFrame implements ActionListener {
@@ -12,14 +13,17 @@ public class EWindow extends JFrame implements ActionListener {
     private SecondPage secondPage;
     private boolean page;
 
-    public EWindow(OWindow o){
+    public EWindow(){
         super("Edytor środowiska");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(660,400);
         setLocation(screenSize.width/32-30,screenSize.height/2-75);
 
-        overviewWindow = o;
+
+        OvrRunnable ovrRunnable = new OvrRunnable(this);
+        overviewWindow = ovrRunnable.getRef();
+        //overviewWindow = o;
         firstPage = new FirstPage(this, overviewWindow);
         //secondPage = new SecondPage(this, overviewWindow);
         page = false;
@@ -55,9 +59,9 @@ public class EWindow extends JFrame implements ActionListener {
         else return null;
     }
 
-    private void alterPage(){
+    protected void alterPage(){
         if(!page){
-            System.out.println("try");
+            //System.out.println("try");
             //removeAll();
             /*SwingUtilities.invokeLater(new Runnable() {
                 @Override
@@ -68,11 +72,11 @@ public class EWindow extends JFrame implements ActionListener {
             });*/
             remove(firstPage);
             //removeAll();
-            System.out.println("removed");
+            //System.out.println("removed");
             secondPage = new SecondPage(this, overviewWindow);
             add(secondPage);
             //add(secondPage);
-            System.out.println("added");
+            //System.out.println("added");
             revalidate();
         } else{
             remove(secondPage);
@@ -83,6 +87,22 @@ public class EWindow extends JFrame implements ActionListener {
         }
         page = !page;
     }
+}
+
+class OvrRunnable implements Runnable {
+    OvrRunnable(EWindow eWindow){
+        e=eWindow;
+        o = new OWindow(e);
+    }
+    @Override
+    public void run() {
+        //o = new OWindow(e);
+    }
+    protected OWindow getRef() {
+        return o;
+    }
+    private OWindow o;
+    private EWindow e;
 }
 
 class EButtonPanel extends JPanel{ //TODO cant edit when working
@@ -115,6 +135,7 @@ class FirstPage extends JPanel{
         initBut = new JButton("Zainicjuj");
 
         loadFileBut.addActionListener(ovrW);
+        loadFileBut.addActionListener(parent);
         initBut.addActionListener((ActionListener)ovrW.ovrPanel);
         initBut.addActionListener(parent);
 
@@ -123,6 +144,7 @@ class FirstPage extends JPanel{
         add(new SizeSliders(ovrW));
         add(new OtherSliders(ovrW));
         add(new RainSliders(ovrW));
+        add(new WindSliders(ovrW));
         add(loadFileBut);
         add(initBut);
     }
@@ -280,5 +302,53 @@ class RainSliders extends JPanel{
         add(rainFrequencySlider);
         add(intText);
         add(rainIntensitySlider);
+    }
+}
+
+class WindSliders extends JPanel{
+    private JTextField firstText;
+    private JSlider firstSlider;
+    private JTextField secondText;
+    private JSlider secondSlider;
+
+    protected WindSliders(OWindow ovrW){
+        setLayout(new GridLayout(4,1));
+        firstText = new JTextField("Pierwszy kierunek wiatru");
+        firstText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        firstText.setEditable(false);
+        firstText.setBorder(null);
+        firstText.setHorizontalAlignment(JTextField.CENTER);
+
+        firstSlider = new JSlider(JSlider.HORIZONTAL, 0, 3, 1);
+        firstSlider.setName("firstWindSlider");
+        firstSlider.setMajorTickSpacing(1);
+        firstSlider.setPaintTicks(true);
+        Hashtable<Integer,JLabel> labels1 = new Hashtable();
+        labels1.put(0, new JLabel("N"));
+        labels1.put(1, new JLabel("E"));
+        labels1.put(2, new JLabel("S"));
+        labels1.put(3, new JLabel("W"));
+        firstSlider.setLabelTable(labels1);
+        firstSlider.setPaintLabels(true);
+        firstSlider.addChangeListener(ovrW.ovrPanel);
+
+        secondText = new JTextField("Drugi kierunek wiatru");
+        secondText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        secondText.setEditable(false);
+        secondText.setBorder(null);
+        secondText.setHorizontalAlignment(JTextField.CENTER);
+
+        secondSlider = new JSlider(JSlider.HORIZONTAL,0,3,3);
+        secondSlider.setName("secondWindSlider");
+        secondSlider.setMajorTickSpacing(1);
+        secondSlider.setPaintTicks(true);
+        secondSlider.setLabelTable(labels1);
+        secondSlider.setPaintLabels(true);
+        secondSlider.addChangeListener(ovrW.ovrPanel);
+
+        add(firstText);
+        add(firstSlider);
+        add(secondText);
+        add(secondSlider);
     }
 }

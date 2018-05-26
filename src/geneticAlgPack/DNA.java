@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class DNA implements Serializable{
-    private int[] gene;
+    private final int[] gene;
     protected static final int genesAmount = 20;
     protected static final int geneValueInterval = 8;
 
     public DNA(){
         Random generator = new Random();
         gene = new int[genesAmount];
-        for(int g : gene){
-            g = generator.nextInt(geneValueInterval+1)-geneValueInterval; //from -8 to 8
+        for(int i = 0; i < genesAmount;i++){
+            gene[i] = generator.nextInt(2*geneValueInterval+1)-geneValueInterval; //from -8 to 8
         }
     }
 
