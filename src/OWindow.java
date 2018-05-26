@@ -92,7 +92,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         canvasHeight = (int)getSize().getHeight();
         //environment = new Environment(canvasWidth,canvasHeight,0);
         isInitialized = false;
-        choice = Choice.NULL;
+        choice = Choice.SEED;
         timer = new Timer(15,this);
         timer.start();
         setBackground(Color.WHITE);
@@ -213,7 +213,11 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         } else if (((JButton)e.getSource()).getText().equals("Posadź ziarno")){
             choice = Choice.SEED;
         } else if (((JButton)e.getSource()).getText().equals("Zainicjuj")){
+            choice = Choice.NULL;
             initEnv();
+        } else if(((JButton)e.getSource()).getText().equals("Utwórz inne")){
+            noInit();
+            choice = Choice.SEED;
         }
     }
 

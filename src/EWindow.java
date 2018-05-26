@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 //(E)nvironment window
 public class EWindow extends JFrame implements ActionListener {
     protected OWindow overviewWindow;
+    private FirstPage firstPage;
+    private SecondPage secondPage;
+    private boolean page;
 
     public EWindow(OWindow o){
         super("Edytor środowiska");
@@ -15,10 +18,16 @@ public class EWindow extends JFrame implements ActionListener {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(660,400);
         setLocation(screenSize.width/32-30,screenSize.height/2-75);
-        //setLayout(new GridLayout(2,1));
 
         overviewWindow = o;
-        add(new EButtonPanel(overviewWindow));
+        firstPage = new FirstPage(this, overviewWindow);
+        //secondPage = new SecondPage(this, overviewWindow);
+        page = false;
+        //setLayout(new GridLayout(2,1));
+        //setContentPane(firstPage);
+        add(firstPage);
+
+        //add(new EButtonPanel(overviewWindow));
 
         //setResizable(false);
     }
@@ -34,6 +43,8 @@ public class EWindow extends JFrame implements ActionListener {
                 setVisible(false);
                 overviewWindow.setVisible(false);
             }
+        } else if(((JButton)e.getSource()).getText().equals("Zainicjuj") || ((JButton)e.getSource()).getText().equals("Utwórz inne")){
+            alterPage();
         }
     }
 
@@ -41,49 +52,102 @@ public class EWindow extends JFrame implements ActionListener {
         if(overviewWindow.ovrPanel.isInitialized) return overviewWindow.ovrPanel.environment;
         else return null;
     }
+
+    private void alterPage(){
+        if(!page){
+            System.out.println("try");
+            //removeAll();
+            /*SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    remove(firstPage);
+                    add(secondPage);
+                }
+            });*/
+            remove(firstPage);
+            //removeAll();
+            System.out.println("removed");
+            secondPage = new SecondPage(this, overviewWindow);
+            add(secondPage);
+            //add(secondPage);
+            System.out.println("added");
+            revalidate();
+        } else{
+            remove(secondPage);
+            //removeAll();
+            firstPage = new FirstPage(this, overviewWindow);
+            add(firstPage);
+            revalidate();
+        }
+        page = !page;
+    }
 }
 
 class EButtonPanel extends JPanel{ //TODO cant edit when working
     //private OWindow overviewWindow; //TODO druga strona
+    private JButton seedPlaceBut;
+
+    protected EButtonPanel(OWindow ovrW){
+
+        setLayout(new FlowLayout());
+
+
+        //overviewWindow = ovrW;
+        /*
+        seedPlaceBut = new JButton("Posadź ziarno");
+
+
+        seedPlaceBut.addActionListener((ActionListener)ovrW.ovrPanel);
+
+
+        add(seedPlaceBut);*/
+    }
+}
+
+class FirstPage extends JPanel{
+    private JButton loadFileBut;
+    private JButton initBut;
+
+    protected FirstPage(EWindow parent, OWindow ovrW){
+        loadFileBut = new JButton("Wczytaj z pliku");
+        initBut = new JButton("Zainicjuj");
+
+        loadFileBut.addActionListener(ovrW);
+        initBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        initBut.addActionListener(parent);
+
+        setLayout(new GridLayout(2, 3, 10, 10));
+        //setLayout(new FlowLayout());
+        add(new SizeSliders(ovrW));
+        add(new OtherSliders(ovrW));
+        add(new RainSliders(ovrW));
+        add(loadFileBut);
+        add(initBut);
+    }
+}
+
+class SecondPage extends JPanel{
     private JButton addFactoryBut;
     private JButton addSpawnerBut;
     private JButton saveFileBut;
-    private JButton loadFileBut;
-    private JButton seedPlaceBut;
-    private JButton initBut;
-    private boolean page;
+    private JButton deInitBut;
 
-    protected EButtonPanel(OWindow ovrW){
-        page = false;
-        //overviewWindow = ovrW;
+    protected SecondPage(EWindow parent, OWindow ovrW){
         addFactoryBut = new JButton("Dodaj fabrykę");
         addSpawnerBut = new JButton("Dodaj źródło cząstek");
         saveFileBut = new JButton("Zapisz do pliku");
-        loadFileBut = new JButton("Wczytaj z pliku");
-        seedPlaceBut = new JButton("Posadź ziarno");
-        initBut = new JButton("Zainicjuj");
+        deInitBut = new JButton("Utwórz inne");
 
         addFactoryBut.addActionListener((ActionListener)ovrW.ovrPanel);
         addSpawnerBut.addActionListener((ActionListener)ovrW.ovrPanel);
         saveFileBut.addActionListener(ovrW);
-        loadFileBut.addActionListener(ovrW);
-        seedPlaceBut.addActionListener((ActionListener)ovrW.ovrPanel);
-        initBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        deInitBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        deInitBut.addActionListener(parent);
 
-        setLayout(new GridLayout(3, 3, 10, 10));
         add(addFactoryBut);
         add(addSpawnerBut);
         add(saveFileBut);
-        add(loadFileBut);
-        add(new SizeSliders(ovrW));
-        add(new OtherSliders(ovrW));
-        add(new RainSliders(ovrW));
-        add(seedPlaceBut);
-        add(initBut);
-    }
-
-    private void alterPage(){
-
+        add(deInitBut);
     }
 }
 
@@ -144,7 +208,7 @@ class OtherSliders extends JPanel{
         groundSlider.setPaintLabels(true);
         groundSlider.addChangeListener(ovrW.ovrPanel);
 
-        sunSlider = new JSlider(JSlider.HORIZONTAL, 0, 24, 12);
+        sunSlider = new JSlider(JSlider.HORIZONTAL, -24, 24, 12);
         sunSlider.setName("sunSlider");
         sunSlider.setMinorTickSpacing(2);
         sunSlider.setMajorTickSpacing(6);

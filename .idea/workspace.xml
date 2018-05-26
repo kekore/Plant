@@ -17,11 +17,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="OWindow.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="OWindow.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/OWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="110" column="97" lean-forward="false" selection-start-line="110" selection-start-column="97" selection-end-line="110" selection-end-column="97" />
+            <state relative-caret-position="340">
+              <caret line="217" column="42" lean-forward="true" selection-start-line="217" selection-start-column="42" selection-end-line="217" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Plant.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Plant.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-102">
+              <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -37,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Environment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Environment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
@@ -46,6 +56,26 @@
                 <element signature="e#7049#7050#0" expanded="true" />
                 <element signature="e#7076#7077#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ground.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/environmentPack/Ground.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="15" column="70" lean-forward="false" selection-start-line="15" selection-start-column="70" selection-end-line="15" selection-end-column="70" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EWindow.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/EWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="26" column="10" lean-forward="false" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -80,40 +110,8 @@
       <file leaf-file-name="SWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1241">
-              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Branch.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/environmentPack/Branch.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1309">
-              <caret line="92" column="42" lean-forward="false" selection-start-line="92" selection-start-column="42" selection-end-line="92" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Leaf.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/environmentPack/Leaf.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="23" column="10" lean-forward="false" selection-start-line="23" selection-start-column="10" selection-end-line="23" selection-end-column="10" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rain.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/environmentPack/Rain.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-80">
-              <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="142" column="12" lean-forward="false" selection-start-line="142" selection-start-column="12" selection-end-line="142" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -153,7 +151,6 @@
         <option value="$PROJECT_DIR$/src/environment/Particle.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/Score.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Factory.java" />
-        <option value="$PROJECT_DIR$/src/environmentPack/Ground.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/Mutation.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/Crossover.java" />
         <option value="$PROJECT_DIR$/src/geneticAlgPack/GeneticAlg.java" />
@@ -167,7 +164,6 @@
         <option value="$PROJECT_DIR$/src/physicsPack/Maths.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Tree.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Branch.java" />
-        <option value="$PROJECT_DIR$/src/EWindow.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/ColChecker.java" />
         <option value="$PROJECT_DIR$/src/Plant.java" />
         <option value="$PROJECT_DIR$/src/CWindow.java" />
@@ -179,11 +175,13 @@
         <option value="$PROJECT_DIR$/src/environmentPack/Leaf.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Rain.java" />
         <option value="$PROJECT_DIR$/src/physicsPack/Vector2D.java" />
-        <option value="$PROJECT_DIR$/src/SWindow.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Sun.java" />
-        <option value="$PROJECT_DIR$/src/OWindow.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Particle.java" />
         <option value="$PROJECT_DIR$/src/environmentPack/Environment.java" />
+        <option value="$PROJECT_DIR$/src/EWindow.java" />
+        <option value="$PROJECT_DIR$/src/SWindow.java" />
+        <option value="$PROJECT_DIR$/src/environmentPack/Ground.java" />
+        <option value="$PROJECT_DIR$/src/OWindow.java" />
       </list>
     </option>
   </component>
@@ -252,12 +250,6 @@
               <item name="Plant2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="AWindow.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="Plant2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Plant2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="EWindow.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="Plant2" type="b2602c69:ProjectViewProjectNode" />
@@ -514,14 +506,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/environmentPack/Ground.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/src.zip!/javax/swing/JComponent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -620,14 +604,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Plant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="64" column="6" lean-forward="false" selection-start-line="64" selection-start-column="6" selection-end-line="64" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MWindow.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -667,14 +643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="45" column="14" lean-forward="false" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1734">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -745,22 +713,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1241">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/OWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="110" column="97" lean-forward="false" selection-start-line="110" selection-start-column="97" selection-end-line="110" selection-end-column="97" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/Particle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -784,6 +736,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/EWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="26" column="10" lean-forward="false" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Plant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="142" column="12" lean-forward="false" selection-start-line="142" selection-start-column="12" selection-end-line="142" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/environmentPack/Environment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -792,6 +768,22 @@
             <element signature="e#7049#7050#0" expanded="true" />
             <element signature="e#7076#7077#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/environmentPack/Ground.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="70" lean-forward="false" selection-start-line="15" selection-start-column="70" selection-end-line="15" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/OWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="217" column="42" lean-forward="true" selection-start-line="217" selection-start-column="42" selection-end-line="217" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
