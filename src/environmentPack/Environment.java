@@ -30,7 +30,7 @@ public class Environment implements Serializable {
     private long time;
     private boolean isWorking; //TODO for denying editions
 
-    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int dayTime, int rainFreq, int rainInt){
+    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int dayTime, boolean sunSide, int rainFreq, int rainInt){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();
@@ -40,6 +40,9 @@ public class Environment implements Serializable {
         ground = new Ground(width,height,groundLevel);
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
+
+        sun = new Sun(dayTime,sunSide,width,height-groundLevel);
+        spawnerList.addAll(sun.getSpawners());
 
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
         wind = new Wind(Wind.Direction.EAST,Wind.Direction.WEST);
@@ -80,11 +83,16 @@ public class Environment implements Serializable {
         //spawn toxic from factories
         //rain:
         if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
+        //sun:
+        sun.proc();
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
             p.setForce(new Vector2D(0,500));
             p.physics.getForce().add(wind.getForce(time));
         }
+        /*for(ParticleSpawner ps : spawnerList){ //count sun forces
+            if(ps.spawnerType == ParticleSpawner.Type.SUN)ps.updateForce();
+        }*/
         //proceed particles' physics:
         for(Particle p : particleList){
             p.proc(tickTime);

@@ -244,6 +244,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
                     Vector2D pos = new Vector2D(x1, y1);
                     Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 6, Particle.Type.OXYGEN);
                     environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.STATIC,20,pos,new Vector2D(),new Vector2D(),10));
+                    //environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.MOVING,20,pos,new Vector2D(0,-100),new Vector2D(),10));
                 }
                 break;
             }

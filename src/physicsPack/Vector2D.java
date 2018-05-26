@@ -49,6 +49,17 @@ public class Vector2D implements Serializable{
         return temp.scale(a);
     }
 
+    public Vector2D rotate(float angle){
+        x = x*(float)Math.cos(angle) - y*(float)Math.sin(angle);
+        y = x*(float)Math.sin(angle) + y*(float)Math.cos(angle);
+        return this;
+    }
+
+    public Vector2D rotateNC(float angle){
+        Vector2D temp = new Vector2D(x,y);
+        return temp.rotate(angle);
+    }
+
     public float getX()
     {
         return x;
