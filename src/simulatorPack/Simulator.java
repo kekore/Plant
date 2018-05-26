@@ -57,7 +57,7 @@ public class Simulator implements ActionListener{
     public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
         addP(new Particle(p,v,f,m,r,t));
     }
-    protected void proc(){
+    synchronized protected void proc(){
 
         if(System.currentTimeMillis() - secStart < 1000){
             actions++;
@@ -105,8 +105,8 @@ public class Simulator implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         timer.stop();
+        if(quickSim) return;
         if(cycle >= speed){
-            if(quickSim) return;
             proc();
             cycle = 0;
         }

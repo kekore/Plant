@@ -5,7 +5,7 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Crossover {
+public class Crossover { //TODO ZMIENIC TO NA INNE KRZYZOWANIE
     private final int popSize;
 
     protected Crossover(int populationSize){
@@ -23,6 +23,14 @@ public class Crossover {
                 genes[j] = (DNAlist.get(dnaIndex1).getGene(j) + DNAlist.get(dnaIndex2).getGene(j))/2;
             }
             shuffledDNAList.add(new DNA(genes));
+
+            System.out.println("CROSSED: ");
+            System.out.println(DNAlist.get(dnaIndex1).getString());
+            System.out.println("WITH: ");
+            System.out.println(DNAlist.get(dnaIndex2).getString());
+            System.out.println("AND GOT: ");
+            System.out.println(shuffledDNAList.get(shuffledDNAList.size()-1).getString());
+
         }
 
         /*System.out.println("Shuffled:");

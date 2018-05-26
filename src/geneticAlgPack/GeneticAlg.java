@@ -14,7 +14,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
     private Crossover crossover;
     private Mutation mutation;
     public static final float startSatiety = 100;
-    public static final long simulationTime = 1000;
+    public static final long simulationTime = 1000; //should be around 3000-5000
 
     public GeneticAlg(int populationSize, int fittestAmount, int mutationProbability, int maxMutedGenes){
         populations = new ArrayList<Population>();
