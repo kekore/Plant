@@ -40,7 +40,7 @@ public class Factory implements Serializable{
 
     protected Particle proc(long time){
         if(time % frequency == 0){ //should work with == !
-            System.out.println(time);
+            //System.out.println(time);
             return new Particle(new Vector2D(spawnPoint), new Vector2D(startV), new Vector2D(), 10, 3, Particle.Type.CARBOXIDE);
         }
         else return null;

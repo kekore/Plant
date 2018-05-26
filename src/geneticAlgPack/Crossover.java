@@ -1,5 +1,7 @@
 package geneticAlgPack;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,6 +24,15 @@ public class Crossover {
             }
             shuffledDNAList.add(new DNA(genes));
         }
+
+        /*System.out.println("Shuffled:");
+        for(DNA d : shuffledDNAList){
+            System.out.println("NEXT DNA: ");
+            for(int i = 0; i<DNA.genesAmount;i++) {
+                System.out.println(d.getGene(i));
+            }
+        }*/
+
         return shuffledDNAList;
     }
 }

@@ -19,7 +19,7 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
     private ArrayList<Pair<Integer,Integer>> xmArray;
 
     protected Rain(int frequency, int intensity, int width){
-        System.out.println(frequency + " " + intensity);
+        //System.out.println(frequency + " " + intensity);
         this.frequency = frequency;
         this.intensity = intensity;
         isRaining = false;

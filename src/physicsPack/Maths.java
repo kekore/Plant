@@ -80,7 +80,7 @@ public class Maths {
         return y;
     }
 
-    static public float countA(float xH, float x1, float y1, float x2, float y2, float d, boolean side){
+    /*static public float countA(float xH, float x1, float y1, float x2, float y2, float d, boolean side){
         float a;
         if(side){
             a = xH + (d*d*(y1-y2)*(y1-y2))/(2*(float)Math.sqrt(d*d*(y1-y2)*(y1-y2)*(x1*x1-2*x1*x2+y1*y1-2*y1*y2+x2*x2+y2*y2)));
@@ -111,5 +111,5 @@ public class Maths {
             b=yH;
         }
         return b;
-    }
+    }*/
 }

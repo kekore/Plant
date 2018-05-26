@@ -29,7 +29,7 @@ public class Tree implements Serializable{
         levels = 0;
         points = 0;
         branchGreen = (int)(Maths.sig(dna.getGene(5)) * 128)+128;
-        System.out.println(branchGreen);
+        //System.out.println(branchGreen);
         leafGreen = (int)(Maths.sig(dna.getGene(6)) * 128)+128;
         if(dna.getGene(12)==0) leavesAmount = 1;
         else leavesAmount = Math.abs(dna.getGene(12));
@@ -98,7 +98,7 @@ public class Tree implements Serializable{
         for(Branch b : branches){ b.receiveBufferRec(); }
         for(Branch b : branches){ b.growRec(); } //TODO opoznianie kolejnych branchowan
         if((time % firstBranchTime == 0 && levels == 0)||((time-firstBranchTime) % nextBranchTime == 0 && levels > 0)){
-            System.out.println("BRANCH");
+            //System.out.println("BRANCH");
             levels++;
             for(Branch b : branches){ b.doBranchRec(); }
         }

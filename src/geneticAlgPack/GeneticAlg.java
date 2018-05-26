@@ -35,7 +35,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
 
     public void createNewGen(){
         ArrayList<DNA> newGenDNAList = crossover.shuffle(populations.get(currentGen).getFittest(fittestAmount));
-        mutation.Mutate(newGenDNAList);
+        //mutation.Mutate(newGenDNAList);
         populations.add(new Population(newGenDNAList));
         currentGen++;
     }
@@ -56,10 +56,11 @@ public class GeneticAlg { //TODO make serializable (?) not important
 
     synchronized public Individual getNextIndividual(){
         System.out.println("pop size: "+populations.size() + " ind: "+populations.get(currentGen).individuals.size() );
+        System.out.println("Giving from gen, with index: " + currentGen + " "+currentIndex);
         return getIndividual(currentGen, currentIndex);
     }
 
-    synchronized public boolean setSignalTested(Individual individual, Tree tree, float fitness){
+    synchronized public boolean signalTested(Individual individual, Tree tree, float fitness){
         boolean generateNextGen = false;
         if(currentIndex+1==popSize){
             generateNextGen = true;

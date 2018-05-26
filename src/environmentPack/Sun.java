@@ -55,12 +55,12 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         if(time % (dayTime/2) == 0) isRising = !isRising;
         if ((isRising && sunSide) || (!isRising && !sunSide)) {
             spinningVector.rotate(-angleStep);
-            System.out.println("SV x y: " + spinningVector.getX() + " " + spinningVector.getY());
+            //System.out.println("SV x y: " + spinningVector.getX() + " " + spinningVector.getY());
         } else{
             spinningVector.rotate(angleStep);
         }
         roofCenter = center.addNC(spinningVector);
-        System.out.println("RC x y: " + roofCenter.getX() + " " + roofCenter.getY());
+        //System.out.println("RC x y: " + roofCenter.getX() + " " + roofCenter.getY());
         roof = new Line2D.Float(center.getX(),center.getY(),roofCenter.getX(),roofCenter.getY());
 
         /*ArrayList<Vector2D> spawningPosList = new ArrayList<Vector2D>();

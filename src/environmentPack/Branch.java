@@ -152,7 +152,7 @@ public class Branch implements Serializable{
 
     private void newBranch(float angle){
         boolean doesGrowLeaves;
-        if(level+1 >= Math.abs(parentTree.dna.getGene(10))) doesGrowLeaves = true;
+        if(level+1 >= Math.abs(parentTree.dna.getGene(10))/2) doesGrowLeaves = true;
         else doesGrowLeaves = false;
         Branch newBranch = new Branch(parentTree, this, angle, doesGrowLeaves, 0);
         for(Branch b : branches){

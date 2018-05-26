@@ -73,8 +73,8 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
 
         isInitialized=false;
 
-        popSize=200; //TODO !!!!
-        fittestAmount=50;//TODO !!!!
+        popSize=10; //TODO !!!!
+        fittestAmount=5;//TODO !!!!
         mutProb=1;
         maxMutGen=3;
     }
@@ -106,7 +106,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
                 fitPanel.fittestAmountSlider.setValue(popSize);
                 fittestAmount = popSize;
             }
-            System.out.println(popSize);
+            //System.out.println(popSize);
         } else if(e.getSource() == fitPanel.fittestAmountSlider){
             noInit();
             fitPanel.fittestAmountSlider.setValue(((int)(fitPanel.fittestAmountSlider.getValue()/25))*25);

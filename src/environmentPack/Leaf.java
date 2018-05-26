@@ -59,11 +59,12 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
                 break;
             }
             case CARBOXIDE:{
-                grow(-3);
+                grow(-1);
                 parentTree.addPoints(-3);
                 break;
             }
             case TOXIC:{
+                grow(-3);
                 parentTree.addPoints(-9);
                 break;
             }

@@ -241,5 +241,9 @@ public class Environment implements Serializable {
             satiety = satiety + b.satiety;
         }
         return satiety;
-     }
+    }
+
+    public Tree getTree(){
+        return tree;
+    }
 }

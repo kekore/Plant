@@ -56,7 +56,8 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText().equals("Zapisz do pliku")){
-            System.out.println("Save file returned: " + ovrPanel.saveFile(width,height)); //TODO change this
+            //System.out.println("Save file returned: " + ovrPanel.saveFile(width,height)); //TODO change this
+            ovrPanel.saveFile(width,height);
         } else if(((JButton)e.getSource()).getText().equals("Wczytaj z pliku")){
             //System.out.println("Load file returned: " + ovrPanel.loadFile());
             if(ovrPanel.loadFile() == 0) eWindow.alterPage();
@@ -130,7 +131,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         try {
             FileOutputStream fos = new FileOutputStream(new File("environment.env"));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            System.out.println("oos:");
+            //System.out.println("oos:");
             oos.writeObject(environment);
             oos.close();
             fos.close();
@@ -151,9 +152,9 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         int ret = 0;
         try {
             FileInputStream fis = new FileInputStream(new File("environment.env"));
-            System.out.println("fis");
+            //System.out.println("fis");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            System.out.println("ois");
+            //System.out.println("ois");
             environment = (Environment) ois.readObject();
             //environment = read;
             ois.close();
@@ -213,7 +214,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         if(e.getSource() == timer){
             repaint();
         } else if(((JButton)e.getSource()).getText().equals("Dodaj fabrykę")){
-            System.out.println("fabryka"); //TODO erase it
+            //System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
         } else if(((JButton)e.getSource()).getText().equals("Dodaj źródło cząstek")){
             choice = Choice.SPAWNER;

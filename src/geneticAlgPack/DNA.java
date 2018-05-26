@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class DNA implements Serializable{
     private final int[] gene;
-    protected static final int genesAmount = 20;
+    protected static final int genesAmount = 14;
     protected static final int geneValueInterval = 8;
 
     public DNA(){
@@ -14,6 +14,7 @@ public class DNA implements Serializable{
         for(int i = 0; i < genesAmount;i++){
             gene[i] = generator.nextInt(2*geneValueInterval+1)-geneValueInterval; //from -8 to 8
         }
+        //gene = new int[] {0,8,8,0,8,8,8,0,2,8,1,0,5,-8};
     }
 
     public DNA(int[] genes){
@@ -36,6 +37,14 @@ public class DNA implements Serializable{
         } catch (ArrayIndexOutOfBoundsException e){
             throw new RuntimeException();
         }
+    }
+
+    public String getString(){
+        String s = "";
+        for(int i = 0;i<genesAmount;i++){
+            s = s+i+"["+gene[i]+"] ";
+        }
+        return s;
     }
 }
 

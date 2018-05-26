@@ -176,8 +176,9 @@ class SimPanel extends JPanel implements ActionListener{
             }
             timeText.setText("Time: " + simulator.getTime());
             int fit = (int)simulator.getPoints();
-            if(fit >= 0) fitText.setText("Fitness: " + fit);
-            else fitText.setText("Fitness: -");
+            fitText.setText("Fitness: " + fit);
+            /*if(fit >= 0) fitText.setText("Fitness: " + fit);
+            else fitText.setText("Fitness: -");*/
             int sat = (int)simulator.getSatiety();
             if(sat >= 0) satText.setText("Satiety: " + sat);
             else satText.setText("Satiety: -");
@@ -209,6 +210,6 @@ class SimPanel extends JPanel implements ActionListener{
         simulator.setEnvironment(environment);
     }
     protected void setAlgorithm(GeneticAlg geneticAlg) { simulator.setAlgorithm(geneticAlg); }
-    protected void start(){simulator.startSimulation();}
-    protected void pause(){simulator.pauseSimulation();}
+    //protected void start(){simulator.startSimulation();}
+    //protected void pause(){simulator.pauseSimulation();}
 }

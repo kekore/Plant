@@ -15,24 +15,30 @@ import java.util.ArrayList;
 
 public class Simulator implements ActionListener{
     private GeneticAlg geneticAlg;
-    private Environment environment;
+    protected Environment environment;
+    //flagi:
     private boolean isSet;
-    private long tickTime;
+    private boolean isWorking;
+    //private boolean allowProc;
     protected boolean quickSim;
+    //stałe:
+    private final long tickTime;
+    protected final long simulationTime;
+    //zarządzanie czasem:
     private Timer timer;
     private int speed;
     private int cycle;
-    protected final long simulationTime;
+    //obliczanie akcji na sekunde:
     private long secStart;
     private int actions;
     private int PPS;
+    //wątek:
     private QuickSimThread thread;
-    private boolean isWorking;
+    //pola dotyczące wymianyinformacji z algorytmem:
     private Individual currentIndividual;
 
     public Simulator(long tT, long simulationTime){ //TODO algorythm as parameter
         isSet = false;
-        //else this.environment = new Environment(600,700,100,20,12,50,50);
         tickTime = tT;
         quickSim = false;
         timer = new Timer(1,this);
@@ -43,6 +49,7 @@ public class Simulator implements ActionListener{
         actions=0;
         thread = new QuickSimThread(this);
         isWorking=false;
+        //allowProc = false;
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -51,6 +58,7 @@ public class Simulator implements ActionListener{
         addP(new Particle(p,v,f,m,r,t));
     }
     protected void proc(){
+
         if(System.currentTimeMillis() - secStart < 1000){
             actions++;
         } else{
@@ -88,12 +96,12 @@ public class Simulator implements ActionListener{
         if(environment == null) return new ArrayList<Pair<Line2D,Color>>();
         return environment.getBranchLines();
     }
-    public void startSimulation(){
+    /*public void startSimulation(){
         timer.start();
     }
     public void pauseSimulation(){
         timer.stop();
-    }
+    }*/
     @Override
     public void actionPerformed(ActionEvent e){
         timer.stop();
@@ -106,10 +114,17 @@ public class Simulator implements ActionListener{
             cycle++;
         }
         if(environment.getTime() == GeneticAlg.simulationTime) endSimulation();
-        timer.start();
+        else timer.start();
     }
-    private void endSimulation(){
-
+    protected void endSimulation(){
+        cycle=0;
+        if(!geneticAlg.signalTested(currentIndividual,environment.getTree(),environment.getPoints())) startNewSimulation(geneticAlg.getNextIndividual());
+        else{
+            currentIndividual = null;
+            isWorking = false;
+            if(quickSim) quickSim = !quickSim;
+            //allowProc = false;
+        }
     }
 
     public void setSpeed(int a){speed = a;}
@@ -140,7 +155,7 @@ public class Simulator implements ActionListener{
     }
     public boolean isSet() { return isSet; }
     public void alterQuickSim(){
-        if(environment==null) return;
+        if(!isWorking || environment==null) return;
         if(!quickSim) {
             quickSim = true;
             timer.stop();
@@ -163,8 +178,14 @@ public class Simulator implements ActionListener{
     public void simulateGeneration(){
         if(isWorking || !isSet) return;
         isWorking = true;
-        currentIndividual = geneticAlg.getNextIndividual();
-        environment.insertTree(currentIndividual.getDna(),GeneticAlg.startSatiety);
-        startSimulation();
+        startNewSimulation(geneticAlg.getNextIndividual());
+    }
+
+    private void startNewSimulation(Individual i){
+        currentIndividual = i;
+        System.out.println(i.getDna().getString());
+        environment.insertTree(i.getDna(),GeneticAlg.startSatiety);
+        timer.start();
+        //allowProc=true;
     }
 }
