@@ -21,7 +21,7 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     protected Leaf(Tree parentTree, Branch parentBranch, float relPos, boolean side){
         this.parentBranch = parentBranch;
         this.parentTree = parentTree;
-        System.out.println("Rel pos: "+relPos);
+        //System.out.println("Rel pos: "+relPos);
         relativePos = relPos;
         this.side = side;
         d = 0;

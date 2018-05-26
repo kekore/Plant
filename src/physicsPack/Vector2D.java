@@ -49,15 +49,34 @@ public class Vector2D implements Serializable{
         return temp.scale(a);
     }
 
+    public Vector2D scaleTo(float length){
+        scale(length/length());
+        return this;
+    }
+    public Vector2D scaleToNC(float length){
+        Vector2D temp = new Vector2D(x,y);
+        return temp.scaleTo(length);
+    }
+
     public Vector2D rotate(float angle){
-        x = x*(float)Math.cos(angle) - y*(float)Math.sin(angle);
-        y = x*(float)Math.sin(angle) + y*(float)Math.cos(angle);
+        float x2 = x*(float)Math.cos(angle) - y*(float)Math.sin(angle);
+        float y2 = x*(float)Math.sin(angle) + y*(float)Math.cos(angle);
+        x = x2;
+        y = y2;
         return this;
     }
 
     public Vector2D rotateNC(float angle){
         Vector2D temp = new Vector2D(x,y);
         return temp.rotate(angle);
+    }
+
+    public Vector2D getPerpendicular(boolean side, float lenght){
+        Vector2D temp = new Vector2D(x,y);
+        if(side) temp.rotate(-(float)Math.PI/2);
+        else temp.rotate((float)Math.PI/2);
+        temp.scaleTo(lenght);
+        return temp;
     }
 
     public float getX()

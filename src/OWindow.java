@@ -83,7 +83,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
 
     private int groundLevel;
     protected int seedPosX;
-    private int dayTime;
+    private int sunTime;
     private int rainFrequency;
     private int rainIntensity;
 
@@ -99,7 +99,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         addMouseListener(this);
         groundLevel = 100;
         seedPosX = 20;
-        dayTime = 12;
+        sunTime = 100;
         rainFrequency = 50;
         rainIntensity = 50;
     }
@@ -108,7 +108,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         canvasHeight = (int)getSize().getHeight();
     }
     protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,dayTime,rainFrequency,rainIntensity);
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,sunTime,true,rainFrequency,rainIntensity);
         isInitialized = true;
     }
     protected void noInit(){
@@ -243,7 +243,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
                 if (isInitialized && y1 + 3 < canvasHeight - groundLevel) {
                     Vector2D pos = new Vector2D(x1, y1);
                     Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 6, Particle.Type.OXYGEN);
-                    environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.STATIC,20,pos,new Vector2D(),new Vector2D(),10));
+                    environment.addSpawner(new ParticleSpawner(p,true,20,pos,new Vector2D(),new Vector2D(),10));
                     //environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.MOVING,20,pos,new Vector2D(0,-100),new Vector2D(),10));
                 }
                 break;
@@ -270,7 +270,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             groundLevel = ((JSlider) e.getSource()).getValue();
         } else if(((JSlider) e.getSource()).getName().equals("sunSlider")){
             noInit();
-            dayTime = ((JSlider) e.getSource()).getValue();
+            sunTime = ((JSlider) e.getSource()).getValue();
         } else if(((JSlider) e.getSource()).getName().equals("rainFreqSlider")){
             noInit();
             rainFrequency = ((JSlider) e.getSource()).getValue();

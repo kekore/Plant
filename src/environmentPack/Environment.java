@@ -30,7 +30,7 @@ public class Environment implements Serializable {
     private long time;
     private boolean isWorking; //TODO for denying editions
 
-    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int dayTime, boolean sunSide, int rainFreq, int rainInt){
+    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int sunTime, boolean sunSide, int rainFreq, int rainInt){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();
@@ -41,8 +41,8 @@ public class Environment implements Serializable {
         seedPlace = new Vector2D(seedPosX,height-groundLevel);
         seedRect = new Rect(new Vector2D(seedPosX,height-groundLevel),6,6,Color.BLUE,true);
 
-        sun = new Sun(dayTime,sunSide,width,height-groundLevel);
-        spawnerList.addAll(sun.getSpawners());
+        sun = new Sun(sunTime,sunSide,width,height-groundLevel);
+        //spawnerList.addAll(sun.getSpawners());
 
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
         wind = new Wind(Wind.Direction.EAST,Wind.Direction.WEST);
@@ -84,7 +84,7 @@ public class Environment implements Serializable {
         //rain:
         if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
         //sun:
-        sun.proc();
+        particleList.addAll(sun.proc(time));
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
             p.setForce(new Vector2D(0,500));
@@ -93,9 +93,10 @@ public class Environment implements Serializable {
         /*for(ParticleSpawner ps : spawnerList){ //count sun forces
             if(ps.spawnerType == ParticleSpawner.Type.SUN)ps.updateForce();
         }*/
-        //proceed particles' physics:
+        //proceed particles' physics and fotons' age:
         for(Particle p : particleList){
             p.proc(tickTime);
+            p.age++;
         }
         //proceed factories:
         for(Factory f : factoryList){
@@ -107,10 +108,11 @@ public class Environment implements Serializable {
             Particle spawnerRet = ps.proc(time,tickTime);
             if(spawnerRet != null) particleList.add(spawnerRet);
         }
-        //Check particles out of canvas and erase them:
+        //Check particles out of canvas or old and erase them:
         ArrayList<Particle> toErase = new ArrayList<Particle>();
         for(Particle p : particleList){
-            if((p.physics.getPos().getX()<0 || p.physics.getPos().getX() > width) && p.type != Particle.Type.FOTON){
+            if(p.type == Particle.Type.FOTON && p.age > 1000){ toErase.add(p); }
+            else if((p.physics.getPos().getX()<0 || p.physics.getPos().getX() > width) && p.type != Particle.Type.FOTON){
                 toErase.add(p);
             } else if ((p.physics.getPos().getY()<0 && p.type != Particle.Type.FOTON) || p.physics.getPos().getY() > height-ground.groundLevel){
                 toErase.add(p);
@@ -180,6 +182,7 @@ public class Environment implements Serializable {
         for(Particle p : particleList){
             ilList.add(p.physics.getColLine(tickTime));
         }
+        ilList.addAll(sun.getLines());
         return ilList;
     }
 
@@ -198,6 +201,7 @@ public class Environment implements Serializable {
         for(ParticleSpawner ps : spawnerList){
             irList.add(ps.rectangle);
         }
+        irList.addAll(sun.getRects());
         return irList;
     }
 

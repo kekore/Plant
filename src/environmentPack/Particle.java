@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Particle implements Serializable{
     protected Physics physics;
     protected Circle shape;
+    protected int age; //matters only for fotons
 
     public enum Type{
         OXYGEN,CARBOXIDE,TOXIC,FOTON,DROP
@@ -14,6 +15,7 @@ public class Particle implements Serializable{
     protected Type type;
 
     public Particle(Vector2D p, Vector2D v, Vector2D f, float m, int d, Type t){
+        age = 0;
         physics = new Physics(p,v,f,m);
         type = t;
         switch (type){

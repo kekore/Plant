@@ -39,9 +39,9 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
 
     protected boolean proc(long time){
         if(time % (10*frequency) == 0){
-            System.out.println("rain: " + time);
+            /*System.out.println("rain: " + time);
             System.out.println(time % (10*frequency));
-            System.out.println(frequency);
+            System.out.println(frequency);*/
             //System.out.println("alternate" + time % 10*(long)frequency);
             isRaining = !isRaining;
             startTime = time;

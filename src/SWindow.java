@@ -134,7 +134,7 @@ class SimPanel extends JPanel implements ActionListener{
             else g2d.fill(c.ellipse);
         }
         for(Line2D l : lList){
-            g2d.setColor(Color.GREEN);
+            g2d.setColor(Color.RED);
             g2d.draw(l);
         }
         for(Rect r : rList){

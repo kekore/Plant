@@ -57,7 +57,9 @@ public class Physics implements Serializable{
     }
 
     public Line2D getColLine(long tickTime){
-        Vector2D predictedA = force.scaleNC((float)1/mass);
+        Vector2D predictedA;
+        if(mass != 0)predictedA = force.scaleNC((float)1/mass);
+        else predictedA = new Vector2D();
         Vector2D predictedV = vel.addNC(predictedA.scaleNC((float)1/tickTime));
         Vector2D predictedP = pos.addNC(predictedV.scaleNC((float)1/tickTime));
         return new Line2D.Float(pos.getX(),pos.getY(),predictedP.getX(),predictedP.getY());
