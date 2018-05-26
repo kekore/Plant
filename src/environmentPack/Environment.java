@@ -111,7 +111,7 @@ public class Environment implements Serializable {
         //Check particles out of canvas or old and erase them:
         ArrayList<Particle> toErase = new ArrayList<Particle>();
         for(Particle p : particleList){
-            if(p.type == Particle.Type.FOTON && p.age > 1000){ toErase.add(p); }
+            if(p.type == Particle.Type.FOTON && p.age > 3000){ toErase.add(p); }
             else if((p.physics.getPos().getX()<0 || p.physics.getPos().getX() > width) && p.type != Particle.Type.FOTON){
                 toErase.add(p);
             } else if ((p.physics.getPos().getY()<0 && p.type != Particle.Type.FOTON) || p.physics.getPos().getY() > height-ground.groundLevel){

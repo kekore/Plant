@@ -68,7 +68,7 @@ class SimPanel extends JPanel implements ActionListener{
     private boolean showInvis;
 
     protected SimPanel(){
-        simulator = new Simulator(100,null);
+        simulator = new Simulator(200,null);
         timer = new Timer(1,this);
         //generator = new Random();
         showInvis = false;
@@ -140,7 +140,7 @@ class SimPanel extends JPanel implements ActionListener{
         for(Rect r : rList){
             g2d.setColor(r.color);
             if(!r.isFilled())g2d.draw(r.rectangle);
-            else g2d.fill(r.rectangle);
+            //else g2d.fill(r.rectangle);
         }
         for(Pair<Line2D,Color> pair : bList){
             g2d.setColor(pair.getValue());

@@ -16,7 +16,7 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
     private float roofLength;
     private static final int dayTime = 1000;
     private static final float angleStep = (float)Math.PI/(dayTime/2);
-    private static final int fotonsSpacing = 5;
+    private static final int fotonsSpacing = 20;
     private static final int frequency = 25;
     private boolean isRising;
     private boolean sunSide;
@@ -29,14 +29,15 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         isRising=true;
         this.sunSide = sunSide;
         center = new Vector2D(width/2,height);
-        //distance = (float)Math.sqrt((width/2)*(width/2)+height*height);
-        distance = 300;
+        distance = (float)Math.sqrt((width/2)*(width/2)+height*height);
+        //distance = 200;
         if(sunSide){
             spinningVector = new Vector2D(distance,0);
-            spinningVector.rotate((1-sunTime/100)*(dayTime/2)*angleStep);
+            spinningVector.rotate((1F-(float)sunTime/100F)*((float)dayTime/2F)*angleStep);
+            System.out.println("COONSTRUCTOR SPINNING: " + spinningVector.getX() + " " + spinningVector.getY());
         } else {
             spinningVector = new Vector2D(-distance,0);
-            spinningVector.rotate(-(1-sunTime/100)*(dayTime/2)*angleStep);
+            spinningVector.rotate(-(1F-(float)sunTime/100F)*((float)dayTime/2F)*angleStep);
         }
         //roofCenter = center.addNC(spinningVector);
 
@@ -77,7 +78,7 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         if(time % frequency == 0){
             rList.clear();
             for(Vector2D spawnPos : spawningPosList){
-                pList.add(new Particle(spawnPos,new Vector2D(velocity),new Vector2D(),0,1,Particle.Type.FOTON));
+                pList.add(new Particle(spawnPos,new Vector2D(velocity),new Vector2D(),0,2,Particle.Type.FOTON));
                 rList.add(new Rect(spawnPos,6,6,Color.RED,true));
             }
         }
@@ -90,7 +91,7 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
 
     protected ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
-        lList.add(roof);
+        if (roof != null)lList.add(roof);
         return lList;
     }
 }

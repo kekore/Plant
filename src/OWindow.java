@@ -99,7 +99,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         addMouseListener(this);
         groundLevel = 100;
         seedPosX = 20;
-        sunTime = 100;
+        sunTime = 75;
         rainFrequency = 50;
         rainIntensity = 50;
     }
@@ -108,7 +108,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         canvasHeight = (int)getSize().getHeight();
     }
     protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,sunTime,true,rainFrequency,rainIntensity);
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,sunTime,false,rainFrequency,rainIntensity);
         isInitialized = true;
     }
     protected void noInit(){

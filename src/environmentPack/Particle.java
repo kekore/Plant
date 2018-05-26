@@ -24,7 +24,7 @@ public class Particle implements Serializable{
                 break;
             }
             case CARBOXIDE: {
-                shape = new Circle(p,d,Color.DARK_GRAY,false);
+                shape = new Circle(p,d,Color.DARK_GRAY,true);
                 break;
             }
             case TOXIC: {
@@ -32,7 +32,7 @@ public class Particle implements Serializable{
                 break;
             }
             case FOTON: {
-                shape = new Circle(p,d,Color.YELLOW,false);
+                shape = new Circle(p,d,Color.ORANGE,true);
                 break;
             }
             case DROP: {
