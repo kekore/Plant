@@ -38,10 +38,12 @@ public class EWindow extends JFrame implements ActionListener {
             if(!isVisible()){
                 setVisible(true);
                 overviewWindow.setVisible(true);
+                overviewWindow.ovrPanel.timer.start();
             }
             else{
                 setVisible(false);
                 overviewWindow.setVisible(false);
+                overviewWindow.ovrPanel.timer.stop();
             }
         } else if(((JButton)e.getSource()).getText().equals("Zainicjuj") || ((JButton)e.getSource()).getText().equals("Utwórz inne")){
             alterPage();
@@ -116,8 +118,8 @@ class FirstPage extends JPanel{
         initBut.addActionListener((ActionListener)ovrW.ovrPanel);
         initBut.addActionListener(parent);
 
-        setLayout(new GridLayout(2, 3, 10, 10));
-        //setLayout(new FlowLayout());
+        //setLayout(new GridLayout(2, 3, 10, 10));
+        setLayout(new FlowLayout());
         add(new SizeSliders(ovrW));
         add(new OtherSliders(ovrW));
         add(new RainSliders(ovrW));
@@ -152,19 +154,19 @@ class SecondPage extends JPanel{
 }
 
 class SizeSliders extends JPanel{
-    //private JTextField widthText;
+    private JTextField widthText;
     private JSlider widthSlider;
-    //private JTextField heightText;
+    private JTextField heightText;
     private JSlider heightSlider;
 
     protected SizeSliders(OWindow ovrW){
-        setLayout(new GridLayout(2,1));
+        setLayout(new GridLayout(4,1));
 
-        /*widthText = new JTextField("Szerokość obszaru");
+        widthText = new JTextField("Szerokość obszaru");
         widthText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
         widthText.setEditable(false);
         widthText.setBorder(null);
-        widthText.setHorizontalAlignment(JTextField.CENTER);*/
+        widthText.setHorizontalAlignment(JTextField.CENTER);
 
         widthSlider = new JSlider(JSlider.HORIZONTAL,400,1200,600);
         widthSlider.setName("widthSlider");
@@ -174,11 +176,11 @@ class SizeSliders extends JPanel{
         widthSlider.setPaintLabels(true);
         widthSlider.addChangeListener(ovrW);
 
-        /*heightText = new JTextField("Wysokość obszaru");
+        heightText = new JTextField("Wysokość obszaru");
         heightText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
         heightText.setEditable(false);
         heightText.setBorder(null);
-        heightText.setHorizontalAlignment(JTextField.CENTER);*/
+        heightText.setHorizontalAlignment(JTextField.CENTER);
 
         heightSlider = new JSlider(JSlider.HORIZONTAL,400,800,700);
         heightSlider.setName("heightSlider");
@@ -188,18 +190,27 @@ class SizeSliders extends JPanel{
         heightSlider.setPaintLabels(true);
         heightSlider.addChangeListener(ovrW);
 
-        //add(widthText);
+        add(widthText);
         add(widthSlider);
-        //add(heightText);
+        add(heightText);
         add(heightSlider);
     }
 }
 
 class OtherSliders extends JPanel{
+    private JTextField groundText;
     private JSlider groundSlider;
+    private JTextField sunText;
     private JSlider sunSlider;
 
     protected OtherSliders(OWindow ovrW){
+        setLayout(new GridLayout(4,1));
+        groundText = new JTextField("Wysokość gruntu");
+        groundText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        groundText.setEditable(false);
+        groundText.setBorder(null);
+        groundText.setHorizontalAlignment(JTextField.CENTER);
+
         groundSlider = new JSlider(JSlider.HORIZONTAL, 0, 200, 100);
         groundSlider.setName("groundSlider");
         groundSlider.setMinorTickSpacing(10);
@@ -207,6 +218,12 @@ class OtherSliders extends JPanel{
         groundSlider.setPaintTicks(true);
         groundSlider.setPaintLabels(true);
         groundSlider.addChangeListener(ovrW.ovrPanel);
+
+        sunText = new JTextField("Długość dnia");
+        sunText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        sunText.setEditable(false);
+        sunText.setBorder(null);
+        sunText.setHorizontalAlignment(JTextField.CENTER);
 
         sunSlider = new JSlider(JSlider.HORIZONTAL, -24, 24, 12);
         sunSlider.setName("sunSlider");
@@ -216,16 +233,27 @@ class OtherSliders extends JPanel{
         sunSlider.setPaintLabels(true);
         sunSlider.addChangeListener(ovrW.ovrPanel);
 
+        add(groundText);
         add(groundSlider);
+        add(sunText);
         add(sunSlider);
     }
 }
 
 class RainSliders extends JPanel{
+    private JTextField freqText;
     private JSlider rainFrequencySlider;
+    private JTextField intText;
     private JSlider rainIntensitySlider;
 
     protected RainSliders(OWindow ovrW){
+        setLayout(new GridLayout(4,1));
+        freqText = new JTextField("Częstotliwość deszczu");
+        freqText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        freqText.setEditable(false);
+        freqText.setBorder(null);
+        freqText.setHorizontalAlignment(JTextField.CENTER);
+
         rainFrequencySlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         rainFrequencySlider.setName("rainFreqSlider");
         rainFrequencySlider.setMinorTickSpacing(5);
@@ -233,6 +261,12 @@ class RainSliders extends JPanel{
         rainFrequencySlider.setPaintTicks(true);
         rainFrequencySlider.setPaintLabels(true);
         rainFrequencySlider.addChangeListener(ovrW.ovrPanel);
+
+        intText = new JTextField("Intensywność deszczu");
+        intText.setFont(new Font("ComicSansMS", Font.PLAIN, 10));
+        intText.setEditable(false);
+        intText.setBorder(null);
+        intText.setHorizontalAlignment(JTextField.CENTER);
 
         rainIntensitySlider = new JSlider(JSlider.HORIZONTAL,0,100,50);
         rainIntensitySlider.setName("rainIntSlider");
@@ -242,7 +276,9 @@ class RainSliders extends JPanel{
         rainIntensitySlider.setPaintLabels(true);
         rainIntensitySlider.addChangeListener(ovrW.ovrPanel);
 
+        add(freqText);
         add(rainFrequencySlider);
+        add(intText);
         add(rainIntensitySlider);
     }
 }

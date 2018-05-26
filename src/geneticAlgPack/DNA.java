@@ -53,4 +53,5 @@ public class DNA implements Serializable{
 10 - od którego poziomu rosną liście
 11 - czas kolejnych rozgałęzień (*1000)
 12 - liczba liści na gałęzi
+13 - odchylenie kolejnych gałęzi względem poprzednich
  */

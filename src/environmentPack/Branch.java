@@ -276,7 +276,7 @@ public class Branch implements Serializable{
         if(parentTree.dna.getGene(7) == 0) branchesN = 1;
         else branchesN = Math.abs(parentTree.dna.getGene(7));
 
-        float generalAngle = (float)(Maths.sig(parentTree.dna.getGene(8)/2) * Math.PI - Math.PI); //~-180 to ~-45
+        float generalAngle = (float)(Maths.sig(parentTree.dna.getGene(8)/2) * Math.PI - Math.PI + level*parentTree.dna.getGene(13)*Math.PI/64); //~-180 to ~-45
         float freeAngle = (float)Math.max(-Math.PI-generalAngle,generalAngle);
         boolean isOdd = branchesN%2 == 1;
         int divideN;

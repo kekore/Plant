@@ -70,7 +70,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     protected int canvasHeight;
     protected Environment environment;
     protected boolean isInitialized;
-    private Timer timer;
+    protected Timer timer;
     private enum Choice{
         NULL, FACTORY, SPAWNER, SEED
     }
@@ -94,12 +94,12 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         isInitialized = false;
         choice = Choice.SEED;
         timer = new Timer(15,this);
-        timer.start();
+        //timer.start();
         setBackground(Color.WHITE);
         addMouseListener(this);
         groundLevel = 100;
         seedPosX = 20;
-        sunTime = 75;
+        sunTime = 12;
         rainFrequency = 50;
         rainIntensity = 50;
     }
@@ -108,7 +108,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         canvasHeight = (int)getSize().getHeight();
     }
     protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,sunTime,false,rainFrequency,rainIntensity);
+        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,Math.abs(sunTime*100/24),sunTime>0,rainFrequency,rainIntensity);
         isInitialized = true;
     }
     protected void noInit(){
@@ -218,6 +218,11 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         } else if(((JButton)e.getSource()).getText().equals("Utwórz inne")){
             noInit();
             choice = Choice.SEED;
+            groundLevel = 100;
+            seedPosX = 20;
+            sunTime = 12;
+            rainFrequency = 50;
+            rainIntensity = 50;
         }
     }
 
