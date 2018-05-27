@@ -16,11 +16,11 @@ public class GeneticAlg { //TODO make serializable (?) not important
     public static final float startSatiety = 100;
     public static final long simulationTime = 1000; //should be around 3000-5000
 
-    public GeneticAlg(int populationSize, int fittestAmount, int mutationProbability, int maxMutedGenes, String seed){
+    public GeneticAlg(int populationSize, int fittestAmount, boolean[] crossMap, int mutationProbability, int maxMutedGenes, String seed){
         populations = new ArrayList<Population>();
         popSize = populationSize;
         this.fittestAmount = fittestAmount;
-        crossover = new Crossover(populationSize);
+        crossover = new Crossover(populationSize,crossMap);
         mutation = new Mutation(mutationProbability, maxMutedGenes);
 
         ArrayList<DNA> DNAList = new ArrayList<DNA>();

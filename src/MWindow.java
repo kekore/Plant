@@ -13,16 +13,16 @@ public class MWindow extends JFrame{
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(600,300);
+        setSize(610,220);
         setLocation(4,4);
-        setLayout(new GridLayout(1, 1, 20, 20));
-        //setLayout(new FlowLayout(FlowLayout.CENTER));
+        //setLayout(new GridLayout(1, 1, 20, 20));
+        setLayout(new FlowLayout());
 
         //simWindow = s;
         //envWindow = e;
         add(new MButtonPanel(s, e, a, c));
 
-        setResizable(false);
+        //setResizable(false);
         setVisible(true);
     }
 }
@@ -33,11 +33,11 @@ class MButtonPanel extends JPanel implements ActionListener{
     private AWindow algWindow;
     private CWindow catWindow;
     private JButton simOneBut;
-    private JButton s;
+    private JButton simBut;
     //private JButton w;
-    private JButton t;
-    private JButton q;
-    private JButton h;
+    private JButton doubleSpeedBut;
+    private JButton quadSpeedBut;
+    private JButton halfSpeedBut;
     private JButton envEditBut;
     private JButton algEditBut;
     private JButton loadEnvBut;
@@ -54,27 +54,27 @@ class MButtonPanel extends JPanel implements ActionListener{
         //Dimension d = new Dimension(100,100); //niepotrzebne raczej
         //setPreferredSize(d);
         simOneBut = new JButton("Zasymuluj generację");
-        s = new JButton("Symulacja");
+        simBut = new JButton("Symulacja");
         //w = new JButton("Dodaj");
-        t = new JButton("2x");
-        q = new JButton("4x");
-        h = new JButton("0.5x");
+        doubleSpeedBut = new JButton("2x");
+        quadSpeedBut = new JButton("4x");
+        halfSpeedBut = new JButton("0.5x");
         envEditBut = new JButton("Edytor środowiska");
         algEditBut = new JButton("Edytor algorytmu");
         loadEnvBut = new JButton("Załaduj środ. z edytora");
         loadAlgBut = new JButton("Załaduj algorytm z edytora");
-        showInvisBut = new JButton("Pokaż/ukryj");
+        showInvisBut = new JButton("Pokaż/ukryj szczegóły");
         catBut = new JButton("Katalog");
         quickBut = new JButton("Szybka symulacja");
 
         //s.addActionListener(this);
         simOneBut.addActionListener(simW.simPanel);
-        s.addActionListener(simW);
+        simBut.addActionListener(simW);
         //w.addActionListener(this);
         //w.addActionListener((ActionListener)simW.simPanel);
-        t.addActionListener(simW.simPanel);
-        q.addActionListener(simW.simPanel);
-        h.addActionListener(simW.simPanel);
+        doubleSpeedBut.addActionListener(simW.simPanel);
+        quadSpeedBut.addActionListener(simW.simPanel);
+        halfSpeedBut.addActionListener(simW.simPanel);
         envEditBut.addActionListener(envW);
         algEditBut.addActionListener(algW);
         loadEnvBut.addActionListener(this);
@@ -85,16 +85,16 @@ class MButtonPanel extends JPanel implements ActionListener{
 
 
         setLayout(new GridLayout(4, 3, 20, 20));
-        add(simOneBut);
-        add(s);
-        //add(w);
-        add(t);
-        add(q);
-        add(h);
         add(envEditBut);
         add(algEditBut);
+        add(simBut);
         add(loadEnvBut);
         add(loadAlgBut);
+        add(simOneBut);
+        //add(w);
+        add(quadSpeedBut);
+        add(doubleSpeedBut);
+        add(halfSpeedBut);
         add(showInvisBut);
         add(catBut);
         add(quickBut);
@@ -104,7 +104,7 @@ class MButtonPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(((JButton) e.getSource()).getText().equals("Załaduj środ. z edytora")){
             Environment environment = envWindow.getEnvironment();
-            if(environment != null){
+            if(environment != null && !simWindow.simPanel.simulator.isSet()){
                 simWindow.setSize(envWindow.overviewWindow.width,envWindow.overviewWindow.height);
                 simWindow.simPanel.setEnvironment(environment);
             }

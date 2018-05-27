@@ -65,6 +65,9 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
             width = size.width;
             height = size.height;
             setSize(size);
+        } else if (((JButton)e.getSource()).getText().equals("Utwórz inne")){
+            setSize(600,700);
+            ovrPanel.updateSize();
         }
     }
 }

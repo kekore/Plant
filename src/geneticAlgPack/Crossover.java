@@ -7,9 +7,14 @@ import java.util.Random;
 
 public class Crossover { //TODO ZMIENIC TO NA INNE KRZYZOWANIE
     private final int popSize;
+    private final boolean[] crossMap;
 
-    protected Crossover(int populationSize){
+    protected Crossover(int populationSize, boolean[] crossMap){
         popSize = populationSize;
+        this.crossMap = crossMap;
+        for(int i = 0; i < DNA.genesAmount+1; i++){
+            System.out.println(crossMap[i]);
+        }
     }
 
     protected ArrayList<DNA> shuffle(ArrayList<DNA> DNAlist){ //TODO check if well done - gets 250 gives 1000

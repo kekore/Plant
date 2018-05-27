@@ -197,8 +197,8 @@ class SimPanel extends JPanel implements ActionListener{
         } else if (((JButton) e.getSource()).getText().equals("4x")){
             simulator.setSpeed(1);
         } else if (((JButton) e.getSource()).getText().equals("0.5x")){
-            simulator.setSpeed(64);
-        } else if (((JButton) e.getSource()).getText().equals("Pokaż/ukryj")){
+            simulator.setSpeed(64); //TODO zmienic na 8
+        } else if (((JButton) e.getSource()).getText().equals("Pokaż/ukryj szczegóły")){
             showInvis = !showInvis;
         } else if (((JButton) e.getSource()).getText().equals("Szybka symulacja")){
             simulator.alterQuickSim();

@@ -166,6 +166,7 @@ class SecondPage extends JPanel{
         addSpawnerBut.addActionListener((ActionListener)ovrW.ovrPanel);
         saveFileBut.addActionListener(ovrW);
         deInitBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        deInitBut.addActionListener(ovrW);
         deInitBut.addActionListener(parent);
 
         add(addFactoryBut);

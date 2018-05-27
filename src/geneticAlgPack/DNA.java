@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class DNA implements Serializable{
     private final int[] gene;
-    protected static final int genesAmount = 14;
+    public static final int genesAmount = 14;
     protected static final int geneValueInterval = 8;
 
     protected DNA(){
