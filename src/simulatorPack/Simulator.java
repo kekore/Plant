@@ -188,4 +188,6 @@ public class Simulator implements ActionListener{
         timer.start();
         //allowProc=true;
     }
+
+    public int getPopSize(){return geneticAlg.getPopSize();}
 }

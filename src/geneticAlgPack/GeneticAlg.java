@@ -81,4 +81,8 @@ public class GeneticAlg { //TODO make serializable (?) not important
         }
         return generateNextGen;
     }
+
+    public int getPopSize(){
+        return popSize;
+    }
 }
