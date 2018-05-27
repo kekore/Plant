@@ -111,7 +111,7 @@ class MButtonPanel extends JPanel implements ActionListener{
         }
         else if(((JButton) e.getSource()).getText().equals("Załaduj algorytm z edytora")){
             GeneticAlg geneticAlg = algWindow.getAlgorithm();
-            if(geneticAlg != null){
+            if(geneticAlg != null && !simWindow.simPanel.simulator.isSet()){
                 simWindow.simPanel.setAlgorithm(geneticAlg);
             }
         }

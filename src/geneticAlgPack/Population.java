@@ -45,8 +45,21 @@ public class Population {
         return fittest;
     }
 
-    /*protected ArrayList<Individual> getSortedList(){
+    protected ArrayList<Individual> getSortedList(){
+        for(Individual i: individuals){
+            if(!i.tested) return null;
+        }
+        ArrayList<Individual> unsortedList = new ArrayList<Individual>();
+        unsortedList.addAll(individuals);
         ArrayList<Individual> sortedList = new ArrayList<Individual>();
-
-    }*/
+        while(unsortedList.size() != 0){
+            Individual best = unsortedList.get(0);
+            for(int j = 0; j < unsortedList.size(); j++){
+                if(unsortedList.get(j).getFitness() > best.getFitness()) best = unsortedList.get(j);
+            }
+            sortedList.add(best);
+            unsortedList.remove(best);
+        }
+        return sortedList;
+    }
 }

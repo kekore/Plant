@@ -11,6 +11,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
     private final int fittestAmount;
     private int currentIndex;
     private int currentGen;
+    private int lastTestedGen;
     private Crossover crossover;
     private Mutation mutation;
     public static final float startSatiety = 100;
@@ -38,6 +39,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
         populations.add(new Population(DNAList));
         currentIndex=0;
         currentGen = 0;
+        lastTestedGen = -1;
     }
 
     public void createNewGen(){
@@ -71,6 +73,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
         boolean generateNextGen = false;
         if(currentIndex+1==popSize){
             generateNextGen = true;
+            lastTestedGen = currentGen;
             currentIndex = 0;
         }else{
             currentIndex++;
@@ -82,7 +85,15 @@ public class GeneticAlg { //TODO make serializable (?) not important
         return generateNextGen;
     }
 
+    synchronized public ArrayList<Individual> getSortedList(int generation){
+        return populations.get(generation).getSortedList();
+    }
+
     public int getPopSize(){
         return popSize;
     }
+    public int getCurrentGen(){
+        return currentGen;
+    }
+    public int getLastTestedGen(){ return lastTestedGen; }
 }

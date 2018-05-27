@@ -1,5 +1,6 @@
 package simulatorPack;
 
+import com.sun.org.apache.bcel.internal.generic.InvokeInstruction;
 import environmentPack.*;
 import geneticAlgPack.GeneticAlg;
 import geneticAlgPack.Individual;
@@ -19,6 +20,9 @@ public class Simulator implements ActionListener{
     //flagi:
     private boolean isSet;
     private boolean isWorking;
+    private boolean isWorkingForAlgorithm;
+    private boolean isOverviewing;
+    private boolean isResimulating;
     //private boolean allowProc;
     protected boolean quickSim;
     //stałe:
@@ -49,6 +53,9 @@ public class Simulator implements ActionListener{
         actions=0;
         thread = new QuickSimThread(this);
         isWorking=false;
+        isWorkingForAlgorithm=false;
+        isOverviewing=false;
+        isResimulating=false;
         //allowProc = false;
     }
     private void addP(Particle p){
@@ -118,12 +125,22 @@ public class Simulator implements ActionListener{
     }
     protected void endSimulation(){
         cycle=0;
-        if(!geneticAlg.signalTested(currentIndividual,environment.getTree(),environment.getPoints())) startNewSimulation(geneticAlg.getNextIndividual());
-        else{
+        if(isResimulating){
             currentIndividual = null;
+            isResimulating = false;
             isWorking = false;
             if(quickSim) quickSim = !quickSim;
-            //allowProc = false;
+        }
+        else if(isWorkingForAlgorithm) {
+            if (!geneticAlg.signalTested(currentIndividual, environment.getTree(), environment.getPoints()))
+                startNewTestingSimulation(geneticAlg.getNextIndividual());
+            else {
+                currentIndividual = null;
+                isWorkingForAlgorithm = false;
+                isWorking = false;
+                if (quickSim) quickSim = !quickSim;
+                //allowProc = false;
+            }
         }
     }
 
@@ -178,16 +195,41 @@ public class Simulator implements ActionListener{
     public void simulateGeneration(){
         if(isWorking || !isSet) return;
         isWorking = true;
-        startNewSimulation(geneticAlg.getNextIndividual());
+        isWorkingForAlgorithm = true;
+        startNewTestingSimulation(geneticAlg.getNextIndividual());
     }
-
-    private void startNewSimulation(Individual i){
+    private void startNewTestingSimulation(Individual i){
         currentIndividual = i;
-        System.out.println(i.getDna().getString());
-        environment.insertTree(i.getDna(),GeneticAlg.startSatiety);
+        System.out.println("STARTING SIMULATION OF INDIVIDUAL WITH DNA: "+i.getDna().getString());
+        environment.insertTreeToTest(i.getDna(),GeneticAlg.startSatiety);
         timer.start();
         //allowProc=true;
     }
 
-    public int getPopSize(){return geneticAlg.getPopSize();}
+    public void overviewIndividual(Individual i){
+        if(isWorking) return;
+        if(isOverviewing) resimulate(i);
+        isOverviewing = true;
+        environment.insertTestedTree(i.getTree());
+    }
+    private void resimulate(Individual i){
+        isOverviewing = false;
+        isWorking = true;
+        isResimulating = true;
+        environment.insertTreeToTest(i.getDna(),GeneticAlg.startSatiety);
+        timer.start();
+    }
+
+    //dla katalogu:
+    public int getPopSize(){
+        return geneticAlg.getPopSize();
+    }
+    public ArrayList<Individual> getSortedList(int generation){
+        return geneticAlg.getSortedList(generation);
+    }
+    public int getCurrentGen(){return geneticAlg.getCurrentGen();}
+    public int getLastTestedGen(){
+        if(geneticAlg == null) return -1;
+        return geneticAlg.getLastTestedGen();
+    }
 }

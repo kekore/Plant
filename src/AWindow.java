@@ -78,8 +78,8 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
 
         isInitialized=false;
 
-        popSize=10; //TODO !!!!
-        fittestAmount=5;//TODO !!!!
+        popSize=5; //TODO !!!!
+        fittestAmount=3;//TODO !!!!
         mutProb=1;
         maxMutGen=3;
         seed = null;

@@ -211,8 +211,13 @@ public class Environment implements Serializable {
         return irList;
     }
 
-    public void insertTree(DNA dna, float startSatiety){
+    public void insertTreeToTest(DNA dna, float startSatiety){
         this.tree = new Tree(dna,startSatiety,seedPlace.getX(),seedPlace.getY());
+        reset();
+    }
+
+    public void insertTestedTree(Tree tree){
+        this.tree = tree;
         reset();
     }
 

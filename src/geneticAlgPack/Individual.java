@@ -7,7 +7,7 @@ public class Individual {
     protected DNA dna;
     protected Tree tree;
     private float fitness;
-    private boolean tested;
+    protected boolean tested;
 
     Individual(DNA dna){
         this.dna = dna;
@@ -23,11 +23,11 @@ public class Individual {
         this.fitness = fitness;
     }
     public DNA getDna(){ return dna; }
-    private Tree getTree(){
+    public Tree getTree(){
         if(!tested) throw new RuntimeException();
         return tree;
     }
-    protected float getFitness(){
+    public float getFitness(){
         if(!tested) return -1;
         return fitness;
     }

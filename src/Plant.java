@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 public class Plant {
     public static void main(String[] args) {
         SimRunnable simR = new SimRunnable(); //TODO ogarnac invokeLater
+        EventQueue.invokeLater(simR);
         //OvrRunnable ovrR = new OvrRunnable();
         //EventQueue.invokeLater(ovrR);
         //while(!ovrR.isRan());
@@ -14,7 +15,6 @@ public class Plant {
         AlgRunnable algR = new AlgRunnable();
         CatRunnable catR = new CatRunnable(simR.getRef());
 
-        EventQueue.invokeLater(simR);
         EventQueue.invokeLater(envR);
         EventQueue.invokeLater(algR);
         EventQueue.invokeLater(catR);
