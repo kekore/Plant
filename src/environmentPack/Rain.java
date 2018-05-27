@@ -64,4 +64,11 @@ public class Rain implements Serializable{ //TODO wygenerowac wzorzec dla kazdeg
         }*/
         return pList;
     }
+
+    protected void reset(){
+        isRaining = false;
+        startTime = 0;
+        cycle = 0;
+        shift = 0;
+    }
 }

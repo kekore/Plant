@@ -212,6 +212,8 @@ public class Environment implements Serializable {
     }
 
     public void insertTreeToTest(DNA dna, float startSatiety){
+        System.out.println("MAKING NEW TREE");
+        //this.tree = null;
         this.tree = new Tree(dna,startSatiety,seedPlace.getX(),seedPlace.getY());
         reset();
     }
@@ -234,7 +236,8 @@ public class Environment implements Serializable {
         particleList.clear();
         //tree.reset();
         sun = new Sun(sunTime,sunSide,width,height-ground.groundLevel);
-        rain =  new Rain(rainFreq,rainInt,width);
+        //rain =  new Rain(rainFreq,rainInt,width);
+        rain.reset();
      }
 
      public float getSatiety(){

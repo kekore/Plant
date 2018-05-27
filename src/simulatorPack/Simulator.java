@@ -208,8 +208,12 @@ public class Simulator implements ActionListener{
 
     public void overviewIndividual(Individual i){
         if(isWorking) return;
-        if(isOverviewing) resimulate(i);
+        if(isOverviewing && i==currentIndividual){
+            resimulate(i);
+            return;
+        }
         isOverviewing = true;
+        currentIndividual=i;
         environment.insertTestedTree(i.getTree());
     }
     private void resimulate(Individual i){

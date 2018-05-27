@@ -21,7 +21,7 @@ public class ParticleSpawner implements Serializable { //TODO wywalic sun i przy
     protected Type spawnerType;*/
     protected Physics physics;
     private int frequency;
-    protected boolean working;
+    //protected boolean working;
 
     public ParticleSpawner(Particle sample, boolean isStatic, int frequency, Vector2D p, Vector2D v, Vector2D f, float m){
         partType = sample.type;
@@ -34,7 +34,7 @@ public class ParticleSpawner implements Serializable { //TODO wywalic sun i przy
         rectangle = new Rect(new Vector2D(sample.physics.getPos()),6,6,Color.RED,false);
         //this.isStatic = isStatic;
         physics = new Physics(p,v,f,m);
-        working = true;
+        //working = true;
     }
 
     protected Particle proc(long time,long tickTime){
