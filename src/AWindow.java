@@ -47,20 +47,22 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     private FitPanel fitPanel;
     private ProbPanel probPanel;
     private MutPanel mutPanel;
+    private SeedPanel seedPanel;
+    private JButton initBut;
+    protected boolean isInitialized;
 
     private int popSize;
     private int fittestAmount;
     private int mutProb;
     private int maxMutGen;
-    private JButton initBut;
-    protected boolean isInitialized;
+    private String seed;
 
     protected APanel(){
         popPanel = new PopPanel(this);
         fitPanel = new FitPanel(this);
         probPanel = new ProbPanel(this);
         mutPanel = new MutPanel(this);
-
+        seedPanel = new SeedPanel(this);
         initBut = new JButton("Zastosuj");
         initBut.addActionListener(this);
 
@@ -69,6 +71,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
         add(fitPanel);
         add(probPanel);
         add(mutPanel);
+        add(seedPanel);
         add(initBut);
 
         isInitialized=false;
@@ -77,10 +80,11 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
         fittestAmount=20;//TODO !!!!
         mutProb=1;
         maxMutGen=3;
+        seed = null;
     }
 
     private void initAlg(){
-        geneticAlg = new GeneticAlg(popSize,fittestAmount,mutProb,maxMutGen);
+        geneticAlg = new GeneticAlg(popSize,fittestAmount,mutProb,maxMutGen,seed);
         isInitialized = true;
     }
 
@@ -93,6 +97,13 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == initBut){
             initAlg();
+        } else if (e.getSource() == seedPanel.seedField){
+            seed = seedPanel.seedField.getText();
+            if(seed.equals("")){
+                seedPanel.currentSeedText.setText("<Bez ziarna>");
+                seed = null;
+            }
+            else seedPanel.currentSeedText.setText(seed);
         }
     }
 
@@ -109,7 +120,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
             //System.out.println(popSize);
         } else if(e.getSource() == fitPanel.fittestAmountSlider){
             noInit();
-            fitPanel.fittestAmountSlider.setValue(((int)(fitPanel.fittestAmountSlider.getValue()/25))*25);
+            fitPanel.fittestAmountSlider.setValue(((fitPanel.fittestAmountSlider.getValue()/25))*25);
             fittestAmount = ((JSlider) e.getSource()).getValue();
             if(fittestAmount > popSize){
                 popPanel.popSizeSlider.setValue(fittestAmount);
@@ -213,5 +224,40 @@ class MutPanel extends JPanel{
         setLayout(new GridLayout(2,1));
         add(mutName);
         add(maxMutGenSlider);
+    }
+}
+
+class SeedPanel extends JPanel{
+    private JTextField seedText;
+    protected JTextField seedField;
+    private JTextField seedText2;
+    protected JTextField currentSeedText;
+
+    protected SeedPanel(APanel a){
+        seedText = new JTextField("Ziarno pierwszej generacji (zatwierdź enterem)");
+        seedText.setEditable(false);
+        seedText.setBorder(null);
+        seedText.setHorizontalAlignment(JTextField.CENTER);
+
+        seedField = new JTextField();
+        seedField.setEditable(true);
+        //seedField.setBorder();
+        seedField.setHorizontalAlignment(JTextField.CENTER);
+        seedField.addActionListener(a);
+
+        seedText2 = new JTextField("Aktualne ziarno");
+        seedText2.setEditable(false);
+        seedText2.setBorder(null);
+        seedText2.setHorizontalAlignment(JTextField.CENTER);
+
+        currentSeedText = new JTextField();
+        currentSeedText.setEditable(false);
+        currentSeedText.setText("<Bez ziarna>");
+
+        setLayout(new GridLayout(4,1));
+        add(seedText);
+        add(seedField);
+        add(seedText2);
+        add(currentSeedText);
     }
 }
