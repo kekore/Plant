@@ -14,20 +14,31 @@ public class Factory implements Serializable{
     private Vector2D spawnPoint;
     private Vector2D startV;
     private int frequency;
+    public enum Type{
+        NORMAL, TOXIC
+    }
+    Type type;
 
-    public Factory(Vector2D spawnPoint, Vector2D startVelocity, int frequency){
+    public Factory(Vector2D spawnPoint, Vector2D startVelocity, int frequency, Type type){
         this.spawnPoint = new Vector2D(spawnPoint);
         startV = new Vector2D(startVelocity);
         this.frequency = frequency;
-        Rectangle2D.Float chimneyRect = new Rectangle2D.Float(spawnPoint.getX()-3, spawnPoint.getY(), 6, 20); //TODO poprawic to
-        Rectangle2D.Float buildingRect = new Rectangle2D.Float(spawnPoint.getX()-20, spawnPoint.getY()+20, 30, 16);
-        Rectangle2D.Float windowRect = new Rectangle2D.Float(spawnPoint.getX()-17, spawnPoint.getY()+23, 10, 10);
-        //chimney = new Rect(chimneyRect, Color.BLACK, true);
-        chimney = new Rect(new Vector2D(spawnPoint.getX(),spawnPoint.getY()+10),6,20,Color.BLACK, true);
-        //building = new Rect(buildingRect, Color.BLACK, false);
-        building = new Rect(new Vector2D(spawnPoint.getX()-5,spawnPoint.getY()+28),30,16,Color.BLACK,false);
-        //window = new Rect(windowRect, Color.BLACK, false);
-        window = new Rect(new Vector2D(spawnPoint.getX()-12,spawnPoint.getY()+28),10,10,Color.BLACK,false);
+        this.type = type;
+        switch (type){
+            case NORMAL:{
+                chimney = new Rect(new Vector2D(spawnPoint.getX(),spawnPoint.getY()+10),6,20,Color.BLACK, true);
+                building = new Rect(new Vector2D(spawnPoint.getX()-5,spawnPoint.getY()+28),30,16,Color.BLACK,false);
+                window = new Rect(new Vector2D(spawnPoint.getX()-12,spawnPoint.getY()+28),10,10,Color.BLACK,false);
+                break;
+            }
+            case TOXIC:{
+                chimney = new Rect(new Vector2D(spawnPoint.getX(),spawnPoint.getY()+15),8,30,new Color(139,0,139), true);
+                building = new Rect(new Vector2D(spawnPoint.getX()-5,spawnPoint.getY()+28),30,16,new Color(139,0,139),false);
+                window = new Rect(new Vector2D(spawnPoint.getX()-12,spawnPoint.getY()+28),10,10,new Color(139,0,139),false);
+                break;
+            }
+        }
+
     }
 
     protected ArrayList<Rect> getRects(){
@@ -41,7 +52,10 @@ public class Factory implements Serializable{
     protected Particle proc(long time){
         if(time % frequency == 0){ //should work with == !
             //System.out.println(time);
-            return new Particle(new Vector2D(spawnPoint), new Vector2D(startV), new Vector2D(), 10, 3, Particle.Type.CARBOXIDE);
+            if(type == Type.NORMAL)
+                return new Particle(new Vector2D(spawnPoint), new Vector2D(startV), new Vector2D(), 10, 3, Particle.Type.CARBOXIDE);
+            else
+                return new Particle(new Vector2D(spawnPoint), new Vector2D(startV), new Vector2D(), 10, 4, Particle.Type.TOXIC);
         }
         else return null;
     }

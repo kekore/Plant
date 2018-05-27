@@ -104,21 +104,21 @@ class SimPanel extends JPanel implements ActionListener{
         add(fitText);
 
         satText = new JTextField();
-        satText.setBounds(1,52,100,20);
+        satText.setBounds(1,54,100,20);
         satText.setEditable(false);
         satText.setBorder(null);
         satText.setBackground(Color.WHITE);
         add(satText);
 
         ppsText = new JTextField();
-        ppsText.setBounds(1,68,60,20);
+        ppsText.setBounds(1,72,60,20);
         ppsText.setEditable(false);
         ppsText.setBorder(null);
         ppsText.setBackground(Color.WHITE);
         add(ppsText);
 
         progressText = new JTextField();
-        progressText.setBounds(getSize().width/2-50,getSize().height/2-10,100,20);
+        progressText.setBounds(1,90,100,20);
         progressText.setEditable(false);
         progressText.setBorder(null);
         progressText.setBackground(Color.WHITE);
@@ -183,6 +183,10 @@ class SimPanel extends JPanel implements ActionListener{
             if(sat >= 0) satText.setText("Satiety: " + sat);
             else satText.setText("Satiety: -");
             ppsText.setText("PPS: "+simulator.getPPS());
+            if(simulator.isQuickSim()){
+                progressText.setVisible(true);
+                progressText.setText("Szybka symulacja");
+            } else progressText.setVisible(false);
         } /*else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
             for(int i = 0; i < 1; i++) {
                 //Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);

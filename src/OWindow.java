@@ -79,7 +79,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     protected boolean isInitialized;
     protected Timer timer;
     private enum Choice{
-        NULL, FACTORY, SPAWNER, SEED
+        NULL, FACTORY, SPAWNER, SEED, NUCLEAR
     }
     private Choice choice;
     private int x1;
@@ -219,7 +219,9 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         } else if(((JButton)e.getSource()).getText().equals("Dodaj fabrykę")){
             //System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
-        } else if(((JButton)e.getSource()).getText().equals("Dodaj źródło cząstek")){
+        } else if(((JButton)e.getSource()).getText().equals("Dodaj elektrownię nuklearną")){
+            choice = Choice.NUCLEAR;
+        } else if(((JButton)e.getSource()).getText().equals("Dodaj źródło tlenu")){
             choice = Choice.SPAWNER;
         } else if (((JButton)e.getSource()).getText().equals("Posadź ziarno")){
             choice = Choice.SEED;
@@ -256,7 +258,14 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         switch (choice) {
             case FACTORY: {
                 if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
-                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30));
+                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30,Factory.Type.NORMAL));
+                    //System.out.println("Added factory");
+                }
+                break;
+            }
+            case NUCLEAR:{
+                if (isInitialized && y1 + 46 < canvasHeight - groundLevel) {
+                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 35,Factory.Type.TOXIC));
                     //System.out.println("Added factory");
                 }
                 break;
@@ -264,8 +273,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             case SPAWNER: {
                 if (isInitialized && y1 + 3 < canvasHeight - groundLevel) {
                     Vector2D pos = new Vector2D(x1, y1);
-                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 6, Particle.Type.OXYGEN);
-                    environment.addSpawner(new ParticleSpawner(p,true,20,pos,new Vector2D(),new Vector2D(),10));
+                    Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 5, Particle.Type.OXYGEN);
+                    environment.addSpawner(new ParticleSpawner(p,true,15,pos,new Vector2D(),new Vector2D(),10));
                     //environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.MOVING,20,pos,new Vector2D(0,-100),new Vector2D(),10));
                 }
                 break;

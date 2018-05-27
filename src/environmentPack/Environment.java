@@ -86,14 +86,13 @@ public class Environment implements Serializable {
     }
 
     public void proc(long tickTime){
-        //spawn toxic from factories
         //rain:
         if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
         //sun:
         if(sun != null) particleList.addAll(sun.proc(time));
         //count forces:
         for(Particle p : particleList){ //TODO count forces (wind)
-            p.setForce(new Vector2D(0,400));
+            p.setForce(new Vector2D(0,300));
             p.physics.getForce().add(wind.getForce(time));
         }
         /*for(ParticleSpawner ps : spawnerList){ //count sun forces

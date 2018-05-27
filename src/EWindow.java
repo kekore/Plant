@@ -152,24 +152,28 @@ class FirstPage extends JPanel{
 
 class SecondPage extends JPanel{
     private JButton addFactoryBut;
+    private JButton addNucBut;
     private JButton addSpawnerBut;
     private JButton saveFileBut;
     private JButton deInitBut;
 
     protected SecondPage(EWindow parent, OWindow ovrW){
         addFactoryBut = new JButton("Dodaj fabrykę");
-        addSpawnerBut = new JButton("Dodaj źródło cząstek");
+        addNucBut = new JButton("Dodaj elektrownię nuklearną");
+        addSpawnerBut = new JButton("Dodaj źródło tlenu");
         saveFileBut = new JButton("Zapisz do pliku");
         deInitBut = new JButton("Utwórz inne");
 
-        addFactoryBut.addActionListener((ActionListener)ovrW.ovrPanel);
-        addSpawnerBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        addFactoryBut.addActionListener(ovrW.ovrPanel);
+        addNucBut.addActionListener(ovrW.ovrPanel);
+        addSpawnerBut.addActionListener(ovrW.ovrPanel);
         saveFileBut.addActionListener(ovrW);
-        deInitBut.addActionListener((ActionListener)ovrW.ovrPanel);
+        deInitBut.addActionListener(ovrW.ovrPanel);
         deInitBut.addActionListener(ovrW);
         deInitBut.addActionListener(parent);
 
         add(addFactoryBut);
+        add(addNucBut);
         add(addSpawnerBut);
         add(saveFileBut);
         add(deInitBut);
