@@ -133,7 +133,7 @@ class SimPanel extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-
+        if(simulator.isQuickSim())return;
         ArrayList<Circle> cList = simulator.getCircles();
         ArrayList<Line2D> lList = simulator.getLines();
         ArrayList<Rect> rList = simulator.getRects();

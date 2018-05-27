@@ -19,7 +19,7 @@ public class CWindow extends JFrame implements ActionListener{
         super("Katalog");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(600,700);
+        setSize(600,300);
         setLocation(screenSize.width/2,6);
 
         setLayout(new GridLayout(1,1));
@@ -69,9 +69,11 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
         //textList = new JTextField[1000];
         setLayout(new GridLayout(1,3));
         prevBut = new JButton("Poprzednia generacja");
+        prevBut.addActionListener(this);
         updateBut = new JButton("Zaktualizuj");
         updateBut.addActionListener(this);
         nextBut = new JButton("Następna generacja");
+        nextBut.addActionListener(this);
         add(prevBut);
         add(updateBut);
         add(nextBut);
@@ -107,6 +109,7 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
             }
         }
 
+        System.out.println("AKTUALIZACJA");
         currentIndividualsList = sWindow.simPanel.simulator.getSortedList(page);
         for(int i = 0; i < textList.length; i++){
             textList[i].setText(currentIndividualsList.get(i).getDna().getString() + "\nPunktacja: " + currentIndividualsList.get(i).getFitness());
@@ -116,6 +119,15 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(((JButton)e.getSource()).getText().equals("Zaktualizuj")){
+            update();
+        } else if(((JButton)e.getSource()).getText().equals("Poprzednia generacja")){
+            if(page == 0) return;
+            page--;
+            update();
+        } else if(((JButton)e.getSource()).getText().equals("Następna generacja")){
+            if(page == sWindow.simPanel.simulator.getLastTestedGen()) return;
+            System.out.println("NASTEPNA");
+            page++;
             update();
         }
     }
