@@ -87,14 +87,14 @@ public class Branch implements Serializable{
                 break;
             }
             case FOTON:{
-                addSatiety((2.54F - ((float)parentTree.branchGreen-128)/100)/4F); //fotons were giving too much satiety
-                parentTree.addPoints((2.54F - ((float)parentTree.branchGreen-128)/100)/16F); //was without /16F before but too much points
+                addSatiety((2.54F - 2F*((float)parentTree.branchGreen-128)/100)/4F); //fotons were giving too much satiety
+                parentTree.addPoints((2.54F - 2F*((float)parentTree.branchGreen-128)/100)/16F); //was without /16F before but too much points
                 break;
             }
             case OXYGEN:{
                 //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
-                addSatiety(2.54F - ((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints((2.54F - ((float)parentTree.branchGreen-128)/100)/4F); //was without /4F before but too much points
+                addSatiety(2.54F - 2F*((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints((2.54F - 2F*((float)parentTree.branchGreen-128)/100)/4F); //was without /4F before but too much points
                 break;
             }
             case CARBOXIDE:{

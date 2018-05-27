@@ -53,13 +53,13 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
                 break;
             }
             case FOTON: {
-                parentBranch.addSatiety((5.08F - ((float)parentTree.leafGreen-128)/100)/2F);
-                parentTree.addPoints((5.08F - ((float)parentTree.leafGreen-128)/100)/2F);
+                parentBranch.addSatiety((5.08F - 4F*((float)parentTree.leafGreen-128)/100)/2F);
+                parentTree.addPoints((5.08F - 4F*((float)parentTree.leafGreen-128)/100)/2F);
                 break;
             }
             case OXYGEN:{
-                parentBranch.addSatiety(5.08F - ((float)parentTree.leafGreen-128)/100);
-                parentTree.addPoints(5.08F - ((float)parentTree.leafGreen-128)/100);
+                parentBranch.addSatiety(5.08F - 4F*((float)parentTree.leafGreen-128)/100);
+                parentTree.addPoints(5.08F - 4F*((float)parentTree.leafGreen-128)/100);
                 break;
             }
             case CARBOXIDE:{
