@@ -44,7 +44,7 @@ public class Tree implements Serializable{
 
         int rootBranchesN;
         if(dna.getGene(0) == 0) rootBranchesN = 1;
-        else rootBranchesN = Math.abs(dna.getGene(0));
+        else rootBranchesN = Math.abs(dna.getGene(0))/2; //max 4, was 8 before
 
         float generalAngle = (float)(Maths.sig(dna.getGene(1)/2) * (Math.PI/2) - (3*Math.PI/4)); //~-135 to ~-45
         float freeAngle = (float)Math.max(-Math.PI-generalAngle,generalAngle);

@@ -51,8 +51,10 @@ public class SWindow extends JFrame implements ActionListener{
             }*/
             if(isVisible()){
                 setVisible(false);
+                simPanel.timer.stop();
             } else {
                 setVisible(true);
+                simPanel.timer.start();
             }
         }
     }
@@ -60,7 +62,7 @@ public class SWindow extends JFrame implements ActionListener{
 
 class SimPanel extends JPanel implements ActionListener{
 
-    private Timer timer;
+    protected Timer timer;
     protected Simulator simulator;
     //Random generator;
     private JTextField timeText;

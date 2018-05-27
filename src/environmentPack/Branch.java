@@ -82,15 +82,19 @@ public class Branch implements Serializable{
         switch (p.type){
             case DROP:{
                 addSatiety(2F*((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints(2F*((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints((2F*((float)parentTree.branchGreen-128)/100)/4F); //was without /4F before but too much points
                 //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
-            case FOTON:{} //same as below
+            case FOTON:{
+                addSatiety((2.54F - ((float)parentTree.branchGreen-128)/100)/4F); //fotons were giving too much satiety
+                parentTree.addPoints((2.54F - ((float)parentTree.branchGreen-128)/100)/16F); //was without /16F before but too much points
+                break;
+            }
             case OXYGEN:{
                 //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
                 addSatiety(2.54F - ((float)parentTree.branchGreen-128)/100);
-                parentTree.addPoints(2.54F - ((float)parentTree.branchGreen-128)/100);
+                parentTree.addPoints((2.54F - ((float)parentTree.branchGreen-128)/100)/4F); //was without /4F before but too much points
                 break;
             }
             case CARBOXIDE:{
@@ -165,7 +169,8 @@ public class Branch implements Serializable{
     protected void growRec(){
         //System.out.println(satiety + " " + angle); //for debugging
         //float lenghtFormula = 10*getStaiety(((float)1/(float)(100*(Math.abs(parentTree.dna.getGene(4))+2)))*satiety);
-        float lenghtFormula = getStaiety((1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
+        float lenghtFormula = getStaiety((1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F)); //very long branches
+        //float lenghtFormula = (7F/new Vector2D(x2-x1,y2-y1).length())*getStaiety((1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
         //System.out.println("BRANCH: "+(1F/(float)(Math.abs(parentTree.dna.getGene(4))+2))*satiety*(1F/10F));
         if(doesGrowLeaves)growLeaves();
         //System.out.println((float)1/(float)(2*(Math.abs(parentTree.dna.getGene(4))+2)));
@@ -274,7 +279,7 @@ public class Branch implements Serializable{
     private void doBranch(){ //TODO dodać gen który będzie lekko zmieniać kąt
         int branchesN;
         if(parentTree.dna.getGene(7) == 0) branchesN = 1;
-        else branchesN = Math.abs(parentTree.dna.getGene(7));
+        else branchesN = Math.abs(parentTree.dna.getGene(7))/2;//max 4, was 8 before
 
         float generalAngle = (float)(Maths.sig(parentTree.dna.getGene(8)/2) * Math.PI - Math.PI + level*parentTree.dna.getGene(13)*Math.PI/64); //~-180 to ~-45
         float freeAngle = (float)Math.max(-Math.PI-generalAngle,generalAngle);

@@ -156,7 +156,7 @@ public class Environment implements Serializable {
         time++;
     }
 
-    public ArrayList<Circle> getCircles(){
+    synchronized public ArrayList<Circle> getCircles(){
         ArrayList<Circle> sList = new ArrayList<Circle>();
         for(Particle p : particleList){
             sList.add(p.shape);
@@ -165,7 +165,7 @@ public class Environment implements Serializable {
         return sList;
     }
 
-    public ArrayList<Line2D> getLines(){
+    synchronized public ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
         /*for(Particle p : particleList){
             lList.add(p.physics.getColLine(tickTime));
@@ -174,7 +174,7 @@ public class Environment implements Serializable {
         return lList;
     }
 
-    public ArrayList<Pair<Line2D,Color>> getBranchLines(){
+    synchronized public ArrayList<Pair<Line2D,Color>> getBranchLines(){
         ArrayList<Pair<Line2D,Color>> array = new ArrayList<Pair<Line2D,Color>>();
         if(tree == null) return array;
         for(Branch b : tree.getBranches()){
@@ -183,7 +183,7 @@ public class Environment implements Serializable {
         return array;
     }
 
-    public ArrayList<Line2D> getInvisLines(long tickTime){
+    synchronized public ArrayList<Line2D> getInvisLines(long tickTime){
         ArrayList<Line2D> ilList = new ArrayList<Line2D>();
         for(Particle p : particleList){
             ilList.add(p.physics.getColLine(tickTime));
@@ -192,7 +192,7 @@ public class Environment implements Serializable {
         return ilList;
     }
 
-    public ArrayList<Rect> getRects(){
+    synchronized public ArrayList<Rect> getRects(){
         ArrayList<Rect> rList = new ArrayList<Rect>();
         for(Factory f : factoryList){
             rList.addAll(f.getRects());
@@ -201,7 +201,7 @@ public class Environment implements Serializable {
         return rList;
     }
 
-    public ArrayList<Rect> getInvisRects(){
+    synchronized public ArrayList<Rect> getInvisRects(){
         ArrayList<Rect> irList = new ArrayList<Rect>();
         irList.add(seedRect);
         for(ParticleSpawner ps : spawnerList){

@@ -15,7 +15,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
     private Crossover crossover;
     private Mutation mutation;
     public static final float startSatiety = 100;
-    public static final long simulationTime = 1000; //should be around 3000-5000
+    public static final long simulationTime = 3000; //should be around 3000-5000
 
     public GeneticAlg(int populationSize, int fittestAmount, boolean[] crossMap, int mutationProbability, int maxMutedGenes, String seed){
         populations = new ArrayList<Population>();
@@ -44,7 +44,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
 
     public void createNewGen(){
         ArrayList<DNA> newGenDNAList = crossover.shuffle(populations.get(currentGen).getFittest(fittestAmount));
-        //mutation.Mutate(newGenDNAList);
+        mutation.Mutate(newGenDNAList);
         populations.add(new Population(newGenDNAList));
         currentGen++;
     }

@@ -159,11 +159,11 @@ public class Simulator implements ActionListener{
         if(!isSet) return 0;
         return environment.getTime();
     }
-    public float getPoints(){
+    public float getPoints(){ //should be synchronized instead of this condition (?)
         if(!isSet || quickSim) return -2;
         return environment.getPoints();
     }
-    public float getSatiety(){
+    public float getSatiety(){ //should be synchronized instead of this condition (?)
         if(!isSet || quickSim) return -2;
         return environment.getSatiety();
     }
