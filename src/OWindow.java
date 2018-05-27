@@ -264,7 +264,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
                 break;
             }
             case NUCLEAR:{
-                if (isInitialized && y1 + 46 < canvasHeight - groundLevel) {
+                if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
                     environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 35,Factory.Type.TOXIC));
                     //System.out.println("Added factory");
                 }

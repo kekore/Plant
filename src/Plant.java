@@ -12,7 +12,7 @@ public class Plant {
         //EnvRunnable envR = new EnvRunnable(ovrR.getRef());
         EnvRunnable envR = new EnvRunnable();
         AlgRunnable algR = new AlgRunnable();
-        CatRunnable catR = new CatRunnable();
+        CatRunnable catR = new CatRunnable(simR.getRef());
 
         EventQueue.invokeLater(simR);
         EventQueue.invokeLater(envR);
@@ -81,7 +81,7 @@ class AlgRunnable implements Runnable{
 }
 
 class CatRunnable implements Runnable{
-    CatRunnable() { c = new CWindow(); }
+    CatRunnable(SWindow sWindow) { c = new CWindow(sWindow); }
     @Override
     public void run() {
         //c = new CWindow;

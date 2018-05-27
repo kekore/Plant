@@ -143,11 +143,11 @@ public class Simulator implements ActionListener{
         return environment.getTime();
     }
     public float getPoints(){
-        if(!isSet) return -2;
+        if(!isSet || quickSim) return -2;
         return environment.getPoints();
     }
     public float getSatiety(){
-        if(!isSet) return -2;
+        if(!isSet || quickSim) return -2;
         return environment.getSatiety();
     }
     public int getPPS(){

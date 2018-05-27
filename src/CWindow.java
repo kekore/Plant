@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CWindow extends JFrame implements ActionListener {
-    public CWindow(){
+    public CWindow(SWindow sWindow){
         super("Katalog");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,700);
         setLocation(screenSize.width/2,6);
+
+        add(new CatPanel(sWindow));
 
         //setResizable(false);
     }
@@ -23,5 +25,11 @@ public class CWindow extends JFrame implements ActionListener {
                 setVisible(true);
             }
         }
+    }
+}
+
+class CatPanel extends JPanel{
+    protected CatPanel(SWindow sWindow){
+
     }
 }

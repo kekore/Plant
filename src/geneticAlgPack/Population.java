@@ -44,4 +44,9 @@ public class Population {
         }
         return fittest;
     }
+
+    /*protected ArrayList<Individual> getSortedList(){
+        ArrayList<Individual> sortedList = new ArrayList<Individual>();
+
+    }*/
 }
