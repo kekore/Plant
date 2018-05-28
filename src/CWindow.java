@@ -25,7 +25,7 @@ public class CWindow extends JFrame implements ActionListener{
 
         this.sWindow = sWindow;
 
-        textListPanel = new TextListPanel(sWindow);
+        textListPanel = new TextListPanel(this, sWindow);
         scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -53,11 +53,13 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
     private int page;
     private JTextArea[] textList;
     SWindow sWindow;
+    CWindow cWindow;
 
     private ArrayList<Individual> currentIndividualsList;
 
-    protected TextListPanel(SWindow sWindow){
+    protected TextListPanel(CWindow parent, SWindow sWindow){
         this.sWindow = sWindow;
+        this.cWindow = parent;
         page=0;
         setLayout(new GridLayout(1,3));
         prevBut = new JButton("Poprzednia generacja");
@@ -103,11 +105,13 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
             if(page == 0) return;
             page--;
             update();
+            cWindow.setTitle("Katalog - pokolenie " + page);
         } else if(((JButton)e.getSource()).getText().equals("Następna generacja")){
             if(page == sWindow.simPanel.simulator.getLastTestedGen()) return;
             System.out.println("NASTEPNA");
             page++;
             update();
+            cWindow.setTitle("Katalog - pokolenie " + page);
         }
     }
 
