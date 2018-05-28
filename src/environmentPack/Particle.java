@@ -51,16 +51,4 @@ public class Particle implements Serializable{
         physics.proc(tickTime);
         shape.setPos(physics.getPos());
     }
-
-    /*@Override
-    public Particle clone(){
-        Particle ret;
-        try{
-            ret = new Particle(physics.getPos().clone(),physics.getVel().clone(),physics.getForce().clone(),physics.getMass(),shape.d,type);
-        } catch (CloneNotSupportedException e){
-            System.out.println("Particle cloning exception!");
-            throw new RuntimeException();
-        }
-        return ret;
-    }*/
 }

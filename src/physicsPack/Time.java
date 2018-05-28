@@ -1,3 +1,5 @@
+//TO JEST NIE UZYWANE
+
 package physicsPack;
 
 public class Time {

@@ -16,7 +16,7 @@ public class Wind implements Serializable{
         NORTH,EAST,SOUTH,WEST
     }
 
-    protected Wind(Direction dir1, Direction dir2){ //TODO use nosie
+    protected Wind(Direction dir1, Direction dir2){
         Random generator = new Random();
         noise = new ArrayList<Vector2D>();
         for(int i = 0; i < noiseAmount; i++){

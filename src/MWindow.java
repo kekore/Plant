@@ -6,23 +6,16 @@ import java.awt.*;
 import java.awt.event.*;
 // (M)ain window
 public class MWindow extends JFrame{
-    //private SWindow simWindow;
-    //private EWindow envWindow;
 
     public MWindow(SWindow s, EWindow e, AWindow a, CWindow c){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(610,220);
         setLocation(4,4);
-        //setLayout(new GridLayout(1, 1, 20, 20));
         setLayout(new FlowLayout());
 
-        //simWindow = s;
-        //envWindow = e;
         add(new MButtonPanel(s, e, a, c));
 
-        //setResizable(false);
         setVisible(true);
     }
 }
@@ -34,7 +27,6 @@ class MButtonPanel extends JPanel implements ActionListener{
     private CWindow catWindow;
     private JButton simOneBut;
     private JButton simBut;
-    //private JButton w;
     private JButton doubleSpeedBut;
     private JButton quadSpeedBut;
     private JButton halfSpeedBut;
@@ -51,11 +43,8 @@ class MButtonPanel extends JPanel implements ActionListener{
         envWindow = envW;
         algWindow = algW;
         catWindow = catW;
-        //Dimension d = new Dimension(100,100); //niepotrzebne raczej
-        //setPreferredSize(d);
         simOneBut = new JButton("Zasymuluj generację");
         simBut = new JButton("Symulacja");
-        //w = new JButton("Dodaj");
         doubleSpeedBut = new JButton("2x");
         quadSpeedBut = new JButton("4x");
         halfSpeedBut = new JButton("0.5x");
@@ -67,11 +56,8 @@ class MButtonPanel extends JPanel implements ActionListener{
         catBut = new JButton("Katalog");
         quickBut = new JButton("Szybka symulacja");
 
-        //s.addActionListener(this);
         simOneBut.addActionListener(simW.simPanel);
         simBut.addActionListener(simW);
-        //w.addActionListener(this);
-        //w.addActionListener((ActionListener)simW.simPanel);
         doubleSpeedBut.addActionListener(simW.simPanel);
         quadSpeedBut.addActionListener(simW.simPanel);
         halfSpeedBut.addActionListener(simW.simPanel);
@@ -91,7 +77,6 @@ class MButtonPanel extends JPanel implements ActionListener{
         add(loadEnvBut);
         add(loadAlgBut);
         add(simOneBut);
-        //add(w);
         add(quadSpeedBut);
         add(doubleSpeedBut);
         add(halfSpeedBut);

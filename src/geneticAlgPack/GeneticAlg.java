@@ -1,11 +1,10 @@
 package geneticAlgPack;
 
 import environmentPack.Tree;
-import javafx.util.Pair;
 
 import java.util.ArrayList;
 
-public class GeneticAlg { //TODO make serializable (?) not important
+public class GeneticAlg {
     private ArrayList<Population> populations;
     private final int popSize;
     private final int fittestAmount;
@@ -49,7 +48,7 @@ public class GeneticAlg { //TODO make serializable (?) not important
         currentGen++;
     }
 
-    private Individual getIndividual(int generation, int index){ //TODO not sure if will be used in other packs ( especially in simulator)
+    private Individual getIndividual(int generation, int index){
         Individual ret;
         try{
             ret = populations.get(generation).getIndividual(index);
@@ -58,10 +57,6 @@ public class GeneticAlg { //TODO make serializable (?) not important
         }
         return ret;
     }
-
-    /*public Tree getTree(int generation, int index){
-        return getIndividual(generation,index).tree;
-    }*/
 
     synchronized public Individual getNextIndividual(){
         System.out.println("pop size: "+populations.size() + " ind: "+populations.get(currentGen).individuals.size() );

@@ -6,9 +6,7 @@ import javafx.util.Pair;
 import physicsPack.Vector2D;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -49,7 +47,6 @@ public class Environment implements Serializable {
         this.sunTime = sunTime;
         this.sunSide = sunSide;
         if(sunTime != 0) sun = new Sun(sunTime,sunSide,width,height-groundLevel);
-        //spawnerList.addAll(sun.getSpawners());
 
         this.rainFreq=rainFreq;
         this.rainInt=rainInt;
@@ -58,10 +55,6 @@ public class Environment implements Serializable {
 
         time = 1;
         isWorking = false;
-
-        //int[20] dnaTest =
-        //tree = new Tree(new DNA(new int[] {2,8,8,0,4,8,8,2,2,8,1,0,5,-8,0,0,0,0,0,0}),100, seedPosX, height-groundLevel);
-        //tree.seed(seedPosX,height-groundLevel);
     }
 
     public void saveWindowSize(int windowWidth, int windowHeight){
@@ -91,13 +84,10 @@ public class Environment implements Serializable {
         //sun:
         if(sun != null) particleList.addAll(sun.proc(time));
         //count forces:
-        for(Particle p : particleList){ //TODO count forces (wind)
+        for(Particle p : particleList){
             p.setForce(new Vector2D(0,300));
             p.physics.getForce().add(wind.getForce(time));
         }
-        /*for(ParticleSpawner ps : spawnerList){ //count sun forces
-            if(ps.spawnerType == ParticleSpawner.Type.SUN)ps.updateForce();
-        }*/
         //proceed particles' physics and fotons' age:
         for(Particle p : particleList){
             p.proc(tickTime);
@@ -167,10 +157,6 @@ public class Environment implements Serializable {
 
     synchronized public ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
-        /*for(Particle p : particleList){
-            lList.add(p.physics.getColLine(tickTime));
-        }*/
-        //lList.addAll(tree.getLines());
         return lList;
     }
 
@@ -213,7 +199,6 @@ public class Environment implements Serializable {
 
     public void insertTreeToTest(DNA dna, float startSatiety){
         System.out.println("MAKING NEW TREE");
-        //this.tree = null;
         this.tree = new Tree(dna,startSatiety,seedPlace.getX(),seedPlace.getY());
         reset();
     }
@@ -234,9 +219,7 @@ public class Environment implements Serializable {
     private void reset(){
         time = 1;
         particleList.clear();
-        //tree.reset();
         sun = new Sun(sunTime,sunSide,width,height-ground.groundLevel);
-        //rain =  new Rain(rainFreq,rainInt,width);
         rain.reset();
      }
 

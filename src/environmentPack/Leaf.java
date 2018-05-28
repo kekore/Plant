@@ -1,12 +1,11 @@
 package environmentPack;
 
-import physicsPack.Maths;
 import physicsPack.Vector2D;
 
 import java.awt.*;
 import java.io.Serializable;
 
-public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES (?)
+public class Leaf implements Serializable{
     protected Circle shape;
     private float relativePos;
     protected float d;
@@ -15,13 +14,10 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     protected boolean side;
     private Branch parentBranch;
     private Tree parentTree;
-    private int growCost;
-    private int growCounter;
 
     protected Leaf(Tree parentTree, Branch parentBranch, float relPos, boolean side){
         this.parentBranch = parentBranch;
         this.parentTree = parentTree;
-        //System.out.println("Rel pos: "+relPos);
         relativePos = relPos;
         this.side = side;
         d = 0;
@@ -42,7 +38,6 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     protected void grow(float dd){
         if(d+dd < 0) d = 0;
         else d = d + dd;
-        //System.out.println("DIAMETER: " + d);
     }
 
     protected void gotParticle(Particle p){
@@ -78,14 +73,9 @@ public class Leaf implements Serializable{ //TODO HAS TO HAVE RECTANGLE HITBOXES
     protected void updatePoint(){
         xH = parentBranch.x1 + (parentBranch.x2 - parentBranch.x1)*relativePos;
         yH = parentBranch.y1 + (parentBranch.y2 - parentBranch.y1)*relativePos;
-        //System.out.println("xH yH: " + xH + " "+yH);
     }
 
     protected void updateShape(){
-        /*float cA = Maths.countA(xH,parentBranch.x1,parentBranch.y1,parentBranch.x2,parentBranch.y2,d,side);
-        System.out.println("cA: " + cA);
-        float cB = Maths.countB(yH,parentBranch.x1,parentBranch.y1,parentBranch.x2,parentBranch.y2,d,side);
-        System.out.println("cB "+ cB);*/
         Vector2D cirCenter;
         float cA,cB;
         if(side){

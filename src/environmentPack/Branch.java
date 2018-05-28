@@ -2,7 +2,6 @@ package environmentPack;
 
 import physicsPack.Maths;
 import physicsPack.Vector2D;
-import sun.security.krb5.internal.PAData;
 
 import java.awt.geom.Line2D;
 import java.io.Serializable;
@@ -21,13 +20,10 @@ public class Branch implements Serializable{
     private ArrayList<Leaf> leaves;
     private int level;
     protected float angle;
-    private float lenght;
     private boolean doesGrowLeaves;
 
     protected float satiety;
     private float satietyBuffer;
-    private int growCost;
-    private int growCounter;
 
     protected Branch(Tree parentTree, Branch parentBranch, float angle, boolean doesGrowLeaves, float initSatiety){
         if(parentBranch != null){
@@ -51,12 +47,10 @@ public class Branch implements Serializable{
         leaves = new ArrayList<Leaf>();
         if(doesGrowLeaves){
             float posStep = 1F/(1F+parentTree.leavesAmount/2);
-            //System.out.println(1F/(1F+(float)parentTree.leavesAmount/2F));
             for(int i = 0; i < parentTree.leavesAmount/2; i++){
                 leaves.add(new Leaf(parentTree,this,(i+1)*posStep,true));
             }
             posStep = 1F/(1F+parentTree.leavesAmount-parentTree.leavesAmount/2);
-            //System.out.println(1F/(1F+(float) parentTree.leavesAmount-(float) parentTree.leavesAmount/2F));
             for(int i = 0; i < parentTree.leavesAmount-parentTree.leavesAmount/2; i++){
                 leaves.add(new Leaf(parentTree,this,(i+1)*posStep,false));
             }
@@ -66,11 +60,8 @@ public class Branch implements Serializable{
 
         this.angle = angle;
         this.doesGrowLeaves = doesGrowLeaves;
-        //this.green = green;
         satiety = initSatiety;
         satietyBuffer = 0;
-        //level =
-        //green =
     }
 
     protected void addBrother(Branch b){
@@ -78,12 +69,10 @@ public class Branch implements Serializable{
     }
 
     protected void gotParticle(Particle p){
-        //System.out.println("green: "+green);
         switch (p.type){
             case DROP:{
                 addSatiety((2.54F - 2F*((float)parentTree.branchGreen-128)/100)/4F); //fotons were giving too much satiety
                 parentTree.addPoints((2.54F - 2F*((float)parentTree.branchGreen-128)/100)/16F); //was without /16F before but too much points
-                //System.out.println("DROP: "+(((float)green-128)/100));
                 break;
             }
             case FOTON:{
@@ -92,7 +81,6 @@ public class Branch implements Serializable{
                 break;
             }
             case OXYGEN:{
-                //System.out.println("OXYGEN: "+(1.27F - ((float)green-128)/100));
                 addSatiety(2.54F - 2F*((float)parentTree.branchGreen-128)/100);
                 parentTree.addPoints((2.54F - 2F*((float)parentTree.branchGreen-128)/100)/4F); //was without /4F before but too much points
                 break;
@@ -109,7 +97,6 @@ public class Branch implements Serializable{
     }
     protected void addSatiety(float n){
         satiety = satiety + n;
-        //System.out.println(satiety);
     }
 
     protected float getStaiety(float n){
@@ -128,10 +115,6 @@ public class Branch implements Serializable{
         for(Branch b : branches){ b.receiveBufferRec(); }
     }
 
-    /*protected void proc(){
-
-    }*/
-
     protected void distributeFoodRec(){
         distributeFood();
         for(Branch b : branches){ b.distributeFoodRec(); }
@@ -143,8 +126,6 @@ public class Branch implements Serializable{
         if(level != 0) portionsCount++; //add parent if not root
 
         float portion = (satiety/2F)/(float)portionsCount;
-        //System.out.println("FORUMULA: " + (satiety/128F)/(float)connectedBCount);
-        //System.out.println("SATIETY: " + satiety);
         if(level != 0) parentBranch.addSatietyBuf(this,portion);
         for(Branch b : branches){
             b.addSatietyBuf(this,2*portion);
@@ -188,29 +169,14 @@ public class Branch implements Serializable{
         y1 = y1 + shift.getY();
         x2 = x2 + shift.getX();
         y2 = y2 + shift.getY();
-        //System.out.println("updatePointsRec");
         for(Branch b : branches){ b.updatePointsRec(shift); }
     }
 
     protected void updateShapesRec(){
-        //System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
         line = new Line2D.Float(x1,y1,x2,y2);
         for(Leaf l : leaves){ l.updateShape(); }
         for(Branch b : branches){ b.updateShapesRec(); }
     }
-
-    /*protected void updateLineRec(){ updateLineRec(); }
-
-    private void updateLineRec(float newXHook, float newYHook){
-        float shiftX = newXHook-line.x1;
-        float shiftY = newYHook-line.y1;
-        float newX1 = line.x1+shiftX;
-        float newX2 = line.x2+shiftX;
-        float newY1 = line.y1+shiftY;
-        float newY2 = line.y2+shiftY;
-        line = new Line2D.Float(newX1,newY1,newX2,newY2);
-        for(Branch b : branches){ b.updateLineRec(newX2,newY2); }
-    }*/
 
     private Vector2D countBGrowth(float lenght){
         return new Vector2D(lenght*(float)Math.cos(angle),lenght*(float)Math.sin(angle));
@@ -276,7 +242,7 @@ public class Branch implements Serializable{
         }
     }
 
-    private void doBranch(){ //TODO dodać gen który będzie lekko zmieniać kąt
+    private void doBranch(){
         int branchesN;
         if(parentTree.dna.getGene(7) == 0) branchesN = 1;
         else branchesN = Math.abs(parentTree.dna.getGene(7))/2;//max 4, was 8 before

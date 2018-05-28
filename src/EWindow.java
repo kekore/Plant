@@ -23,17 +23,8 @@ public class EWindow extends JFrame implements ActionListener {
 
         OvrRunnable ovrRunnable = new OvrRunnable(this);
         overviewWindow = ovrRunnable.getRef();
-        //overviewWindow = o;
         firstPage = new FirstPage(this, overviewWindow);
-        //secondPage = new SecondPage(this, overviewWindow);
-        page = false;
-        //setLayout(new GridLayout(2,1));
-        //setContentPane(firstPage);
         add(firstPage);
-
-        //add(new EButtonPanel(overviewWindow));
-
-        //setResizable(false);
     }
 
     @Override
@@ -61,26 +52,12 @@ public class EWindow extends JFrame implements ActionListener {
 
     protected void alterPage(){
         if(!page){
-            //System.out.println("try");
-            //removeAll();
-            /*SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    remove(firstPage);
-                    add(secondPage);
-                }
-            });*/
             remove(firstPage);
-            //removeAll();
-            //System.out.println("removed");
             secondPage = new SecondPage(this, overviewWindow);
             add(secondPage);
-            //add(secondPage);
-            //System.out.println("added");
             revalidate();
         } else{
             remove(secondPage);
-            //removeAll();
             firstPage = new FirstPage(this, overviewWindow);
             add(firstPage);
             revalidate();
@@ -105,27 +82,6 @@ class OvrRunnable implements Runnable {
     private EWindow e;
 }
 
-class EButtonPanel extends JPanel{ //TODO cant edit when working
-    //private OWindow overviewWindow; //TODO druga strona
-    private JButton seedPlaceBut;
-
-    protected EButtonPanel(OWindow ovrW){
-
-        setLayout(new FlowLayout());
-
-
-        //overviewWindow = ovrW;
-        /*
-        seedPlaceBut = new JButton("Posadź ziarno");
-
-
-        seedPlaceBut.addActionListener((ActionListener)ovrW.ovrPanel);
-
-
-        add(seedPlaceBut);*/
-    }
-}
-
 class FirstPage extends JPanel{
     private JButton loadFileBut;
     private JButton initBut;
@@ -139,7 +95,6 @@ class FirstPage extends JPanel{
         initBut.addActionListener((ActionListener)ovrW.ovrPanel);
         initBut.addActionListener(parent);
 
-        //setLayout(new GridLayout(2, 3, 10, 10));
         setLayout(new FlowLayout());
         add(new SizeSliders(ovrW));
         add(new OtherSliders(ovrW));

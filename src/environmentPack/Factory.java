@@ -3,7 +3,6 @@ package environmentPack;
 import physicsPack.Vector2D;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -50,8 +49,7 @@ public class Factory implements Serializable{
     }
 
     protected Particle proc(long time){
-        if(time % frequency == 0){ //should work with == !
-            //System.out.println(time);
+        if(time % frequency == 0){
             if(type == Type.NORMAL)
                 return new Particle(new Vector2D(spawnPoint), new Vector2D(startV), new Vector2D(), 10, 3, Particle.Type.CARBOXIDE);
             else

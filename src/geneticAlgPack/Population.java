@@ -5,14 +5,10 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 
 public class Population {
-    //private int generation;
     protected ArrayList<Individual> individuals;
-    //private ArrayList<DNA> DNAList;
 
     protected Population(ArrayList<DNA> DNAList){
-        //this.DNAList = DNAList;
         individuals = new ArrayList<Individual>();
-        //generation = genNr;
         for(DNA dna : DNAList){
             individuals.add(new Individual(dna));
         }
@@ -28,7 +24,7 @@ public class Population {
         return ret;
     }
 
-    protected ArrayList<DNA> getFittest(int amount){ //TODO check if well done cause i was sleepy doing it :(
+    protected ArrayList<DNA> getFittest(int amount){
         ArrayList<Pair<DNA,Float>> pairs = new ArrayList<Pair<DNA,Float>>();
         for(Individual i : individuals){
             pairs.add(i.getPair());

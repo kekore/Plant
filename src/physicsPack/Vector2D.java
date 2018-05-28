@@ -87,17 +87,4 @@ public class Vector2D implements Serializable{
     {
         return y;
     }
-
-    /*@Override
-    public Vector2D clone(){
-        Vector2D ret;
-        try{
-            ret = (Vector2D) super.clone();
-        } catch (CloneNotSupportedException e){
-            System.out.println("Particle cloning exception!");
-            throw new RuntimeException();
-        }
-        return ret;
-        //return (Vector2D) super.clone();
-    }*/
 }

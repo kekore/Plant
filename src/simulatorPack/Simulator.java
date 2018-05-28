@@ -1,6 +1,5 @@
 package simulatorPack;
 
-import com.sun.org.apache.bcel.internal.generic.InvokeInstruction;
 import environmentPack.*;
 import geneticAlgPack.GeneticAlg;
 import geneticAlgPack.Individual;
@@ -23,7 +22,6 @@ public class Simulator implements ActionListener{
     private boolean isWorkingForAlgorithm;
     private boolean isOverviewing;
     private boolean isResimulating;
-    //private boolean allowProc;
     protected boolean quickSim;
     //stałe:
     private final long tickTime;
@@ -41,7 +39,7 @@ public class Simulator implements ActionListener{
     //pola dotyczące wymianyinformacji z algorytmem:
     private Individual currentIndividual;
 
-    public Simulator(long tT, long simulationTime){ //TODO algorythm as parameter
+    public Simulator(long tT, long simulationTime){
         isSet = false;
         tickTime = tT;
         quickSim = false;
@@ -56,7 +54,6 @@ public class Simulator implements ActionListener{
         isWorkingForAlgorithm=false;
         isOverviewing=false;
         isResimulating=false;
-        //allowProc = false;
     }
     private void addP(Particle p){
         environment.addParticle(p);
@@ -65,7 +62,6 @@ public class Simulator implements ActionListener{
         addP(new Particle(p,v,f,m,r,t));
     }
     synchronized protected void proc(){
-
         if(System.currentTimeMillis() - secStart < 1000){
             actions++;
         } else{
@@ -73,10 +69,7 @@ public class Simulator implements ActionListener{
             actions = 0;
             secStart = System.currentTimeMillis();
         }
-        //timer.stop(); //stop and start zeby wykonywal raz w jednym momencie
         environment.proc(tickTime);
-        //TODO have to check if simulation is finished and then do some genetic alg stuff
-        //timer.start();
     }
 
     public ArrayList<Circle> getCircles(){
@@ -103,12 +96,6 @@ public class Simulator implements ActionListener{
         if(environment == null) return new ArrayList<Pair<Line2D,Color>>();
         return environment.getBranchLines();
     }
-    /*public void startSimulation(){
-        timer.start();
-    }
-    public void pauseSimulation(){
-        timer.stop();
-    }*/
     @Override
     public void actionPerformed(ActionEvent e){
         timer.stop();
@@ -139,7 +126,6 @@ public class Simulator implements ActionListener{
                 isWorkingForAlgorithm = false;
                 isWorking = false;
                 if (quickSim) quickSim = !quickSim;
-                //allowProc = false;
             }
         }
     }
@@ -203,7 +189,6 @@ public class Simulator implements ActionListener{
         System.out.println("STARTING SIMULATION OF INDIVIDUAL WITH DNA: "+i.getDna().getString());
         environment.insertTreeToTest(i.getDna(),GeneticAlg.startSatiety);
         timer.start();
-        //allowProc=true;
     }
 
     public void overviewIndividual(Individual i){

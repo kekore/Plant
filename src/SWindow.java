@@ -1,21 +1,16 @@
 import environmentPack.Circle;
 import environmentPack.Environment;
-import environmentPack.Particle;
 import environmentPack.Rect;
 import geneticAlgPack.GeneticAlg;
 import javafx.util.Pair;
-import physicsPack.Vector2D;
 import simulatorPack.Simulator;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Random;
 // (S)imulation window
 public class SWindow extends JFrame implements ActionListener{
 
@@ -24,7 +19,7 @@ public class SWindow extends JFrame implements ActionListener{
 
     public SWindow(){
         super("Podgląd symulacji");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //do zmiany
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,700);
         setLocation(screenSize.width/2,screenSize.height/2-350);
@@ -37,18 +32,6 @@ public class SWindow extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText().equals("Symulacja")){
-            /*if(!siming) {
-                if(simPanel.simulator.isSet()) {
-                    setVisible(true);
-                    siming = true;
-                    simPanel.start();
-                }
-            }
-            else{
-                setVisible(true);
-                siming = false;
-                simPanel.pause();
-            }*/
             if(isVisible()){
                 setVisible(false);
                 simPanel.timer.stop();
@@ -78,7 +61,6 @@ class SimPanel extends JPanel implements ActionListener{
     protected SimPanel(){
         simulator = new Simulator(200, GeneticAlg.simulationTime);
         timer = new Timer(1,this);
-        //generator = new Random();
         showInvis = false;
         timer.start();
         setLayout(null);
@@ -179,8 +161,6 @@ class SimPanel extends JPanel implements ActionListener{
             timeText.setText("Time: " + simulator.getTime());
             int fit = (int)simulator.getPoints();
             fitText.setText("Fitness: " + fit);
-            /*if(fit >= 0) fitText.setText("Fitness: " + fit);
-            else fitText.setText("Fitness: -");*/
             int sat = (int)simulator.getSatiety();
             if(sat >= 0) satText.setText("Satiety: " + sat);
             else satText.setText("Satiety: -");
@@ -189,21 +169,12 @@ class SimPanel extends JPanel implements ActionListener{
                 progressText.setVisible(true);
                 progressText.setText("Szybka symulacja");
             } else progressText.setVisible(false);
-        } /*else if (((JButton) e.getSource()).getText().equals("Dodaj")) {
-            for(int i = 0; i < 1; i++) {
-                //Vector2D p = new Vector2D((float)generator.nextInt(400) + 50, (float)generator.nextInt(600) + 50);
-                //Vector2D v = new Vector2D((float)generator.nextInt(50) / 10+10, (float)generator.nextInt(50) / 110);
-                Vector2D p = new Vector2D(50,50);
-                Vector2D v = new Vector2D(30,200);
-                Vector2D f = new Vector2D(0,-50);
-                simulator.addP(p, v, f, 1, 10, Particle.Type.OXYGEN);
-            }
-        }*/ else if (((JButton) e.getSource()).getText().equals("2x")){
+        } else if (((JButton) e.getSource()).getText().equals("2x")){
             simulator.setSpeed(2);
         } else if (((JButton) e.getSource()).getText().equals("4x")){
             simulator.setSpeed(1);
         } else if (((JButton) e.getSource()).getText().equals("0.5x")){
-            simulator.setSpeed(64); //TODO zmienic na 8
+            simulator.setSpeed(8);
         } else if (((JButton) e.getSource()).getText().equals("Pokaż/ukryj szczegóły")){
             showInvis = !showInvis;
         } else if (((JButton) e.getSource()).getText().equals("Szybka symulacja")){
@@ -216,6 +187,4 @@ class SimPanel extends JPanel implements ActionListener{
         simulator.setEnvironment(environment);
     }
     protected void setAlgorithm(GeneticAlg geneticAlg) { simulator.setAlgorithm(geneticAlg); }
-    //protected void start(){simulator.startSimulation();}
-    //protected void pause(){simulator.pauseSimulation();}
 }

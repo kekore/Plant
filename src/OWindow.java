@@ -23,7 +23,7 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
 
     public OWindow(EWindow e){
         super("Podgląd środowiska");
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //?
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         width = 600;
         height = 700;
@@ -56,10 +56,8 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText().equals("Zapisz do pliku")){
-            //System.out.println("Save file returned: " + ovrPanel.saveFile(width,height)); //TODO change this
             ovrPanel.saveFile(width,height);
         } else if(((JButton)e.getSource()).getText().equals("Wczytaj z pliku")){
-            //System.out.println("Load file returned: " + ovrPanel.loadFile());
             if(ovrPanel.loadFile() == 0) eWindow.alterPage();
             Dimension size = ovrPanel.environment.getWindowSize();
             width = size.width;
@@ -99,11 +97,9 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     protected OvrPanel(){
         canvasWidth = (int)getSize().getWidth();
         canvasHeight = (int)getSize().getHeight();
-        //environment = new Environment(canvasWidth,canvasHeight,0);
         isInitialized = false;
         choice = Choice.SEED;
         timer = new Timer(15,this);
-        //timer.start();
         setBackground(Color.WHITE);
         addMouseListener(this);
         groundLevel = 100;
@@ -126,7 +122,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         isInitialized = false;
         environment = null;
     }
-    //TODO check if works properly - if all fields are loaded
+
     protected int saveFile(int windowWidth, int windowHeight){
         if(!isInitialized) return 4;
         int ret = 0;
@@ -134,7 +130,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         try {
             FileOutputStream fos = new FileOutputStream(new File("environment.env"));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            //System.out.println("oos:");
             oos.writeObject(environment);
             oos.close();
             fos.close();
@@ -155,11 +150,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         int ret = 0;
         try {
             FileInputStream fis = new FileInputStream(new File("environment.env"));
-            //System.out.println("fis");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            //System.out.println("ois");
             environment = (Environment) ois.readObject();
-            //environment = read;
             ois.close();
             fis.close();
         } catch (FileNotFoundException e) {
@@ -217,7 +209,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         if(e.getSource() == timer){
             repaint();
         } else if(((JButton)e.getSource()).getText().equals("Dodaj fabrykę")){
-            //System.out.println("fabryka"); //TODO erase it
             choice = Choice.FACTORY;
         } else if(((JButton)e.getSource()).getText().equals("Dodaj elektrownię nuklearną")){
             choice = Choice.NUCLEAR;
@@ -245,7 +236,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     public void mousePressed(MouseEvent e){
         x1 = e.getX();
         y1 = e.getY();
-        //System.out.println(x1 + " " + y1);
         mousePressed = true;
     }
 
@@ -254,19 +244,16 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         mousePressed = false;
         x2 = e.getX();
         y2 = e.getY();
-        //System.out.println(x2 + " " + y2);
         switch (choice) {
             case FACTORY: {
                 if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
                     environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30,Factory.Type.NORMAL));
-                    //System.out.println("Added factory");
                 }
                 break;
             }
             case NUCLEAR:{
                 if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
                     environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 35,Factory.Type.TOXIC));
-                    //System.out.println("Added factory");
                 }
                 break;
             }
@@ -275,7 +262,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
                     Vector2D pos = new Vector2D(x1, y1);
                     Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 5, Particle.Type.OXYGEN);
                     environment.addSpawner(new ParticleSpawner(p,true,15,pos,new Vector2D(),new Vector2D(),10));
-                    //environment.addSpawner(new ParticleSpawner(p,ParticleSpawner.Type.MOVING,20,pos,new Vector2D(0,-100),new Vector2D(),10));
                 }
                 break;
             }

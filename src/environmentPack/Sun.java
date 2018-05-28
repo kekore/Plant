@@ -7,11 +7,10 @@ import java.awt.geom.Line2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Sun implements Serializable{ //TODO nie uzywac spawnerow
+public class Sun implements Serializable{
     private final Vector2D center;
     private float distance;
     private Vector2D spinningVector;
-    //ArrayList<ParticleSpawner> sList;
     private Vector2D roofCenter;
     private float roofLength;
     private static final int dayTime = 1000;
@@ -30,16 +29,13 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         this.sunSide = sunSide;
         center = new Vector2D(width/2,height);
         distance = (float)Math.sqrt((width/2)*(width/2)+height*height);
-        //distance = 200;
         if(sunSide){
             spinningVector = new Vector2D(distance,0);
             spinningVector.rotate((1F-(float)sunTime/100F)*((float)dayTime/2F)*angleStep);
-            //System.out.println("COONSTRUCTOR SPINNING: " + spinningVector.getX() + " " + spinningVector.getY());
         } else {
             spinningVector = new Vector2D(-distance,0);
             spinningVector.rotate(-(1F-(float)sunTime/100F)*((float)dayTime/2F)*angleStep);
         }
-        //roofCenter = center.addNC(spinningVector);
 
         if(height > width/2){
             roofLength = height*2;
@@ -55,28 +51,15 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
         if(time % (dayTime/2) == 0) isRising = !isRising;
         if ((isRising && sunSide) || (!isRising && !sunSide)) {
             spinningVector.rotate(-angleStep);
-            //System.out.println("SV x y: " + spinningVector.getX() + " " + spinningVector.getY());
         } else{
             spinningVector.rotate(angleStep);
         }
         roofCenter = center.addNC(spinningVector);
-        //System.out.println("RC x y: " + roofCenter.getX() + " " + roofCenter.getY());
         roof = new Line2D.Float(center.getX(),center.getY(),roofCenter.getX(),roofCenter.getY());
-
-        /*ArrayList<Vector2D> spawningPosList = new ArrayList<Vector2D>();
-        for(int i = 0; i < spawnersAmount/2; i++){
-            Vector2D relPos = spinningVector.getPerpendicular(true, fotonsSpacing*(i+1));
-            spawningPosList.add(roofCenter.addNC(relPos));
-        }
-        for(int i = 0; i < spawnersAmount - spawnersAmount/2; i++){
-            Vector2D relPos = spinningVector.getPerpendicular(false, fotonsSpacing*i);
-            spawningPosList.add(roofCenter.addNC(relPos));
-        }*/
 
         Vector2D velocity = spinningVector.scaleToNC(-100F);
         ArrayList<Particle> pList = new ArrayList<Particle>();
         if(time % frequency == 0){
-
 
             ArrayList<Vector2D> spawningPosList = new ArrayList<Vector2D>();
             for(int i = 0; i < spawnersAmount/2; i++){
@@ -87,7 +70,6 @@ public class Sun implements Serializable{ //TODO nie uzywac spawnerow
                 Vector2D relPos = spinningVector.getPerpendicular(false, fotonsSpacing*i);
                 spawningPosList.add(roofCenter.addNC(relPos));
             }
-
 
             rList.clear();
             for(Vector2D spawnPos : spawningPosList){

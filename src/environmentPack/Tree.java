@@ -2,7 +2,6 @@ package environmentPack;
 
 import geneticAlgPack.DNA;
 import physicsPack.Maths;
-import physicsPack.Vector2D;
 
 import java.awt.geom.Line2D;
 import java.io.Serializable;
@@ -18,10 +17,8 @@ public class Tree implements Serializable{
     protected int leavesAmount;
     protected float seedX;
     protected float seedY;
-    private boolean isSeeded;
     private long firstBranchTime;
     private long nextBranchTime;
-    //private int satiety;
 
     Tree(DNA dna, float satiety, float seedX, float seedY){
         this.dna = dna;
@@ -29,18 +26,13 @@ public class Tree implements Serializable{
         levels = 0;
         points = 0;
         branchGreen = (int)(Maths.sig(dna.getGene(5)) * 128)+128;
-        //System.out.println(branchGreen);
         leafGreen = (int)(Maths.sig(dna.getGene(6)) * 128)+128;
         if(dna.getGene(12)==0) leavesAmount = 1;
         else leavesAmount = Math.abs(dna.getGene(12));
         this.seedX = seedX;
         this.seedY = seedY;
-        //isSeeded = false;
         firstBranchTime = (int)Maths.sig(dna.getGene(3)/2) * 900 + 100;
-        //firstBranchTime = (Math.abs(dna.getGene(3))+1)*100;
         nextBranchTime = (int)Maths.sig(dna.getGene(11)/2) * 1000 + 1000;
-        //nextBranchTime = (Math.abs(dna.getGene(11))+1);
-        //nextBranchTime = (dna.getGene(11)+1)*2000;
 
         int rootBranchesN;
         if(dna.getGene(0) == 0) rootBranchesN = 1;
@@ -78,7 +70,7 @@ public class Tree implements Serializable{
         boolean doesGrowLeaves;
         if(dna.getGene(10) == 0) doesGrowLeaves = true;
         else doesGrowLeaves = false;
-        Branch newBranch = new Branch(this,null, angle, doesGrowLeaves, initSatiety); //TODO pomyslec czy moze rosnac liscie
+        Branch newBranch = new Branch(this,null, angle, doesGrowLeaves, initSatiety);
         for(Branch b : branches){
             b.addBrother(newBranch);
             newBranch.addBrother(b);
@@ -86,19 +78,11 @@ public class Tree implements Serializable{
         branches.add(newBranch);
     }
 
-    /*protected void seed(int seedX, int seedY){
-        this.seedX = seedX;
-        this.seedY = seedY;
-
-        isSeeded = true;
-    }*/
-
     protected void proc(long time){
         for(Branch b : branches){ b.distributeFoodRec(); }
         for(Branch b : branches){ b.receiveBufferRec(); }
-        for(Branch b : branches){ b.growRec(); } //TODO opoznianie kolejnych branchowan
+        for(Branch b : branches){ b.growRec(); }
         if((time % firstBranchTime == 0 && levels == 0)||((time-firstBranchTime) % nextBranchTime == 0 && levels > 0)){
-            //System.out.println("BRANCH");
             levels++;
             for(Branch b : branches){ b.doBranchRec(); }
         }
@@ -140,25 +124,4 @@ public class Tree implements Serializable{
         }
         return cList;
     }
-
-    public void reset(){
-
-    }
-
-        /*Tree(int satiety){
-        dna = new DNA();
-        branches = new ArrayList<Branch>();
-        //leaves = new ArrayList<Leaf>();
-        //this.satiety = satiety;
-    }
-    Tree(int satiety, DNA dna){
-        this.dna = dna;
-        branches = new ArrayList<Branch>();
-        //leaves = new ArrayList<Leaf>();
-        //this.satiety = satiety;
-    }*/
-
-    /*protected void addSatiety(int n){
-        satiety = satiety + n;
-    }*/
 }

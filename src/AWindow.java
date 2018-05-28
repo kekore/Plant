@@ -58,7 +58,6 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     private int maxMutGen;
     private String seed;
     private boolean[] crossMap;
-    //private boolean isRandom;
 
     protected APanel(){
         popPanel = new PopPanel(this);
@@ -88,7 +87,6 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
             crossMap[i] = false;
         }
         crossMap[DNA.genesAmount] = true;
-        //isRandom = true;
     }
 
     private void initAlg(){
@@ -123,7 +121,7 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     }
 
     @Override
-    public void stateChanged (ChangeEvent e){ //it can jump better
+    public void stateChanged (ChangeEvent e){
         if(e.getSource() == popPanel.popSizeSlider){
             noInit();
             popPanel.popSizeSlider.setValue(((int)(popPanel.popSizeSlider.getValue()/50))*50);
@@ -132,7 +130,6 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
                 fitPanel.fittestAmountSlider.setValue(popSize);
                 fittestAmount = popSize;
             }
-            //System.out.println(popSize);
         } else if(e.getSource() == fitPanel.fittestAmountSlider){
             noInit();
             fitPanel.fittestAmountSlider.setValue(((fitPanel.fittestAmountSlider.getValue()/25))*25);
@@ -208,7 +205,6 @@ class ProbPanel extends JPanel{
         probName.setHorizontalAlignment(JTextField.CENTER);
 
         mutProbSlider = new JSlider(JSlider.HORIZONTAL,0,10,1);
-        //mutProbSlider.setMinorTickSpacing(2);
         mutProbSlider.setMajorTickSpacing(1);
         mutProbSlider.setPaintTicks(true);
         mutProbSlider.setPaintLabels(true);
@@ -263,7 +259,6 @@ class SeedPanel extends JPanel{
 
         seedField = new JTextField();
         seedField.setEditable(true);
-        //seedField.setBorder();
         seedField.setHorizontalAlignment(JTextField.CENTER);
         seedField.addActionListener(a);
 

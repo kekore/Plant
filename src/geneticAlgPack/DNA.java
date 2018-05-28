@@ -1,6 +1,5 @@
 package geneticAlgPack;
 
-import javax.swing.event.ChangeListener;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -15,7 +14,6 @@ public class DNA implements Serializable{
         for(int i = 0; i < genesAmount; i++){
             gene[i] = generator.nextInt(2*geneValueInterval+1)-geneValueInterval; //from -8 to 8
         }
-        //gene = new int[] {0,8,8,0,8,8,8,0,2,8,1,0,5,-8};
     }
 
     protected DNA(String seed, int shift){

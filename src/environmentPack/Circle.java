@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class Circle implements Serializable{
     public Ellipse2D.Float ellipse;
     protected Vector2D position;
-    //public Rectangle2D.Float hitbox;
     private boolean isFilled;
     protected int d;
     public Color color;
