@@ -180,6 +180,7 @@ public class Simulator implements ActionListener{
 
     public void simulateGeneration(){
         if(isWorking || !isSet) return;
+        isOverviewing=false;
         isWorking = true;
         isWorkingForAlgorithm = true;
         startNewTestingSimulation(geneticAlg.getNextIndividual());
