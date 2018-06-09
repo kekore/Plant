@@ -3,11 +3,19 @@ package physicsPack;
 import java.awt.geom.Line2D;
 import java.io.Serializable;
 
+/**
+ * Klasa obsługująca fizykę - położenie, prędkość, przyspieszenie, siłę przyłożoną do ciała, masę.
+ */
 public class Physics implements Serializable{
+    /**Wektor położenia.*/
     private Vector2D pos;
+    /**Wektor prędkości.*/
     private Vector2D vel;
+    /**Wektor przyspieszenia*/
     private Vector2D acc;
+    /**Wektor siły*/
     private Vector2D force;
+    /**Masa ciała.*/
     private float mass;
 
     public Physics(Vector2D p, Vector2D v, Vector2D f, float m){
@@ -18,6 +26,11 @@ public class Physics implements Serializable{
         mass = m;
     }
 
+    /**
+     * Wykonuje krok czasowy - aktualizuje wartość przyspieszenia, prędkości i pozycji zgodnie z wzorami fizycznymi.
+     * @param tickTime Określa skokowość zmian wektorów - duża wartość to mniejsze skoki, ale dłuższe pokonywanie drogi lub dłuższa symulacja,
+     *                 mała wartość to większe skoki, ale szybsze pokonywanie drogi lub krótsza symulacja.
+     */
     public void proc(long tickTime)
     {
         if(mass != 0)acc.set(force.scaleNC((float)1/mass));
@@ -56,6 +69,11 @@ public class Physics implements Serializable{
         this.mass = mass;
     }
 
+    /**
+     *
+     * @param tickTime zobacz {@link #proc(long)}
+     * @return Zwraca linię kolizji, czyli linię między aktualną pozycją ciała a przewidywaną pozycją ciała w kolejnym kroku czasowym.
+     */
     public Line2D getColLine(long tickTime){
         Vector2D predictedA;
         if(mass != 0)predictedA = force.scaleNC((float)1/mass);

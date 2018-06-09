@@ -4,9 +4,15 @@ import physicsPack.*;
 import java.awt.*;
 import java.io.Serializable;
 
+/**
+ * Klasa cząsteczki.
+ */
 public class Particle implements Serializable{
+    /** Fizyka cząsteczki - zobacz {@link Physics}*/
     protected Physics physics;
+    /** Reprezentacja graficzna cząsteczki.*/
     protected Circle shape;
+    /** Wiek cząsteczki. */
     protected int age; //matters only for fotons
 
     public enum Type{
@@ -44,9 +50,19 @@ public class Particle implements Serializable{
             }
         }
     }
+
+    /**
+     * Ustawienie siły jaka działa na cząsteczkę.
+     * @param f Siła do ustawienia.
+     */
     public void setForce(Vector2D f){
-        physics.setForce(f);
+        physics.setForce(new Vector2D(f));
     }
+
+    /**
+     * Wykonanie kroku w fizyce cząsteczki i przesunięcie jej kształtu.
+     * @param tickTime Relatywna długość tiku zegara - ten parametr jest przekazywany do wykonania kroku w fizyce cząstek - {@link physicsPack.Physics#proc(long)}.
+     */
     public void proc(long tickTime){
         physics.proc(tickTime);
         shape.setPos(physics.getPos());

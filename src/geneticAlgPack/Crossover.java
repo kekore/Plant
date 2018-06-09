@@ -3,18 +3,30 @@ package geneticAlgPack;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Klasa krzyżująca geny w {@link DNA}.
+ */
 public class Crossover {
+    /**Ilość osobników w jednym pokoleniu.*/
     private final int popSize;
+    /**Wektor bitowy krzyżowania genów (wzorzec).*/
     private final boolean[] crossMap;
 
+    /**
+     *
+     * @param populationSize Ilość osobników w jednym pokoleniu.
+     * @param crossMap Wektor bitowy krzyżowania genów (wzorzec).
+     */
     protected Crossover(int populationSize, boolean[] crossMap){
         popSize = populationSize;
         this.crossMap = crossMap;
-        for(int i = 0; i < DNA.genesAmount+1; i++){
-            System.out.println(crossMap[i]);
-        }
     }
 
+    /**
+     * Funkcja wykonująca krzyżowanie genów - zależnie od ostatniej wartości {@link #crossMap} - losowo bądź zgodnie ze wzorcem.
+     * @param DNAList Lista {@link DNA} do przetasowania.
+     * @return Zwraca listę {@link DNA} po przetasowaniu.
+     */
     protected ArrayList<DNA> shuffle(ArrayList<DNA> DNAList){
         ArrayList<DNA> shuffledDNAList = new ArrayList<DNA>();
         Random generator = new Random();

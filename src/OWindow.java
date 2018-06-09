@@ -59,7 +59,7 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
             ovrPanel.saveFile(width,height);
         } else if(((JButton)e.getSource()).getText().equals("Wczytaj z pliku")){
             if(ovrPanel.loadFile() == 0) eWindow.alterPage();
-            Dimension size = ovrPanel.environment.getWindowSize();
+            Dimension size = ovrPanel.environmentController.getWindowSize();
             width = size.width;
             height = size.height;
             setSize(size);
@@ -73,8 +73,7 @@ public class OWindow extends JFrame implements ChangeListener, ActionListener{
 class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeListener{
     protected int canvasWidth;
     protected int canvasHeight;
-    protected Environment environment;
-    protected boolean isInitialized;
+    protected EnvironmentController environmentController;
     protected Timer timer;
     private enum Choice{
         NULL, FACTORY, SPAWNER, SEED, NUCLEAR
@@ -97,7 +96,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
     protected OvrPanel(){
         canvasWidth = (int)getSize().getWidth();
         canvasHeight = (int)getSize().getHeight();
-        isInitialized = false;
+        environmentController = new EnvironmentController();
         choice = Choice.SEED;
         timer = new Timer(15,this);
         setBackground(Color.WHITE);
@@ -114,23 +113,21 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         canvasWidth = (int)getSize().getWidth();
         canvasHeight = (int)getSize().getHeight();
     }
-    protected void initEnv(){
-        environment = new Environment(canvasWidth,canvasHeight,groundLevel,seedPosX,Math.abs(sunTime*100/24),sunTime>0,rainFrequency,rainIntensity,dir1,dir2);
-        isInitialized = true;
+    protected int initEnv(){
+        return environmentController.initEnvironment(canvasWidth,canvasHeight,groundLevel,seedPosX,Math.abs(sunTime*100/24),sunTime>0,rainFrequency,rainIntensity,dir1,dir2);
     }
-    protected void noInit(){
-        isInitialized = false;
-        environment = null;
+    protected int noInit(){
+        return environmentController.deInitEnvironment();
     }
 
     protected int saveFile(int windowWidth, int windowHeight){
-        if(!isInitialized) return 4;
+        if(!environmentController.isInitialized()) return 4;
         int ret = 0;
-        environment.saveWindowSize(windowWidth, windowHeight);
+        environmentController.saveWindowSize(windowWidth, windowHeight);
         try {
             FileOutputStream fos = new FileOutputStream(new File("environment.env"));
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(environment);
+            oos.writeObject(environmentController);
             oos.close();
             fos.close();
         } catch (FileNotFoundException e) {
@@ -151,7 +148,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         try {
             FileInputStream fis = new FileInputStream(new File("environment.env"));
             ObjectInputStream ois = new ObjectInputStream(fis);
-            environment = (Environment) ois.readObject();
+            environmentController = (EnvironmentController) ois.readObject();
             ois.close();
             fis.close();
         } catch (FileNotFoundException e) {
@@ -167,7 +164,6 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             System.out.println("Unexpected exception!");
             ret = 4;
         }
-        if(ret == 0)isInitialized = true;
         return ret;
     }
 
@@ -178,7 +174,7 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         Rectangle2D.Float ground;
         Rectangle2D.Float seed;
         ArrayList<Rect> rList = new ArrayList<Rect>();
-        if(!isInitialized){
+        if(!environmentController.isInitialized()){
             updateSize();
             ground = new Rectangle2D.Float(0,canvasHeight-groundLevel,canvasWidth,groundLevel);
             g2d.setColor(new Color(139,69,19));
@@ -187,8 +183,8 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
             g2d.setColor(Color.BLUE);
             g2d.fill(seed);
         } else {
-            rList.addAll(environment.getRects());
-            rList.addAll(environment.getInvisRects());
+            rList.addAll(environmentController.getRects());
+            rList.addAll(environmentController.getInvisRects());
         }
         for(Rect r : rList){
             g2d.setColor(r.color);
@@ -246,22 +242,22 @@ class OvrPanel extends JPanel implements ActionListener, MouseListener, ChangeLi
         y2 = e.getY();
         switch (choice) {
             case FACTORY: {
-                if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
-                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30,Factory.Type.NORMAL));
+                if (y1 + 36 < canvasHeight - groundLevel) {
+                    environmentController.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 30,Factory.Type.NORMAL));
                 }
                 break;
             }
             case NUCLEAR:{
-                if (isInitialized && y1 + 36 < canvasHeight - groundLevel) {
-                    environment.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 35,Factory.Type.TOXIC));
+                if (y1 + 36 < canvasHeight - groundLevel) {
+                    environmentController.addFactory(new Factory(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), 35,Factory.Type.TOXIC));
                 }
                 break;
             }
             case SPAWNER: {
-                if (isInitialized && y1 + 3 < canvasHeight - groundLevel) {
+                if (y1 + 3 < canvasHeight - groundLevel) {
                     Vector2D pos = new Vector2D(x1, y1);
                     Particle p = new Particle(new Vector2D(x1, y1), new Vector2D(x2 - x1, y2 - y1), new Vector2D(), 1, 5, Particle.Type.OXYGEN);
-                    environment.addSpawner(new ParticleSpawner(p,true,15,pos,new Vector2D(),new Vector2D(),10));
+                    environmentController.addSpawner(new ParticleSpawner(p,true,15,pos,new Vector2D(),new Vector2D(),10));
                 }
                 break;
             }

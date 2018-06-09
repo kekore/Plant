@@ -2,65 +2,74 @@ package simulatorPack;
 
 import environmentPack.*;
 import geneticAlgPack.GeneticAlg;
+import geneticAlgPack.GeneticAlgController;
 import geneticAlgPack.Individual;
-import javafx.util.Pair;
-import physicsPack.Vector2D;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
-
-public class Simulator implements ActionListener{
-    private GeneticAlg geneticAlg;
-    protected Environment environment;
+/**
+ * Klasa symulatora - wymusza kroki czasowe na symulowanym środowisku, umieszcza drzewa w środowisku i przekierowuje wyniki testów do algorytmu genetycznego.
+ */
+public class Simulator{
+    /**Obiekt kontrolera algorytmu genetycznego do komunikacji z algorytmem.*/
+    protected GeneticAlgController geneticAlgController;
+    /**Obiekt kontrolera środowiska do komunikacji ze środowiskiem.*/
+    protected EnvironmentController environmentController;
     //flagi:
-    private boolean isSet;
-    private boolean isWorking;
+    /**<i>true</i> - symulator posiada zainicjowany algorytm oraz środowisko*/
+    protected boolean isSet;
+    /**<i>true</i> - symulator jest w trakcie wykonywania jednej symulacji lub serii symulacji*/
+    protected boolean isWorking;
+    /**<i>true</i> - symulator wykonuje symulację całego pokolenia dla algorytmu genetycznego*/
     private boolean isWorkingForAlgorithm;
+    /**<i>true</i> - symulator pokazuje ostateczny wygląd przetestowanego drzewa wybranego z katalogu*/
     private boolean isOverviewing;
+    /**<i>true</i> - symulator wykonuje resymulację przetestowanego drzewa*/
     private boolean isResimulating;
+    /**<i>true</i> - symulator jest w trybie szybkiej symulacji*/
     protected boolean quickSim;
     //stałe:
-    private final long tickTime;
+    /**Relatywna długość tiku zegara - zobacz {@link physicsPack.Physics#proc(long)}.*/
+    protected final long tickTime;
+    /**Długość pojedynczej symulacji.*/
     protected final long simulationTime;
     //zarządzanie czasem:
-    private Timer timer;
-    private int speed;
-    private int cycle;
-    //obliczanie akcji na sekunde:
+    /**Używana do zmiany tempa symulacji - zobacz {@link simulatorPack.SimulatorController#actionPerformed(java.awt.event.ActionEvent)}.*/
+    protected int speed;
+    /**Używana do odliczania kiedy należy wykonać kolejny krok czasowy - zobacz {@link simulatorPack.SimulatorController#actionPerformed(java.awt.event.ActionEvent)}.*/
+    protected int cycle;
+    //obliczanie akcji na sekundę:
+    /**Moment rozpoczęcia odliczania 1000ms - zobacz {@link #proc()}.*/
     private long secStart;
+    /**Liczba operacji wykonanych w aktualnym cyklu - zobacz {@link #proc()}.*/
     private int actions;
-    private int PPS;
-    //wątek:
+    /**Ostatnia obliczona liczba operacji na sekundę - zobacz {@link #proc()}.*/
+    protected int PPS;
+    //**Wątek do szybkiej symulacji.*/
     private QuickSimThread thread;
-    //pola dotyczące wymianyinformacji z algorytmem:
+    /**Aktualnie rozpatrywany osobnik - zobacz {@link #startNewTestingSimulation(Individual)} oraz {@link #overviewIndividual(Individual)}*/
     private Individual currentIndividual;
 
-    public Simulator(long tT, long simulationTime){
+    protected Simulator(long tickTime, long simulationTime){
         isSet = false;
-        tickTime = tT;
+        this.tickTime = tickTime;
         quickSim = false;
-        timer = new Timer(1,this);
+        geneticAlgController = new GeneticAlgController();
+        environmentController = new EnvironmentController();
         speed = 4;
         cycle = 0;
         this.simulationTime = simulationTime;
         secStart = System.currentTimeMillis();
         actions=0;
+        PPS=0;
         thread = new QuickSimThread(this);
         isWorking=false;
         isWorkingForAlgorithm=false;
         isOverviewing=false;
         isResimulating=false;
     }
-    private void addP(Particle p){
-        environment.addParticle(p);
-    }
-    public void addP(Vector2D p, Vector2D v, Vector2D f, float m, int r, Particle.Type t){
-        addP(new Particle(p,v,f,m,r,t));
-    }
+
+    /**
+     * Oblicza akcje na sekundę i wymusza krok czasowy na środowisku.
+     */
     synchronized protected void proc(){
         if(System.currentTimeMillis() - secStart < 1000){
             actions++;
@@ -69,47 +78,13 @@ public class Simulator implements ActionListener{
             actions = 0;
             secStart = System.currentTimeMillis();
         }
-        environment.proc(tickTime);
+        environmentController.proc(tickTime);
     }
 
-    public ArrayList<Circle> getCircles(){
-        if(environment == null) return new ArrayList<Circle>();
-        return environment.getCircles();
-    }
-    public ArrayList<Line2D> getLines(){
-        if(environment == null) return new ArrayList<Line2D>();
-        return environment.getLines();
-    }
-    public ArrayList<Line2D> getInvisLines(){
-        if(environment == null) return new ArrayList<Line2D>();
-        return environment.getInvisLines(tickTime);
-    }
-    public ArrayList<Rect> getRects(){
-        if(environment == null) return new ArrayList<Rect>();
-        return environment.getRects();
-    }
-    public ArrayList<Rect> getInvisRects() {
-        if(environment == null) return new ArrayList<Rect>();
-        return environment.getInvisRects();
-    }
-    public ArrayList<Pair<Line2D,Color>> getBranchLines(){
-        if(environment == null) return new ArrayList<Pair<Line2D,Color>>();
-        return environment.getBranchLines();
-    }
-    @Override
-    public void actionPerformed(ActionEvent e){
-        timer.stop();
-        if(quickSim) return;
-        if(cycle >= speed){
-            proc();
-            cycle = 0;
-        }
-        else{
-            cycle++;
-        }
-        if(environment.getTime() == GeneticAlg.simulationTime) endSimulation();
-        else timer.start();
-    }
+    /**
+     * Kończy symulację, której czas dobiegł końca. Wykonuje inne czynności przy symulacji całego pokolenia dla algorytmu genetycznego i inne
+     * przy resymulacji pojedynczego osobnika z katalogu. Przygotowuje symulator do kolejnej symulacji.
+     */
     protected void endSimulation(){
         cycle=0;
         if(isResimulating){
@@ -119,8 +94,10 @@ public class Simulator implements ActionListener{
             if(quickSim) quickSim = !quickSim;
         }
         else if(isWorkingForAlgorithm) {
-            if (!geneticAlg.signalTested(currentIndividual, environment.getTree(), environment.getPoints()))
-                startNewTestingSimulation(geneticAlg.getNextIndividual());
+            if (!geneticAlgController.signalTested(currentIndividual, environmentController.getTree(), environmentController.getPoints())) {
+                System.out.println("DONE");
+                startNewTestingSimulation(geneticAlgController.getNextIndividual());
+            }
             else {
                 currentIndividual = null;
                 isWorkingForAlgorithm = false;
@@ -130,38 +107,42 @@ public class Simulator implements ActionListener{
         }
     }
 
-    public void setSpeed(int a){speed = a;}
-    public void setEnvironment(Environment environment){
-        if(isSet) return;
-        this.environment = environment;
-        if(geneticAlg != null)isSet = true;
+    /**
+     * Ustawia zainicjowany kontroler środowiska (pilnuje tego kontroler symulatora), jeśli jest też ustaniowy kontroler algorytmu to ustawia
+     * flagę {@link #isSet} na true.
+     * @param environmentController Zainicjowany kontroler środowiska do podłączenia pod symulator.
+     */
+    protected void setEnvironmentController(EnvironmentController environmentController){
+        this.environmentController = environmentController;
+        if(geneticAlgController.isInitialized()){
+            environmentController.setIsEditable(false);
+            isSet = true;
+            System.out.println("IS SET == TRUE");
+        }
     }
-    public void setAlgorithm(GeneticAlg geneticAlg){
-        if(isSet) return;
-        this.geneticAlg = geneticAlg;
-        if(environment != null)isSet = true;
+
+    /**
+     * Ustawia zainicjowany kontroler algorytmu genetycznego (pilnuje tego kontroler symulatora), jeśli jest też ustawionyy kontroler
+     * środowiska to ustawia flagę {@link #isSet} na true.
+     * @param geneticAlgController Zainicjowany kontroler środowiska do podłączenia pod symulator.
+     */
+    protected void setAlgorithmController(GeneticAlgController geneticAlgController){
+        this.geneticAlgController = geneticAlgController;
+        if(environmentController.isInitialized()){
+            environmentController.setIsEditable(false);
+            isSet = true;
+            System.out.println("IS SET == TRUE");
+        }
     }
-    public long getTime(){
-        if(!isSet) return 0;
-        return environment.getTime();
-    }
-    public float getPoints(){ //should be synchronized instead of this condition (?)
-        if(!isSet || quickSim) return -2;
-        return environment.getPoints();
-    }
-    public float getSatiety(){ //should be synchronized instead of this condition (?)
-        if(!isSet || quickSim) return -2;
-        return environment.getSatiety();
-    }
-    public int getPPS(){
-        return PPS;
-    }
-    public boolean isSet() { return isSet; }
-    public void alterQuickSim(){
-        if(!isWorking || environment==null) return;
+
+    /**
+     * Przełącza symulator między szybkim trybem symulacji a normalnym. Przy włączeniu tworzy obiekt wątku {@link QuickSimThread} zmienia
+     * flagę {@link #quickSim} na <i>true</i> i uruchamia go, a przy wyłączeniu zmiena flagę {@link #quickSim} na <i>false</i>
+     * i czeka na dołączenie(zakończenie) tego wątku.
+     */
+    protected void alterQuickSim(){
         if(!quickSim) {
             quickSim = true;
-            timer.stop();
             thread = new QuickSimThread(this);
             thread.start();
         } else{
@@ -171,55 +152,56 @@ public class Simulator implements ActionListener{
             } catch (InterruptedException e){
                 throw new RuntimeException();
             }
-            timer.start();
         }
     }
-    public boolean isQuickSim(){
-        return quickSim;
+
+    /**
+     * Ustawia flagi {@link #isOverviewing}, {@link #isWorking}, {@link #isWorkingForAlgorithm} na odpowiednie wartości <i>[false,true,true]</i>
+     * i rozpoczyna proces symulacji całego pokolenia.
+     */
+    protected void simulateGeneration(){
+        /*isOverviewing=false;
+        isWorking = true;
+        isWorkingForAlgorithm = true;*/
+        startNewTestingSimulation(geneticAlgController.getNextIndividual());
     }
 
-    public void simulateGeneration(){
-        if(isWorking || !isSet) return;
+    /**
+     * Służy do uruchamiania symulacji kolejnych osobników w trakcie symulacji całego pokolenia
+     * @param individual Osobnik, którego symulację należy teraz rozpocząć.
+     */
+    private void startNewTestingSimulation(Individual individual){
+        currentIndividual = individual;
+        System.out.println("STARTING SIMULATION OF INDIVIDUAL WITH DNA: "+individual.getDna().getString());
+        environmentController.insertTreeToTest(individual.getDna(),GeneticAlg.startSatiety);
         isOverviewing=false;
         isWorking = true;
         isWorkingForAlgorithm = true;
-        startNewTestingSimulation(geneticAlg.getNextIndividual());
-    }
-    private void startNewTestingSimulation(Individual i){
-        currentIndividual = i;
-        System.out.println("STARTING SIMULATION OF INDIVIDUAL WITH DNA: "+i.getDna().getString());
-        environment.insertTreeToTest(i.getDna(),GeneticAlg.startSatiety);
-        timer.start();
     }
 
-    public void overviewIndividual(Individual i){
-        if(isWorking) return;
-        if(isOverviewing && i==currentIndividual){
-            resimulate(i);
+    /**
+     * Uruchamia podgląd przetestowanego osobnika bądź uruchamia jego resymulację, zależnie wartości flagi {@link #isOverviewing} i zmiennej
+     * {@link #currentIndividual}.
+     * @param individual Osobnik wybrany w katalogu.
+     */
+    protected void overviewIndividual(Individual individual){
+        if(isOverviewing && individual==currentIndividual){
+            resimulate(individual);
             return;
         }
         isOverviewing = true;
-        currentIndividual=i;
-        environment.insertTestedTree(i.getTree());
+        currentIndividual=individual;
+        environmentController.insertTestedTree(individual.getTree());
     }
-    private void resimulate(Individual i){
+
+    /**
+     * Uruchamia resymulację gdy ten sam osobnik w katalogu został naciśnięty drugi raz z rzędu.
+     * @param individual Osobnik do resymulacji.
+     */
+    private void resimulate(Individual individual){
         isOverviewing = false;
         isWorking = true;
         isResimulating = true;
-        environment.insertTreeToTest(i.getDna(),GeneticAlg.startSatiety);
-        timer.start();
-    }
-
-    //dla katalogu:
-    public int getPopSize(){
-        return geneticAlg.getPopSize();
-    }
-    public ArrayList<Individual> getSortedList(int generation){
-        return geneticAlg.getSortedList(generation);
-    }
-    public int getCurrentGen(){return geneticAlg.getCurrentGen();}
-    public int getLastTestedGen(){
-        if(geneticAlg == null) return -1;
-        return geneticAlg.getLastTestedGen();
+        environmentController.insertTreeToTest(individual.getDna(),GeneticAlg.startSatiety);
     }
 }

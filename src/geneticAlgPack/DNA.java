@@ -3,11 +3,20 @@ package geneticAlgPack;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * Klasa determinująca cechy drzewa. Zawiera tablicę wartości liczbowych.
+ */
 public class DNA implements Serializable{
+    /**Tablica wartości liczbowych, na podstawie których są obliczane cechy utworzonego drzewa.*/
     private final int[] gene;
+    /**Liczba wszystkich genów w jednym {@link DNA}.*/
     public static final int genesAmount = 14;
+    /**Przedział wartości wszystkich genów - od <i>-geneValueInterval</i> do <i>geneValueInterval</i>.*/
     protected static final int geneValueInterval = 8;
 
+    /**
+     * Konstuktor domyślny generuje losowe wartości genów z przedziału od <i>-geneValuInterval</i> do <i>geneValueInterval</i>.
+     */
     protected DNA(){
         Random generator = new Random();
         gene = new int[genesAmount];
@@ -16,6 +25,12 @@ public class DNA implements Serializable{
         }
     }
 
+    /**
+     * Generuje geny na podstawie ziarna i przesunięcia, które powinno być związane z indeksem generowanego {@link DNA} -
+     * zobacz {@link GeneticAlg#GeneticAlg(int, int, boolean[], int, int, String)}.
+     * @param seed Ciag znaków pełniący rolę ziarna.
+     * @param shift Liczba wprowadzająca przesunięcie.
+     */
     protected DNA(String seed, int shift){
         gene = new int[genesAmount];
         System.out.println("GENERATING WITH SEED DNA NUMBER "+shift);
@@ -25,10 +40,19 @@ public class DNA implements Serializable{
         System.out.println("GENERATED: " + getString());
     }
 
+    /**
+     * Tworze {@link DNA} z podanym zestawem genów.
+     * @param genes Pożadany zestaw genów w {@link DNA}.
+     */
     protected DNA(int[] genes){
-        gene = genes.clone(); //maybe doesnt have to clone
+        gene = genes.clone();
     }
 
+    /**
+     *
+     * @param index Pożądany indeks.
+     * @return Zwraca wartość liczbową genu o podanym indeksie.
+     */
     public int getGene(int index){
         int ret;
         try{
@@ -39,6 +63,11 @@ public class DNA implements Serializable{
         return ret;
     }
 
+    /**
+     * Zamienia wartość genu o podanym ineksie na podaną wartość.
+     * @param index Indeks genu do zmiany.
+     * @param value Pożądana wartość.
+     */
     protected void changeGene(int index, int value){
         try{
             gene[index] = value;

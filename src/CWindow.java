@@ -38,7 +38,7 @@ public class CWindow extends JFrame implements ActionListener{
         if(((JButton)e.getSource()).getText().equals("Katalog")){
             if(isVisible()){
                 setVisible(false);
-            } else if(sWindow.simPanel.simulator.getLastTestedGen() >= 0) {
+            } else if(sWindow.simPanel.simulatorController.getLastTestedGen() >= 0) {
                 setVisible(true);
                 textListPanel.update();
             }
@@ -77,9 +77,9 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
         if(textList == null){
             System.out.println(sWindow);
             System.out.println(sWindow.simPanel);
-            textList = new JTextArea[sWindow.simPanel.simulator.getPopSize()];
-            setLayout(new GridLayout(((sWindow.simPanel.simulator.getPopSize()+3)/3+1),3));
-            for(int i = 0; i < sWindow.simPanel.simulator.getPopSize(); i++){
+            textList = new JTextArea[sWindow.simPanel.simulatorController.getPopSize()];
+            setLayout(new GridLayout(((sWindow.simPanel.simulatorController.getPopSize()+3)/3+1),3));
+            for(int i = 0; i < sWindow.simPanel.simulatorController.getPopSize(); i++){
                 textList[i] = new JTextArea(4,1);
                 add(textList[i]);
                 textList[i].setEditable(false);
@@ -91,7 +91,7 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
         }
 
         System.out.println("AKTUALIZACJA");
-        currentIndividualsList = sWindow.simPanel.simulator.getSortedList(page);
+        currentIndividualsList = sWindow.simPanel.simulatorController.getSortedList(page);
         for(int i = 0; i < textList.length; i++){
             textList[i].setText(currentIndividualsList.get(i).getDna().getString() + "\nPunktacja: " + currentIndividualsList.get(i).getFitness());
         }
@@ -107,7 +107,7 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
             update();
             cWindow.setTitle("Katalog - pokolenie " + page);
         } else if(((JButton)e.getSource()).getText().equals("Następna generacja")){
-            if(page == sWindow.simPanel.simulator.getLastTestedGen()) return;
+            if(page == sWindow.simPanel.simulatorController.getLastTestedGen()) return;
             System.out.println("NASTEPNA");
             page++;
             update();
@@ -119,7 +119,7 @@ class TextListPanel extends JPanel implements ActionListener, MouseListener{
     public void mouseReleased(MouseEvent e){
         for(int i = 0; i < textList.length; i++){
             if(e.getSource() == textList[i]){
-                sWindow.simPanel.simulator.overviewIndividual(currentIndividualsList.get(i));
+                sWindow.simPanel.simulatorController.overviewIndividual(currentIndividualsList.get(i));
             }
         }
     }

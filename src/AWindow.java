@@ -1,5 +1,5 @@
 import geneticAlgPack.DNA;
-import geneticAlgPack.GeneticAlg;
+import geneticAlgPack.GeneticAlgController;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -20,8 +20,6 @@ public class AWindow extends JFrame implements ActionListener{
 
         aPanel = new APanel();
         add(aPanel);
-
-        //setResizable(false);
     }
 
     @Override
@@ -35,22 +33,21 @@ public class AWindow extends JFrame implements ActionListener{
         }
     }
 
-    protected GeneticAlg getAlgorithm(){
-        if(aPanel.isInitialized) return aPanel.geneticAlg;
+    protected GeneticAlgController getAlgorithmController(){
+        if(aPanel.geneticAlgController.isInitialized()) return aPanel.geneticAlgController;
         else return null;
     }
 }
 
 
 class APanel extends JPanel implements ChangeListener, ActionListener{
-    protected GeneticAlg geneticAlg;
+    protected GeneticAlgController geneticAlgController;
     private PopPanel popPanel;
     private FitPanel fitPanel;
     private ProbPanel probPanel;
     private MutPanel mutPanel;
     private SeedPanel seedPanel;
     private LastPanel lastPanel;
-    protected boolean isInitialized;
 
     private int popSize;
     private int fittestAmount;
@@ -60,6 +57,8 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
     private boolean[] crossMap;
 
     protected APanel(){
+        geneticAlgController = new GeneticAlgController();
+
         popPanel = new PopPanel(this);
         fitPanel = new FitPanel(this);
         probPanel = new ProbPanel(this);
@@ -75,10 +74,8 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
         add(seedPanel);
         add(lastPanel);
 
-        isInitialized=false;
-
-        popSize=100; //TODO !!!!
-        fittestAmount=30;//TODO !!!!
+        popSize=10; //TODO !!!!
+        fittestAmount=7;//TODO !!!!
         mutProb=1;
         maxMutGen=3;
         seed = null;
@@ -89,14 +86,12 @@ class APanel extends JPanel implements ChangeListener, ActionListener{
         crossMap[DNA.genesAmount] = true;
     }
 
-    private void initAlg(){
-        geneticAlg = new GeneticAlg(popSize,fittestAmount,crossMap,mutProb,maxMutGen,seed);
-        isInitialized = true;
+    private int initAlg(){
+        return geneticAlgController.initGeneticAlg(popSize,fittestAmount,crossMap,mutProb,maxMutGen,seed);
     }
 
-    private void noInit(){
-        isInitialized = false;
-        geneticAlg = null;
+    private int noInit(){
+        return geneticAlgController.deInitGeneticAlg();
     }
 
     @Override

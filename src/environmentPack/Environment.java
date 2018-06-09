@@ -1,39 +1,67 @@
 package environmentPack;
 
-
 import geneticAlgPack.DNA;
-import javafx.util.Pair;
 import physicsPack.Vector2D;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Klasa środowiska - jest główną klasą paczki <i>environmentPack</i> - zawiera wszystkie elementy środowiska i ich aktualny stan.
+ */
 public class Environment implements Serializable {
-    private int windowWidth;
-    private int windowHeight;
+    /**Szerokość okna symulacji - używana podczas wczytywania z pliku w celu ustawienia odpowiedniej szerokości okna.*/
+    protected int windowWidth;
+    /**Wysokość obszaru symulacji - używana podczas wczytywania z pliku w celu ustawienia odpowiedniej wysokości okna.*/
+    protected int windowHeight;
+    /**Szerokość obszaru symulacji.*/
     private final int width;
+    /**Wysokość obszaru symulacji.*/
     private final int height;
-    private ArrayList<Particle> particleList;
-    private ArrayList<Factory> factoryList;
-    private ArrayList<ParticleSpawner> spawnerList;
-    private final Ground ground;
-    private Tree tree;
+    /**Lista wszystkich cząsteczek jakie są aktualnie w środowisku - są one poddawane działaniu fizyki oraz sprawdza się ich kolizje z drzewem.*/
+    protected ArrayList<Particle> particleList;
+    /**Lista wszystkich fabryk znajdujących się w środowisku - w każdym kroku są pytane o listę cząsteczek które wygenerowały.*/
+    protected ArrayList<Factory> factoryList;
+    /**Lista wszystkich źródeł cząsteczek znajdujących się w środowisku - w każdym kroku są pytane o listę cząsteczek które wygenerowały.*/
+    protected ArrayList<ParticleSpawner> spawnerList;
+    /**Obiekt opisujący wysokość gruntu oraz jego wygląd.*/
+    protected final Ground ground;
+    /**Wektor wskazujący położenie ziarenka drzewa, czyli jego punktu startowego - są tam przyczepione początkowe gałęzie drzewa.*/
     private final Vector2D seedPlace;
-    private final Rect seedRect;
-    private Sun sun;
+    /**Prostokąt wizualizujący położenie ziarenka/*/
+    protected final Rect seedRect;
+    /**Aktualne drzewo znajdujące się w środowisku.*/
+    protected Tree tree;
+    /**Obiekt słońca generujący cząsteczki światła do środowiska.*/
+    protected Sun sun;
+    /**Obiekt deszczu generujący cząsteczki deszczu do środowiska.*/
     private Rain rain;
+    /**Obiekt wiatru nakładający dodatkowe siły na cząsteczki.*/
     private Wind wind;
-    private long time;
-    private boolean isWorking; //TODO for denying editions
-
+    /**Aktualny czas(moment) w środowisku.*/
+    protected long time;
+    /**Flaga pozwalająca na dodawanie źródeł i fabryk lub blokująca - metody {@link EnvironmentController#addFactory(Factory)} i {@link EnvironmentController#addSpawner(ParticleSpawner)}*/
+    protected boolean isEditable;
+    /**Czas trwania dnia - używa się do resetowania środowiska - {@link #reset()}*/
     private int sunTime;
+    /**Strona z której wschodzi słońce - true: prawa strona, flase: lewa strona - używa się do resetowania środowiska - {@link #reset()}*/
     private boolean sunSide;
-    private int rainFreq;
-    private int rainInt;
 
-    public Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int sunTime, boolean sunSide, int rainFreq, int rainInt, Wind.Direction dir1, Wind.Direction dir2){
+    /**
+     * Konstruktor inicjuje zmienne, listy i obiekty klasy <i>Environment</i>.
+     * @param canvasWidth Szerokość obszaru symulacji.
+     * @param canvasHeight Wysokość obszaru symulacji.
+     * @param groundLevel Poziom gruntu.
+     * @param seedPosX Pozycja startu drzewa w osi X.
+     * @param sunTime Czas trwania dnia.
+     * @param sunSide Strona z której wschodzi słońce - true: prawa strona, flase: lewa strona.
+     * @param rainFreq Częstotliwość desczu.
+     * @param rainInt Intensywność deszczu.
+     * @param windDir1 Pierwszy kierunek wiatru - zobacz {@link Wind#template} oraz {@link Wind#Wind(Wind.Direction, Wind.Direction)}.
+     * @param windDir2 Drugi kierunek wiatru - zobacz {@link Wind#template} oraz {@link Wind#Wind(Wind.Direction, Wind.Direction)}.
+     */
+    protected Environment(int canvasWidth, int canvasHeight, int groundLevel, int seedPosX, int sunTime, boolean sunSide, int rainFreq, int rainInt, Wind.Direction windDir1, Wind.Direction windDir2){
         width = canvasWidth;
         height = canvasHeight;
         particleList = new ArrayList<Particle>();
@@ -48,37 +76,27 @@ public class Environment implements Serializable {
         this.sunSide = sunSide;
         if(sunTime != 0) sun = new Sun(sunTime,sunSide,width,height-groundLevel);
 
-        this.rainFreq=rainFreq;
-        this.rainInt=rainInt;
         if(rainFreq != 0 && rainInt != 0) rain = new Rain(rainFreq,rainInt,width);
-        wind = new Wind(dir1,dir2);
+        wind = new Wind(windDir1,windDir2);
 
         time = 1;
-        isWorking = false;
+        isEditable = true;
     }
-
-    public void saveWindowSize(int windowWidth, int windowHeight){
+    /**
+     * Zapisuje wielkość okna - pozwala skojarzyć środowisko z wielkością okna np. przy zapisie do pliku.
+     * @param windowWidth Szerokość okna.
+     * @param windowHeight Wysokość okna.
+     */
+    protected void saveWindowSize(int windowWidth, int windowHeight){
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
     }
 
-    public Dimension getWindowSize(){
-        return new Dimension(windowWidth,windowHeight);
-    }
-
-    public void addParticle(Particle p){
-        particleList.add(p);
-    }
-
-    public void addFactory(Factory f){
-        factoryList.add(f);
-    }
-
-    public void addSpawner(ParticleSpawner ps){
-        spawnerList.add(ps);
-    }
-
-    public void proc(long tickTime){
+    /**
+     * Główna metoda środowiska - pobiera nowe cząsteczki z generatorów, powoduje krok w fizyce cząstek, sprawdza kolizje, usuwa cząsteczki poza obszarem symulacji.
+     * @param tickTime Relatywna długość tiku zegara - ten parametr jest przekazywany do wykonania kroku w fizyce cząstek - {@link physicsPack.Physics#proc(long)}.
+     */
+    protected void proc(long tickTime){
         //rain:
         if(rain != null && rain.proc(time))particleList.addAll(rain.getParticles(time,width));
         //sun:
@@ -145,85 +163,38 @@ public class Environment implements Serializable {
         //increment time:
         time++;
     }
-
-    synchronized public ArrayList<Circle> getCircles(){
-        ArrayList<Circle> sList = new ArrayList<Circle>();
-        for(Particle p : particleList){
-            sList.add(p.shape);
-        }
-        if(tree != null)sList.addAll(tree.getCircles());
-        return sList;
-    }
-
-    synchronized public ArrayList<Line2D> getLines(){
-        ArrayList<Line2D> lList = new ArrayList<Line2D>();
-        return lList;
-    }
-
-    synchronized public ArrayList<Pair<Line2D,Color>> getBranchLines(){
-        ArrayList<Pair<Line2D,Color>> array = new ArrayList<Pair<Line2D,Color>>();
-        if(tree == null) return array;
-        for(Branch b : tree.getBranches()){
-            array.add(new Pair<Line2D,Color>(b.line,new Color(0,tree.branchGreen,0)));
-        }
-        return array;
-    }
-
-    synchronized public ArrayList<Line2D> getInvisLines(long tickTime){
-        ArrayList<Line2D> ilList = new ArrayList<Line2D>();
-        for(Particle p : particleList){
-            ilList.add(p.physics.getColLine(tickTime));
-        }
-        ilList.addAll(sun.getLines());
-        return ilList;
-    }
-
-    synchronized public ArrayList<Rect> getRects(){
-        ArrayList<Rect> rList = new ArrayList<Rect>();
-        for(Factory f : factoryList){
-            rList.addAll(f.getRects());
-        }
-        rList.add(ground.rectangle);
-        return rList;
-    }
-
-    synchronized public ArrayList<Rect> getInvisRects(){
-        ArrayList<Rect> irList = new ArrayList<Rect>();
-        irList.add(seedRect);
-        for(ParticleSpawner ps : spawnerList){
-            irList.add(ps.rectangle);
-        }
-        irList.addAll(sun.getRects());
-        return irList;
-    }
-
-    public void insertTreeToTest(DNA dna, float startSatiety){
+    /**
+     * Powoduje utworzenie obiektu {@link Tree} o zadanych parametrach i zresetowanie środowiska w celu przygotowania do przesymulowania wzrostu osobnika - {@link #reset()}.
+     * @param dna Zadany zestaw cech, wynikający z danych zawartych w tym obiekcie.
+     * @param startSatiety Początkowa wartość sytości drzewa, która jest używana do jego wzrostu.
+     */
+    protected void insertTreeToTest(DNA dna, float startSatiety){
         System.out.println("MAKING NEW TREE");
         this.tree = new Tree(dna,startSatiety,seedPlace.getX(),seedPlace.getY());
         reset();
     }
-
-    public void insertTestedTree(Tree tree){
+    /**
+     * Powoduje umieszczenie obiektu drzewa w środowisku i zresetowanie środowiska - {@link #reset()}.
+     * @param tree Drzewo, które ma zostać umieszczone w środowisku.
+     */
+    protected void insertTestedTree(Tree tree){
         this.tree = tree;
         reset();
     }
-
-    public long getTime(){
-        return time;
-    }
-    public float getPoints(){
-        if(tree == null) return -1;
-        else return tree.points;
-    }
-
+    /**
+     * Resetuje środowisko - usuwa wszystkie cząsteczki z {@link #particleList} i reinicjuje obiekt {@link Sun} oraz {@link Rain}.
+     */
     private void reset(){
         time = 1;
         particleList.clear();
         sun = new Sun(sunTime,sunSide,width,height-ground.groundLevel);
         rain.reset();
      }
-
-     public float getSatiety(){
+    /**
+     * Sumuje sytość we wszystkich gałęziach i zwraca obliczoną wartość.
+     * @return Zwraca sytość aktualnie umieszczonego drzewa {@link #tree} w środowisku lub <i>-1</i> gdy żadne drzewo nie jest umieszczone.
+     */
+    protected float getSatiety(){
         if(tree==null) return -1;
         ArrayList<Branch> bList = tree.getBranches();
         float satiety=0;
@@ -231,9 +202,5 @@ public class Environment implements Serializable {
             satiety = satiety + b.satiety;
         }
         return satiety;
-    }
-
-    public Tree getTree(){
-        return tree;
     }
 }

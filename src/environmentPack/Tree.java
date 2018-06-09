@@ -7,20 +7,41 @@ import java.awt.geom.Line2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Klasa drzewa, które może być symulowane w środowisku.
+ */
 public class Tree implements Serializable{
+    /**Cechy drzewa*/
     protected DNA dna;
+    /**Gałęzie zerowego poziomu.*/
     private ArrayList<Branch> branches;
+    /**Aktualna liczba poziomów gałęzi*/
     protected int levels;
+    /**Aktualna punktacja(jakość) drzewa*/
     protected float points;
+    /**Zieleń gałęzi w skali RGB*/
     protected int branchGreen;
+    /**Zieleń liści w skali RGB*/
     protected int leafGreen;
+    /**Liczba liści na jednej gałęzi.*/
     protected int leavesAmount;
+    /**Pozycja punktu startowego drzewa na osi X - początek gałęzi zerowego poziomu.*/
     protected float seedX;
+    /**Pozycja punktu startowego drzewa na osi Y - początek gałęzi zerowego poziomu.*/
     protected float seedY;
+    /**Czas, po którym następuje pierwsze rozgałęzienie.*/
     private long firstBranchTime;
+    /**Czas, po którym następują wszystkie kolejne rozgałęzienia po pierwszym.*/
     private long nextBranchTime;
 
-    Tree(DNA dna, float satiety, float seedX, float seedY){
+    /**
+     * Konstuktor inicjuje pola klasy oraz pobiera niektóre cechy z {@link #dna} i wykonuje obliczenia.
+     * @param dna Cechy drzewa
+     * @param startSatiety Początkowa wartość nasycenia drzewa - rozdzielana między gałęzie zerowego poziomu.
+     * @param seedX Pozycja punktu startowego drzewa na osi X - początek gałęzi zerowego poziomu.
+     * @param seedY Pozycja punktu startowego drzewa na osi Y - początek gałęzi zerowego poziomu.
+     */
+    Tree(DNA dna, float startSatiety, float seedX, float seedY){
         this.dna = dna;
         branches = new ArrayList<Branch>();
         levels = 0;
@@ -49,7 +70,7 @@ public class Tree implements Serializable{
             angleStep = (freeAngle/divideN) * Maths.sig(dna.getGene(2)/2);
             nextAngle = generalAngle+angleStep*(divideN-1);
             for(int i = 0; i < rootBranchesN; i++){
-                addBranch(nextAngle, satiety/rootBranchesN);
+                addBranch(nextAngle, startSatiety/rootBranchesN);
                 nextAngle = nextAngle - angleStep;
             }
         } else{
@@ -61,11 +82,17 @@ public class Tree implements Serializable{
                     nextAngle = nextAngle - angleStep;
                     continue;
                 }
-                addBranch(nextAngle, satiety/rootBranchesN);
+                addBranch(nextAngle, startSatiety/rootBranchesN);
                 nextAngle = nextAngle - angleStep;
             }
         }
     }
+
+    /**
+     * Tworzy nową gałąź wyrastajacą z tej gałęzi i dodaje ją jako brat do już istniejących gałęzi, które wyrastają z tej gałęzi.
+     * @param angle Kąt w radianach względem osi X.
+     * @param initSatiety Początkowa wartość sytości.
+     */
     private void addBranch(float angle, float initSatiety){
         boolean doesGrowLeaves;
         if(dna.getGene(10) == 0) doesGrowLeaves = true;
@@ -78,6 +105,11 @@ public class Tree implements Serializable{
         branches.add(newBranch);
     }
 
+    /**
+     * Najważniejsza metoda drzewa. Wykonuje kolejno operacje: rozdzielenie pokarmu, przyjęcie pokarmu z buforów, rozrost gałęzi i liści,
+     * ewentualne rozgałęzienie, zaktualizowanie kształtów.
+     * @param time Aktualny czas potrzebny do zdecydowania czy pora na rozgałęzienie.
+     */
     protected void proc(long time){
         for(Branch b : branches){ b.distributeFoodRec(); }
         for(Branch b : branches){ b.receiveBufferRec(); }

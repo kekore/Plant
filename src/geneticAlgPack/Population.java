@@ -4,9 +4,17 @@ import javafx.util.Pair;
 
 import java.util.ArrayList;
 
+/**
+ * Klasa populacji, czyli pokolenia - trzyma listę osobników {@link Individual} które należą do tego pokolenia.
+ */
 public class Population {
+    /**Lista osobników, które należą do tej populacji*/
     protected ArrayList<Individual> individuals;
 
+    /**
+     * Inicjuje listę osobników {@link #individuals} genotypami {@link DNA} podanymi w liście.
+     * @param DNAList Lista genotypów, które otrzymają nowe osobniki.
+     */
     protected Population(ArrayList<DNA> DNAList){
         individuals = new ArrayList<Individual>();
         for(DNA dna : DNAList){
@@ -14,6 +22,11 @@ public class Population {
         }
     }
 
+    /**
+     *
+     * @param index Pożądany indeks osobnika.
+     * @return Zwraca odnośnik do osobnika o podanym indeksie.
+     */
     protected Individual getIndividual(int index){
         Individual ret;
         try{
@@ -24,6 +37,11 @@ public class Population {
         return ret;
     }
 
+    /**
+     *
+     * @param amount Liczba najlepszych {@link DNA}.
+     * @return Zwraca listę najwyżej ocenionych {@link DNA} z populacji - ich liczbę określa argument wywołania.
+     */
     protected ArrayList<DNA> getFittest(int amount){
         ArrayList<Pair<DNA,Float>> pairs = new ArrayList<Pair<DNA,Float>>();
         for(Individual i : individuals){
@@ -41,6 +59,10 @@ public class Population {
         return fittest;
     }
 
+    /**
+     *
+     * @return Zwraca posortowaną według punktacji(od największej do najmniejszej) listę osobników.
+     */
     protected ArrayList<Individual> getSortedList(){
         for(Individual i: individuals){
             if(!i.tested) return null;

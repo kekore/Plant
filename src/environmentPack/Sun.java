@@ -7,23 +7,46 @@ import java.awt.geom.Line2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Klasa słońca - generuje cząsteczki światła dla środowiska - "Sklepienie" oznacza abstrakcyjną linię poruszającą się poza obszarem symulacji
+ * obracającą się wględem środka dolnej granicy obszaru i emitująca cząsteczki światła.
+ */
 public class Sun implements Serializable{
+    /**Środek dolnej granicy obszaru symulacji*/
     private final Vector2D center;
+    /**Odległość "sklepienia" od {@link #center}*/
     private float distance;
+    /**"Wirujący wektor", do którego "przyczepiony" jest środek "sklepienia"*/
     private Vector2D spinningVector;
+    /**Położenie środka sklepienia*/
     private Vector2D roofCenter;
+    /**Długość sklepienia.*/
     private float roofLength;
+    /**Długość doby(dzień plus noc).*/
     private static final int dayTime = 1000;
+    /**Krok obrotu "Wirującego wektora".*/
     private static final float angleStep = (float)Math.PI/(dayTime/2);
+    /**Odległość między wygenerowanymi cząsteczkami światła w pikselach.*/
     private static final int fotonsSpacing = 20;
+    /**Częstotliwość generacji cząsteczek*/
     private static final int frequency = 25;
+    /**<i>true</i> - słońce zbiża się do zenitu, <i>false</i> - słońce zachodzi*/
     private boolean isRising;
+    /**<i>true</i> - słońce wschodzi z lewej strony.*/
     private boolean sunSide;
+    /**łączna liczba cząsteczek do wygenerowania jednocześnie.*/
     int spawnersAmount;
 
-    ArrayList<Rect> rList;
+    ArrayList<Rect> rList;//both for debug
     Line2D.Float roof;
 
+    /**
+     * Przygotowanie "Wirującego wektora" - obliczenie go i obrót na początkową pozycję. Obliczenie długości "sklepienia".
+     * @param sunTime Określa słoneczną część doby - <i>0</i> brak słońca, <i>50</i> pół dobry słońca, <i>100</i> słońce bez przerwy nad horyzontem.
+     * @param sunSide <i>true</i> - słońce wschodzi z prawej strony, <i>false</i> - z lewej
+     * @param width Szerokość obszaru symulacji
+     * @param height Wysokość obszau symulacji
+     */
     protected Sun(int sunTime, boolean sunSide, int width, int height){
         isRising=true;
         this.sunSide = sunSide;
@@ -47,6 +70,11 @@ public class Sun implements Serializable{
         rList = new ArrayList<Rect>();
     }
 
+    /**
+     * Oblicznie nowych wartości wektorów oraz pozycji generacji cząsteczek światła. Ewentualna generacja cząsteczek.
+     * @param time Aktualny czas(moment) w środowisku.
+     * @return Jeśli czas na generację cząsteczek, zwraca listę cząsteczek dla środowiska. Jeśli nie - zwraca pustą listę.
+     */
     protected ArrayList<Particle> proc(long time){
         if(time % (dayTime/2) == 0) isRising = !isRising;
         if ((isRising && sunSide) || (!isRising && !sunSide)) {
@@ -79,11 +107,10 @@ public class Sun implements Serializable{
         }
         return pList;
     }
-
+    //both for debug:
     protected ArrayList<Rect> getRects(){
         return rList;
     }
-
     protected ArrayList<Line2D> getLines(){
         ArrayList<Line2D> lList = new ArrayList<Line2D>();
         if (roof != null)lList.add(roof);

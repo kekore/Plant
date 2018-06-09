@@ -1,9 +1,9 @@
 import environmentPack.Circle;
-import environmentPack.Environment;
+import environmentPack.EnvironmentController;
 import environmentPack.Rect;
-import geneticAlgPack.GeneticAlg;
+import geneticAlgPack.GeneticAlgController;
 import javafx.util.Pair;
-import simulatorPack.Simulator;
+import simulatorPack.SimulatorController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,24 +11,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-// (S)imulation window
+
+/**
+ * Klasa okna, która trzyma panel z symulatorem i wyświetla wizualizację postępu aktualnej symulacji.
+ */
 public class SWindow extends JFrame implements ActionListener{
-
+    /** Panel z symulatorem*/
     protected SimPanel simPanel;
-    private boolean siming;
 
-    public SWindow(){
+    /**
+     * Konstruktor okna symulacji - ustawia nazwę okna, rozmiar, wyłącza działanie przycisku [X], dezaktywuje zmianę wielkości okna, tworzy panel
+     * z symulatorem i dodaje go do okna.
+     * @param parent Przekaże wskazanie do panelu w celu umożliwienia zmieny tekstu informującego o trybie symulacji.
+     */
+    public SWindow(MButtonPanel parent){
         super("Podgląd symulacji");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(600,700);
         setLocation(screenSize.width/2,screenSize.height/2-350);
         setResizable(false);
-        simPanel = new SimPanel();
+        simPanel = new SimPanel(parent);
         add(simPanel);
-        siming = false;
     }
 
+    /**
+     * Obsługuje włączanie i wyłączanie okna oraz jego odświeżania.
+     * @param e Zdarzenie
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         if(((JButton)e.getSource()).getText().equals("Symulacja")){
@@ -43,23 +53,42 @@ public class SWindow extends JFrame implements ActionListener{
     }
 }
 
+/**
+ * Panel wyświetlający wizualizację środowiska oraz informacje w lewym górnym rogu okna.
+ */
 class SimPanel extends JPanel implements ActionListener{
-
+    /**Odnośnik potrzebny do ustawienia informacji o trybie symulacji.*/
+    private MButtonPanel mButtonPanel;
+    /**Timer odświeżający obraz w oknie.*/
     protected Timer timer;
-    protected Simulator simulator;
-    //Random generator;
+    /**Kontroller do komunikacji z symulatorem.*/
+    protected SimulatorController simulatorController;
+    /**Wyświetla informację o aktualnym czasie(momencie) w środowisku*/
     private JTextField timeText;
+    /**Wyświetla liczbę odświeżeń obrazu na sekundę.*/
     private JTextField fpsText;
+    /**Wyświetla aktualną punktację drzewa umieszczonego w środowisku.*/
     private JTextField fitText;
+    /**Wyświetla aktualne nasycenie drzewa umieszczonego w środowisku.*/
     private JTextField satText;
+    /**Wyświetla liczbę operacji wykonywanych przez symulator na sekundę.*/
     private JTextField ppsText;
+    /**Wyświetla informację o wykonywaniu szybkiej symulacji.*/
     private JTextField progressText;
+    /**Moment rozpoczęcia odliczania 1000ms - dla liczenia fps.*/
     private long secStart;
+    /**Liczba klatek naliczona w danej sekundzie.*/
     private int frames;
+    /**<i>true</i> - pokazywanie ukrytych szczegółów*/
     private boolean showInvis;
 
-    protected SimPanel(){
-        simulator = new Simulator(200, GeneticAlg.simulationTime);
+    /**
+     * Tworzy obiekt {@link SimulatorController}, ustawia tło i layout panelu oraz dodaje elementy tekstowe.
+     * @param parent Odnośnik potrzebny do ustawienia informacji o trybie symulacji.
+     */
+    protected SimPanel(MButtonPanel parent){
+        mButtonPanel = parent;
+        simulatorController = new SimulatorController(200);
         timer = new Timer(1,this);
         showInvis = false;
         timer.start();
@@ -117,14 +146,14 @@ class SimPanel extends JPanel implements ActionListener{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        if(simulator.isQuickSim())return;
-        ArrayList<Circle> cList = simulator.getCircles();
-        ArrayList<Line2D> lList = simulator.getLines();
-        ArrayList<Rect> rList = simulator.getRects();
-        ArrayList<Pair<Line2D,Color>> bList = simulator.getBranchLines();
+        if(simulatorController.isQuickSim())return;
+        ArrayList<Circle> cList = simulatorController.getCircles();
+        ArrayList<Line2D> lList = simulatorController.getLines();
+        ArrayList<Rect> rList = simulatorController.getRects();
+        ArrayList<Pair<Line2D,Color>> bList = simulatorController.getBranchLines();
         if(showInvis){
-            lList.addAll(simulator.getInvisLines());
-            rList.addAll(simulator.getInvisRects());
+            lList.addAll(simulatorController.getInvisLines());
+            rList.addAll(simulatorController.getInvisRects());
         }
         for(Circle c : cList){
             g2d.setColor(c.color);
@@ -146,10 +175,14 @@ class SimPanel extends JPanel implements ActionListener{
         }
     }
 
+    /**
+     * Jeśli nadeszło zdarzenie {@link #timer}a to aktualizuje napisy. Jeśli nadeszło zdarzenie przycisku to wywołuje odpowiednią metodę.
+     * @param e Zdarzenie
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == timer){
-            if(!simulator.isQuickSim())repaint();
+            repaint();
             if(System.currentTimeMillis()-secStart < 1000){
                 frames++;
             }
@@ -158,33 +191,38 @@ class SimPanel extends JPanel implements ActionListener{
                 frames = 0;
                 secStart = System.currentTimeMillis();
             }
-            timeText.setText("Time: " + simulator.getTime());
-            int fit = (int)simulator.getPoints();
+            timeText.setText("Time: " + simulatorController.getTime());
+            int fit = (int)simulatorController.getPoints();
             fitText.setText("Fitness: " + fit);
-            int sat = (int)simulator.getSatiety();
+            int sat = (int)simulatorController.getSatiety();
             if(sat >= 0) satText.setText("Satiety: " + sat);
             else satText.setText("Satiety: -");
-            ppsText.setText("PPS: "+simulator.getPPS());
-            if(simulator.isQuickSim()){
+            ppsText.setText("PPS: "+simulatorController.getPPS());
+            if(simulatorController.isQuickSim()){
                 progressText.setVisible(true);
                 progressText.setText("Szybka symulacja");
             } else progressText.setVisible(false);
-        } else if (((JButton) e.getSource()).getText().equals("2x")){
-            simulator.setSpeed(2);
-        } else if (((JButton) e.getSource()).getText().equals("4x")){
-            simulator.setSpeed(1);
-        } else if (((JButton) e.getSource()).getText().equals("0.5x")){
-            simulator.setSpeed(8);
+        } else if (((JButton) e.getSource()).getText().equals("Szybkość symulacji: 2x")){
+            simulatorController.setSpeed(2);
+        } else if (((JButton) e.getSource()).getText().equals("Szybkość symulacji: 4x")){
+            simulatorController.setSpeed(1);
+        } else if (((JButton) e.getSource()).getText().equals("Szybkość symulacji: 0.5x")){
+            simulatorController.setSpeed(8);
         } else if (((JButton) e.getSource()).getText().equals("Pokaż/ukryj szczegóły")){
             showInvis = !showInvis;
         } else if (((JButton) e.getSource()).getText().equals("Szybka symulacja")){
-            simulator.alterQuickSim();
+            if(!simulatorController.isQuickSim()) mButtonPanel.simState.setText("Szybka symulacja");
+            else if(mButtonPanel.simulationProcingTimer.isRunning()) mButtonPanel.simState.setText("Symulacja włączona");
+            else mButtonPanel.simState.setText("Symulacja zapauzowana");
+            simulatorController.alterQuickSim();
         } else if (((JButton) e.getSource()).getText().equals("Zasymuluj generację")){
-            simulator.simulateGeneration();
+            simulatorController.simulateGeneration();
         }
     }
-    protected void setEnvironment(Environment environment){
-        simulator.setEnvironment(environment);
+    protected void setEnvironmentController(EnvironmentController environmentController){
+        simulatorController.setEnvironmentController(environmentController);
     }
-    protected void setAlgorithm(GeneticAlg geneticAlg) { simulator.setAlgorithm(geneticAlg); }
+    protected void setAlgorithmController(GeneticAlgController geneticAlgController) {
+        simulatorController.setAlgorithmController(geneticAlgController);
+    }
 }

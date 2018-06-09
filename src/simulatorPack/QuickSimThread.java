@@ -14,7 +14,7 @@ public class QuickSimThread extends Thread {
     public void run() {
         while(simulator.quickSim){
             simulator.proc();
-            if(simulator.environment.getTime() == GeneticAlg.simulationTime) simulator.endSimulation();
+            if(simulator.environmentController.getTime() == GeneticAlg.simulationTime) simulator.endSimulation();
         }
     }
 }

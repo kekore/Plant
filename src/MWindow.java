@@ -1,20 +1,20 @@
-import environmentPack.Environment;
-import geneticAlgPack.GeneticAlg;
+import environmentPack.EnvironmentController;
+import geneticAlgPack.GeneticAlgController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-// (M)ain window
+// (M)enu window
 public class MWindow extends JFrame{
 
-    public MWindow(SWindow s, EWindow e, AWindow a, CWindow c){
+    public MWindow(){
         super("Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(610,220);
         setLocation(4,4);
         setLayout(new FlowLayout());
 
-        add(new MButtonPanel(s, e, a, c));
+        add(new MButtonPanel());
 
         setVisible(true);
     }
@@ -27,55 +27,59 @@ class MButtonPanel extends JPanel implements ActionListener{
     private CWindow catWindow;
     private JButton simOneBut;
     private JButton simBut;
+    private JButton startPauseSimBut;
+    protected JTextField simState;
     private JButton doubleSpeedBut;
     private JButton quadSpeedBut;
     private JButton halfSpeedBut;
     private JButton envEditBut;
     private JButton algEditBut;
-    private JButton loadEnvBut;
-    private JButton loadAlgBut;
     private JButton showInvisBut;
     private JButton catBut;
     private JButton quickBut;
 
-    protected MButtonPanel(SWindow simW, EWindow envW, AWindow algW, CWindow catW){
-        simWindow = simW;
-        envWindow = envW;
-        algWindow = algW;
-        catWindow = catW;
+    protected Timer simulationProcingTimer;
+
+    protected MButtonPanel(){
+        simWindow = new SWindow(this);
+        envWindow = new EWindow();
+        algWindow = new AWindow();
+        catWindow = new CWindow(simWindow);
         simOneBut = new JButton("Zasymuluj generację");
         simBut = new JButton("Symulacja");
-        doubleSpeedBut = new JButton("2x");
-        quadSpeedBut = new JButton("4x");
-        halfSpeedBut = new JButton("0.5x");
+        startPauseSimBut = new JButton("Start/pauza symulacji");
+        simState = new JTextField("Symulacja zapauzowana");
+        simState.setEditable(false);
+        doubleSpeedBut = new JButton("Szybkość symulacji: 2x");
+        quadSpeedBut = new JButton("Szybkość symulacji: 4x");
+        halfSpeedBut = new JButton("Szybkość symulacji: 0.5x");
         envEditBut = new JButton("Edytor środowiska");
         algEditBut = new JButton("Edytor algorytmu");
-        loadEnvBut = new JButton("Załaduj środ. z edytora");
-        loadAlgBut = new JButton("Załaduj algorytm z edytora");
         showInvisBut = new JButton("Pokaż/ukryj szczegóły");
         catBut = new JButton("Katalog");
         quickBut = new JButton("Szybka symulacja");
 
-        simOneBut.addActionListener(simW.simPanel);
-        simBut.addActionListener(simW);
-        doubleSpeedBut.addActionListener(simW.simPanel);
-        quadSpeedBut.addActionListener(simW.simPanel);
-        halfSpeedBut.addActionListener(simW.simPanel);
-        envEditBut.addActionListener(envW);
-        algEditBut.addActionListener(algW);
-        loadEnvBut.addActionListener(this);
-        loadAlgBut.addActionListener(this);
-        showInvisBut.addActionListener(simW.simPanel);
-        catBut.addActionListener(catW);
-        quickBut.addActionListener(simW.simPanel);
-
+        simOneBut.addActionListener(simWindow.simPanel);
+        simBut.addActionListener(simWindow);
+        startPauseSimBut.addActionListener(this);
+        doubleSpeedBut.addActionListener(simWindow.simPanel);
+        quadSpeedBut.addActionListener(simWindow.simPanel);
+        halfSpeedBut.addActionListener(simWindow.simPanel);
+        envEditBut.addActionListener(envWindow);
+        envEditBut.addActionListener(this);
+        algEditBut.addActionListener(algWindow);
+        algEditBut.addActionListener(this);
+        showInvisBut.addActionListener(simWindow.simPanel);
+        catBut.addActionListener(catWindow);
+        quickBut.addActionListener(simWindow.simPanel);
+        quickBut.addActionListener(this);
 
         setLayout(new GridLayout(4, 3, 20, 20));
         add(envEditBut);
         add(algEditBut);
         add(simBut);
-        add(loadEnvBut);
-        add(loadAlgBut);
+        add(startPauseSimBut);
+        add(simState);
         add(simOneBut);
         add(quadSpeedBut);
         add(doubleSpeedBut);
@@ -83,21 +87,33 @@ class MButtonPanel extends JPanel implements ActionListener{
         add(showInvisBut);
         add(catBut);
         add(quickBut);
+
+        simulationProcingTimer = new Timer(1,simWindow.simPanel.simulatorController);
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        if(((JButton) e.getSource()).getText().equals("Załaduj środ. z edytora")){
-            Environment environment = envWindow.getEnvironment();
-            if(environment != null && !simWindow.simPanel.simulator.isSet()){
+        if(e.getSource() == envEditBut){
+            EnvironmentController environmentController = envWindow.getEnvironmentController();
+            if(environmentController != null){
                 simWindow.setSize(envWindow.overviewWindow.width,envWindow.overviewWindow.height);
-                simWindow.simPanel.setEnvironment(environment);
+                simWindow.simPanel.setEnvironmentController(environmentController);
             }
         }
-        else if(((JButton) e.getSource()).getText().equals("Załaduj algorytm z edytora")){
-            GeneticAlg geneticAlg = algWindow.getAlgorithm();
-            if(geneticAlg != null && !simWindow.simPanel.simulator.isSet()){
-                simWindow.simPanel.setAlgorithm(geneticAlg);
+        else if(e.getSource() == algEditBut){
+            GeneticAlgController geneticAlgController = algWindow.getAlgorithmController();
+            if(geneticAlgController != null){
+                simWindow.simPanel.setAlgorithmController(geneticAlgController);
+            }
+        }
+        else if(e.getSource() == startPauseSimBut){
+            if(simulationProcingTimer.isRunning()){
+                simulationProcingTimer.stop();
+                if(!simState.getText().equals("Szybka symulacja"))simState.setText("Symulacja zapauzowana");
+            }
+            else{
+                simulationProcingTimer.start();
+                if(!simState.getText().equals("Szybka symulacja"))simState.setText("Symulacja włączona");
             }
         }
     }

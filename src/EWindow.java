@@ -1,4 +1,4 @@
-import environmentPack.Environment;
+import environmentPack.EnvironmentController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +20,7 @@ public class EWindow extends JFrame implements ActionListener {
         setSize(660,400);
         setLocation(screenSize.width/32-30,screenSize.height/2-75);
 
-
-        OvrRunnable ovrRunnable = new OvrRunnable(this);
-        overviewWindow = ovrRunnable.getRef();
+        overviewWindow = new OWindow(this);
         firstPage = new FirstPage(this, overviewWindow);
         add(firstPage);
     }
@@ -45,8 +43,8 @@ public class EWindow extends JFrame implements ActionListener {
         }
     }
 
-    protected Environment getEnvironment(){
-        if(overviewWindow.ovrPanel.isInitialized) return overviewWindow.ovrPanel.environment;
+    protected EnvironmentController getEnvironmentController(){
+        if(overviewWindow.ovrPanel.environmentController.isInitialized()) return overviewWindow.ovrPanel.environmentController;
         else return null;
     }
 
@@ -64,22 +62,6 @@ public class EWindow extends JFrame implements ActionListener {
         }
         page = !page;
     }
-}
-
-class OvrRunnable implements Runnable {
-    OvrRunnable(EWindow eWindow){
-        e=eWindow;
-        o = new OWindow(e);
-    }
-    @Override
-    public void run() {
-        //o = new OWindow(e);
-    }
-    protected OWindow getRef() {
-        return o;
-    }
-    private OWindow o;
-    private EWindow e;
 }
 
 class FirstPage extends JPanel{
