@@ -11,7 +11,7 @@ public class Rect implements Serializable{
     public int width;
     private int height;
     public Color color;
-    public boolean isFilled;
+    private boolean isFilled;
     Rect(Vector2D p, int width, int height, Color color, boolean isFilled){
         this.width = width;
         this.height = height;
@@ -23,4 +23,5 @@ public class Rect implements Serializable{
     protected void setPos(Vector2D p){
         rectangle = new Rectangle2D.Float(p.getX()-width/2,p.getY()-height/2,width,height);
     }
+    public boolean isFilled(){ return isFilled; }
 }

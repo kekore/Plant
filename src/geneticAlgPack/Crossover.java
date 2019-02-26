@@ -3,24 +3,65 @@ package geneticAlgPack;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Klasa krzyżująca geny w {@link DNA}.
+ */
 public class Crossover {
+    /**Ilość osobników w jednym pokoleniu.*/
     private final int popSize;
+    /**Wektor bitowy krzyżowania genów (wzorzec).*/
+    private final boolean[] crossMap;
 
-    protected Crossover(int populationSize){
+    /**
+     *
+     * @param populationSize Ilość osobników w jednym pokoleniu.
+     * @param crossMap Wektor bitowy krzyżowania genów (wzorzec).
+     */
+    protected Crossover(int populationSize, boolean[] crossMap){
         popSize = populationSize;
+        this.crossMap = crossMap;
     }
 
-    protected ArrayList<DNA> shuffle(ArrayList<DNA> DNAlist){ //TODO check if well done - gets 250 gives 1000
+    /**
+     * Funkcja wykonująca krzyżowanie genów - zależnie od ostatniej wartości {@link #crossMap} - losowo bądź zgodnie ze wzorcem.
+     * @param DNAList Lista {@link DNA} do przetasowania.
+     * @return Zwraca listę {@link DNA} po przetasowaniu.
+     */
+    protected ArrayList<DNA> shuffle(ArrayList<DNA> DNAList){
         ArrayList<DNA> shuffledDNAList = new ArrayList<DNA>();
         Random generator = new Random();
-        for(int i = 0; i < popSize; i++){
-            int dnaIndex1 = generator.nextInt(DNAlist.size());
-            int dnaIndex2 = generator.nextInt(DNAlist.size());
-            int[] genes = new int[DNA.genesAmount];
-            for(int j = 0; j < DNA.genesAmount; j++){
-                genes[j] = (DNAlist.get(dnaIndex1).getGene(j) + DNAlist.get(dnaIndex2).getGene(j))/2;
+
+        if(crossMap[DNA.genesAmount] == true){
+            for(int i = 0; i < popSize; i++){
+                int dnaIndex1 = generator.nextInt(DNAList.size());
+                int dnaIndex2 = generator.nextInt(DNAList.size());
+                int[] genes = new int[DNA.genesAmount];
+                for(int j = 0; j < DNA.genesAmount; j++){
+                    boolean giver = generator.nextBoolean();
+                    if(giver) genes[j] = DNAList.get(dnaIndex1).getGene(j);
+                    else genes[j] = DNAList.get(dnaIndex2).getGene(j);
+                }
+                shuffledDNAList.add(new DNA(genes));
             }
-            shuffledDNAList.add(new DNA(genes));
+        }
+        else{
+            for(int i = 0; i < popSize; i++){
+                int dnaIndex1 = generator.nextInt(DNAList.size());
+                int dnaIndex2 = generator.nextInt(DNAList.size());
+                int[] genes = new int[DNA.genesAmount];
+                for(int j = 0; j < DNA.genesAmount; j++){
+                    if(crossMap[j]) genes[j] = DNAList.get(dnaIndex1).getGene(j);
+                    else genes[j] = DNAList.get(dnaIndex2).getGene(j);
+                }
+                shuffledDNAList.add(new DNA(genes));
+
+                System.out.println("CROSSED: ");
+                System.out.println(DNAList.get(dnaIndex1).getString());
+                System.out.println("WITH: ");
+                System.out.println(DNAList.get(dnaIndex2).getString());
+                System.out.println("AND GOT: ");
+                System.out.println(shuffledDNAList.get(shuffledDNAList.size()-1).getString());
+            }
         }
         return shuffledDNAList;
     }
